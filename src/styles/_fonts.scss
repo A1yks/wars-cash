@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/fonts/OpenSans-Regular/OpenSans-Regular.eot');
+    src: local('☺'), url('/fonts/OpenSans-Regular/OpenSans-Regular.woff') format('woff'),
+        url('/fonts/OpenSans-Regular/OpenSans-Regular.ttf') format('truetype'), url('/fonts/OpenSans-Regular/OpenSans-Regular.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/fonts/OpenSans-Bold/OpenSans-Bold.eot');
+    src: local('☺'), url('/fonts/OpenSans-Bold/OpenSans-Bold.woff') format('woff'), url('/fonts/OpenSans-Bold/OpenSans-Bold.ttf') format('truetype'),
+        url('/fonts/OpenSans-Bold/OpenSans-Bold.svg') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/fonts/OpenSans-Semibold/OpenSans-Semibold.eot');
+    src: local('☺'), url('/fonts/OpenSans-Semibold/OpenSans-Semibold.woff') format('woff'),
+        url('/fonts/OpenSans-Semibold/OpenSans-Semibold.ttf') format('truetype'), url('/fonts/OpenSans-Semibold/OpenSans-Semibold.svg') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geometria';
+    src: url('/fonts/Geometria-Bold/Geometria-Bold.eot');
+    src: local('☺'), url('/fonts/Geometria-Bold/Geometria-Bold.woff') format('woff'),
+        url('/fonts/Geometria-Bold/Geometria-Bold.ttf') format('truetype'), url('/fonts/Geometria-Bold/Geometria-Bold.svg') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
