@@ -1,0 +1,17 @@
+.userList {
+    width: 100%;
+
+    & > li {
+        &:not(:last-child) {
+            border: 1px solid #e5e5e5;
+        }
+
+        &:nth-child(even) {
+            background: #f7fcfd;
+        }
+
+        &:nth-child(odd) {
+            background: #f8f8f8;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+.results {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+
+    .result {
+        width: 3.1rem;
+        height: 3.1rem;
+        border-radius: 50%;
+
+        &.blue {
+            background: $blue;
+        }
+
+        &.red {
+            background: $red;
+        }
+    }
+}

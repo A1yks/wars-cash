@@ -1,0 +1,58 @@
+.bankHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 2rem;
+    width: 100%;
+    font-family: Geometria;
+
+    .titleWrapper {
+        display: flex;
+        align-items: center;
+        gap: 1.9rem;
+        padding: 2.2rem 2.5rem;
+    }
+
+    .coeff {
+        position: relative;
+
+        width: 9rem;
+        padding: 3.4rem 2.5rem;
+        padding-left: 0;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -6.5rem;
+            border: 4.7rem solid transparent;
+        }
+    }
+
+    &.red {
+        background: $dark-red;
+
+        .coeff {
+            background: #d30e41;
+
+            &::before {
+                border-right: 2rem solid #d30e41;
+            }
+        }
+    }
+
+    &.blue {
+        background: $dark-blue;
+
+        .coeff {
+            background: #2690c7;
+
+            &::before {
+                border-right: 2rem solid #2690c7;
+            }
+        }
+    }
+}

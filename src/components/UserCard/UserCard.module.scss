@@ -1,0 +1,11 @@
+.userCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+
+    .info {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+}

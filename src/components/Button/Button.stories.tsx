@@ -1,5 +1,6 @@
 import type { Meta, StoryObj, ArgTypes } from '@storybook/react';
 import Button from 'components/Button';
+import { useState } from 'react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Button> = {
@@ -10,19 +11,13 @@ const meta: Meta<typeof Button> = {
         color: 'blue',
     },
     tags: ['autodocs'],
-    argTypes: {
-        className: {
-            table: {
-                disable: true,
-            },
-        },
-    },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
-export const Normal: Story = {
+export const Default: Story = {
     args: {
         variant: 'normal',
     },
@@ -58,5 +53,23 @@ export const Text: Story = {
     args: {
         variant: 'text',
         children: '+100',
+    },
+};
+
+export const Loading: Story = {
+    render: function LoadingButton() {
+        const [isLoading, setIsLoading] = useState(false);
+
+        async function clickHandler() {
+            setIsLoading(true);
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            setIsLoading(false);
+        }
+
+        return (
+            <Button loading={isLoading} onClick={clickHandler}>
+                Click
+            </Button>
+        );
     },
 };

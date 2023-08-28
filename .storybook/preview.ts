@@ -13,6 +13,13 @@ const preview: Preview = {
         },
         layout: 'centered',
     },
+    argTypes: {
+        className: {
+            table: {
+                disable: true,
+            },
+        },
+    },
 };
 
 export default preview;

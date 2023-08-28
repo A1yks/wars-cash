@@ -1,0 +1,12 @@
+.listItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem 2.3rem;
+    width: 100%;
+
+    .rightContent {
+        font-size: 1.6rem;
+    }
+}

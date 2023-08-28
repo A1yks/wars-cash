@@ -1,0 +1,46 @@
+.avatar {
+    position: relative;
+
+    .imgWrapper {
+        display: flex;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+        outline: 1px solid $light-gray-secondary;
+
+        img {
+            object-fit: cover;
+        }
+    }
+
+    .status {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(50%);
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+        min-height: 1.6rem;
+        font-size: 1rem;
+        padding: 0 0.5rem;
+        border-radius: 0.6rem;
+        z-index: 1;
+        font-weight: bold;
+
+        &.admin {
+            background: $purple;
+        }
+
+        &.moderator {
+            background: rgb(61, 199, 107);
+        }
+
+        &.premium {
+            background: $green;
+        }
+
+        &.vip {
+            background: $red-secondary;
+        }
+    }
+}
