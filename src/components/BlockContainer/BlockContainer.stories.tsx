@@ -7,6 +7,13 @@ const meta: Meta<typeof BlockContainer> = {
     title: 'Components/BlockContainer',
     component: BlockContainer,
     tags: ['autodocs'],
+    decorators: [
+        (Story) => (
+            <div style={{ width: 370 }}>
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export default meta;
@@ -14,20 +21,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: () => (
-        <div style={{ width: 370 }}>
-            <BlockContainer style={{ fontSize: 17, padding: 10 }}>Block Container</BlockContainer>
-        </div>
-    ),
+    render: () => <BlockContainer style={{ fontSize: 17, padding: 10 }}>Block Container</BlockContainer>,
 };
 
 export const WithHeader: Story = {
     render: () => (
-        <div style={{ width: 370 }}>
-            <BlockContainer>
-                <BlockHeader title="Block Container" img={<Image src="/images/notes.png" width={60} height={60} alt="" />} />
-                <div style={{ fontSize: 17, padding: 10 }}>Content</div>
-            </BlockContainer>
-        </div>
+        <BlockContainer>
+            <BlockHeader title="Block Container" img={<Image src="/images/notes.png" width={60} height={60} alt="" />} />
+            <div style={{ fontSize: 17, padding: 10 }}>Content</div>
+        </BlockContainer>
     ),
 };

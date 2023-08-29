@@ -1,0 +1,48 @@
+.bettingForm {
+    padding: 1.5rem 2rem;
+
+    .betAmount {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 4.9rem;
+    }
+
+    .balance {
+        font-family: Geometria;
+        font-size: 4.5rem;
+        font-weight: 500;
+    }
+
+    .betInput {
+        margin-top: 1rem;
+    }
+
+    .betControls {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+
+        button {
+            font-family: OpenSans;
+            text-transform: initial;
+        }
+    }
+
+    .betBtns {
+        margin-top: 1.7rem;
+        display: flex;
+        gap: 1.8rem;
+
+        button {
+            height: 4.7rem;
+        }
+
+        .betBtnContent {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+    }
+}

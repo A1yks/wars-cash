@@ -5,6 +5,13 @@ const meta: Meta<typeof BankHeader> = {
     title: 'Components/BankHeader',
     component: BankHeader,
     tags: ['autodocs'],
+    decorators: [
+        (Story) => (
+            <div style={{ width: 570 }}>
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export default meta;
@@ -17,11 +24,6 @@ export const RedTeam: Story = {
         variant: 'red',
         coeff: 5.57,
     },
-    render: (args) => (
-        <div style={{ width: 570 }}>
-            <BankHeader {...args} />
-        </div>
-    ),
 };
 
 export const BlueTeam: Story = {
@@ -30,9 +32,4 @@ export const BlueTeam: Story = {
         variant: 'blue',
         coeff: 2.8,
     },
-    render: (args) => (
-        <div style={{ width: 570 }}>
-            <BankHeader {...args} />
-        </div>
-    ),
 };

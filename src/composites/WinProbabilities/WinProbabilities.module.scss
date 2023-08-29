@@ -1,0 +1,11 @@
+.content {
+    display: flex;
+    justify-content: space-between;
+    padding: 2.9rem 4.5rem;
+    gap: 1rem;
+
+    .separator {
+        width: 1px;
+        border: 1px dashed #6c7778;
+    }
+}

@@ -1,0 +1,21 @@
+.bankList {
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    &.red {
+        .betAmount {
+            color: #de0f44;
+        }
+    }
+
+    &.blue {
+        .betAmount {
+            color: #2898d2;
+        }
+    }
+
+    .betAmount {
+        font-weight: 500;
+    }
+}

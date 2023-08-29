@@ -1,0 +1,32 @@
+.teamChance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .like {
+        border-radius: 50%;
+        width: 6.4em;
+        height: 6.4rem;
+
+        &.red {
+            background: $red;
+        }
+
+        &.blue {
+            background: $blue;
+        }
+    }
+
+    .percent {
+        font-family: Geometria;
+        font-weight: 500;
+        font-size: 5rem;
+    }
+
+    .numbers {
+        font-size: 1.5rem;
+        padding: 0.5rem 2.5rem;
+        border-radius: 5px;
+        background: #f4f4f4;
+    }
+}
