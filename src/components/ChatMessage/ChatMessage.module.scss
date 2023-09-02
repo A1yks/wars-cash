@@ -1,0 +1,14 @@
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.6rem;
+
+    .info {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+
+    .text {
+        font-size: 1.5rem;
+    }
+}

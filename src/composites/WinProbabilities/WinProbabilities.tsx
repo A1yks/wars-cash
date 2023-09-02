@@ -17,7 +17,7 @@ function WinProbabilities(props: WinProbabilitiesProps) {
     const { redTeamInfo, blueTeamInfo, percentageValue } = props;
 
     return (
-        <Block title="Честная игра" img={<Image src="/images/gamepad.png" width={64} height={61} alt="" />}>
+        <Block title="Честная игра" rightContent={<Image src="/images/gamepad.png" width={64} height={61} alt="" />}>
             <div className={styles.content}>
                 <TeamChance {...redTeamInfo} percentageValue={percentageValue} teamType="red" />
                 <div className={styles.separator} />

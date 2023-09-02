@@ -27,7 +27,7 @@ export const Default: Story = {
 export const WithHeader: Story = {
     render: () => (
         <BlockContainer>
-            <BlockHeader title="Block Container" img={<Image src="/images/notes.png" width={60} height={60} alt="" />} />
+            <BlockHeader title="Block Container" rightContent={<Image src="/images/notes.png" width={60} height={60} alt="" />} />
             <div style={{ fontSize: 17, padding: 10 }}>Content</div>
         </BlockContainer>
     ),

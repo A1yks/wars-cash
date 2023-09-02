@@ -14,14 +14,14 @@ export type UserCardProps = {
 };
 
 function UserCard(props: UserCardProps) {
-    const name = `${props.name} ${props.surname}`;
+    const fullName = `${props.name} ${props.surname}`;
 
     const avatarJsx = <Avatar src={props.avatarSrc} size={props.avatarSize} role={props.avatarRole} />;
 
     return (
         <div className={c(styles.userCard, props.className)}>
             {props.profileUrl === undefined ? avatarJsx : <Link href={props.profileUrl}>{avatarJsx}</Link>}
-            <div className={styles.info}>{props.profileUrl === undefined ? name : <Link href={props.profileUrl}>{name}</Link>}</div>
+            <div className={styles.info}>{props.profileUrl === undefined ? fullName : <Link href={props.profileUrl}>{fullName}</Link>}</div>
         </div>
     );
 }

@@ -1,8 +1,9 @@
 import { Types } from 'mongoose';
+import { Type } from 'typescript';
 
 export enum Roles {
     Admin = 'admin',
-    Moderator = 'moderator',
+    Moderator = 'moder',
     Premium = 'premium',
     Vip = 'vip',
     User = 'user',
@@ -24,4 +25,10 @@ export type User = {
 export type Bet = {
     amount: number;
     user: User;
+};
+
+export type Message = {
+    _id: Types.ObjectId;
+    sender: User;
+    text: string;
 };

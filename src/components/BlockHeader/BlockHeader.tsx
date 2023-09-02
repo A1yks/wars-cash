@@ -4,7 +4,7 @@ import c from 'clsx';
 
 export type BlockHeaderProps = {
     title: string;
-    img?: JSX.Element;
+    rightContent?: JSX.Element;
     className?: string;
 };
 
@@ -12,7 +12,7 @@ function BlockHeader(props: BlockHeaderProps) {
     return (
         <div className={c(styles.blockHeader, props.className)}>
             <span>{props.title}</span>
-            {props.img}
+            {props.rightContent}
         </div>
     );
 }

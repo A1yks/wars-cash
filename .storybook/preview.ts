@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react';
 
+import 'react-circular-progressbar/dist/styles.css';
+import 'simplebar-react/dist/simplebar.min.css';
 import '../src/styles/global.scss';
 
 const preview: Preview = {

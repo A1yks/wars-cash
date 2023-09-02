@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     render: () => (
         <div style={{ width: 370 }}>
-            <BlockHeader title="Block Header" img={<Image src="/images/gamepad.png" width={64} height={61} alt="" />} />
+            <BlockHeader title="Block Header" rightContent={<Image src="/images/gamepad.png" width={64} height={61} alt="" />} />
         </div>
     ),
 };

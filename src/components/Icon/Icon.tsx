@@ -2,11 +2,10 @@ export type IconProps = {
     src: string;
     width?: number | string;
     height?: number | string;
-    className?: string;
-};
+} & React.ComponentPropsWithoutRef<'div'>;
 
 function Icon(props: IconProps) {
-    const { src, width = '100%', height = '100%', className } = props;
+    const { src, width, height, ...divProps } = props;
 
     return (
         <div
@@ -15,7 +14,7 @@ function Icon(props: IconProps) {
                 width,
                 height,
             }}
-            className={className}
+            {...divProps}
         />
     );
 }

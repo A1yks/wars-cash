@@ -1,0 +1,42 @@
+.modal {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    .modalWrapper {
+        flex: 1;
+        padding: 3rem;
+        width: 100%;
+    }
+}
+
+.animation {
+    &Enter {
+        opacity: 0;
+        padding-top: 2rem;
+
+        &Active {
+            opacity: 1;
+            padding-top: 0rem;
+            transition: opacity 0.2s, padding 0.2s;
+        }
+    }
+
+    &Exit {
+        opacity: 1;
+        padding-top: 0rem;
+
+        &Active {
+            opacity: 0;
+            padding-top: 2rem;
+            transition: opacity 0.2s, padding 0.2s;
+        }
+    }
+}

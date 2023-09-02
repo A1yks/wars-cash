@@ -1,0 +1,27 @@
+.modalBody {
+    max-width: 900px;
+    width: 100%;
+    border: 0.4rem solid $dark-gray;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+
+    .modalHeader {
+        display: flex;
+        justify-content: space-between;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    .closeBtn {
+        width: 2.8rem;
+        height: 2.8rem;
+        transform: rotate(45deg);
+        cursor: pointer;
+    }
+
+    .content {
+        background: #fff;
+        padding: 1.7rem 2.5rem;
+        font-size: 1.6rem;
+    }
+}

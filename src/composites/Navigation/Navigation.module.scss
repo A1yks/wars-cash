@@ -1,0 +1,35 @@
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 2.8rem;
+
+    .menu {
+        display: flex;
+        gap: 3rem;
+
+        .menuItem {
+            position: relative;
+
+            &:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 0.6rem;
+                height: 0.6rem;
+                background: $blue;
+                border-radius: 50%;
+                right: -1.8rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        .login {
+            color: $blue;
+        }
+
+        .logout {
+            color: $red;
+        }
+    }
+}
