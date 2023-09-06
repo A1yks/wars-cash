@@ -7,7 +7,7 @@ const meta: Meta<typeof LastGames> = {
     component: LastGames,
     tags: ['autodocs'],
     args: {
-        lastGames: [
+        data: [
             BetTypes.Blue,
             BetTypes.Red,
             BetTypes.Red,

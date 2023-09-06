@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        redColorPercent: 50,
+        blueColorPercent: 50,
         rotation: 0,
         text: '57',
     },

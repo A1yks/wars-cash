@@ -5,23 +5,21 @@ import Link from 'next/link';
 
 export type UserCardProps = {
     name: string;
-    surname: string;
     avatarSrc: AvatarProps['src'];
     avatarSize?: AvatarProps['size'];
     avatarRole?: AvatarProps['role'];
     profileUrl?: string;
     className?: string;
+    onClick?: () => void;
 };
 
 function UserCard(props: UserCardProps) {
-    const fullName = `${props.name} ${props.surname}`;
-
     const avatarJsx = <Avatar src={props.avatarSrc} size={props.avatarSize} role={props.avatarRole} />;
 
     return (
-        <div className={c(styles.userCard, props.className)}>
+        <div className={c(styles.userCard, props.className)} onClick={props.onClick}>
             {props.profileUrl === undefined ? avatarJsx : <Link href={props.profileUrl}>{avatarJsx}</Link>}
-            <div className={styles.info}>{props.profileUrl === undefined ? fullName : <Link href={props.profileUrl}>{fullName}</Link>}</div>
+            <div className={styles.info}>{props.profileUrl === undefined ? props.name : <Link href={props.profileUrl}>{props.name}</Link>}</div>
         </div>
     );
 }

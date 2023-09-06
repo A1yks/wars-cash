@@ -33,8 +33,8 @@ function Chat(props: ChatProps) {
                     <Icon src="/images/down.png" className={styles.iconBtn} width="2.6rem" height="2.6rem" onClick={scrollClickHandler} />
                 </div>
             </div>
-            <SimpleBar className={styles.scrollbar} autoHide={false} ref={scrollRef}>
-                <UserList className={styles.messages}>
+            <SimpleBar className={c(styles.scrollbar, { [styles.loggedIn]: isLoggedIn })} autoHide={false} ref={scrollRef}>
+                <UserList className={c(styles.messages, { [styles.loggedIn]: isLoggedIn })}>
                     {props.messages.map((message) => (
                         <UserListItem key={message._id.toString()} variant="message" user={message.sender}>
                             {message.text}

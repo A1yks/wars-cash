@@ -25,8 +25,7 @@ export const Default = {
         user: {
             id: '1' as unknown as Types.ObjectId,
             avatar: '/images/avatar.jpg',
-            name: 'Степан',
-            surname: 'Иванов',
+            name: 'Степан Иванов',
             role: Roles.User,
         },
         children: 'Mollit in id consectetur enim do ullamco Lorem culpa reprehenderit aliquip in commodo est sint.',

@@ -26,7 +26,7 @@ function UserListItem(props: UserListItemProps) {
         <li className={c(styles.listItem, className)}>
             {variant === 'default' ? (
                 <>
-                    <UserCard name={user.name} surname={user.surname} avatarSrc={user.avatar} avatarRole={user.role} profileUrl={profileUrl} />
+                    <UserCard name={user.name} avatarSrc={user.avatar} avatarRole={user.role} profileUrl={profileUrl} />
                     {children !== undefined && <div className={styles.rightContent}>{children}</div>}
                 </>
             ) : (

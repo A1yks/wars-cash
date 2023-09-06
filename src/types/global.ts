@@ -17,7 +17,6 @@ export enum BetTypes {
 export type User = {
     id: Types.ObjectId;
     name: string;
-    surname: string;
     avatar: string;
     role: Roles;
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -7,7 +9,7 @@ export type PortalProps = {
 };
 
 function Portal(props: PortalProps) {
-    // if (!process.browser) return null;
+    if (typeof window === 'undefined') return null;
 
     return createPortal(props.children, props.to || document.body);
 }

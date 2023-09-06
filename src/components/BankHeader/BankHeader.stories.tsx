@@ -18,18 +18,18 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const RedTeam: Story = {
+export const RedTeam = {
     args: {
         title: 'Банк красной команды',
         variant: 'red',
         coeff: 5.57,
     },
-};
+} satisfies Story;
 
-export const BlueTeam: Story = {
+export const BlueTeam = {
     args: {
         title: 'Банк синей команды',
         variant: 'blue',
         coeff: 2.8,
     },
-};
+} satisfies Story;

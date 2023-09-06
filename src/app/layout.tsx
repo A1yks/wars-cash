@@ -1,11 +1,15 @@
 import StoreProvider from 'Providers/StoreProvider';
 import type { Metadata } from 'next';
-import 'react-circular-progressbar/dist/styles.css';
-import 'simplebar-react/dist/simplebar.min.css';
 import { store } from 'store';
 import { api } from 'store/api';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import 'react-circular-progressbar/dist/styles.css';
+import 'simplebar-react/dist/simplebar.min.css';
 import 'styles/global.scss';
-import Hydrator from './hydrator';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import MainLayout from 'layouts/MainLayout';
+
+config.autoAddCss = false;
 
 export const dynamic = 'force-dynamic';
 
@@ -15,14 +19,14 @@ export const metadata: Metadata = {
 };
 
 async function RootLayout({ children }: { children: React.ReactNode }) {
-    const { data } = await store.dispatch(api.endpoints.test.initiate());
-
-    console.log(123, data);
+    // const { data } = await store.dispatch(api.endpoints.test.initiate());
 
     return (
-        <html lang="en">
+        <html lang="ru">
             <body>
-                <StoreProvider data={{ test: data, api: store.getState().api }}>{children}</StoreProvider>
+                <StoreProvider data={{ api: store.getState().api }}>
+                    <MainLayout>{children}</MainLayout>
+                </StoreProvider>
             </body>
         </html>
     );

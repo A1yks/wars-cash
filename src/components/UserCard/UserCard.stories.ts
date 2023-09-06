@@ -8,8 +8,7 @@ const meta: Meta<typeof UserCard> = {
     args: {
         avatarSize: 50,
         avatarSrc: '/images/avatar.jpg',
-        name: 'Степан',
-        surname: 'Иванов',
+        name: 'Степан Иванов',
     },
 };
 

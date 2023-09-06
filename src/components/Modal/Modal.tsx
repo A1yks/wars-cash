@@ -1,9 +1,10 @@
 import c from 'clsx';
 import styles from './Modal.module.scss';
 import Portal from 'components/Portal';
-import { ReactElement, ReactNode, createContext, useCallback, useMemo, useState } from 'react';
+import { ReactElement, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
+import preventBubbling from 'utils/preventBubbling';
 
 export type ModalContextData = {
     isOpened: boolean;
@@ -43,6 +44,14 @@ export function Modal(props: Props.WithChildren) {
         setIsOpened(false);
     }, []);
 
+    useEffect(() => {
+        if (isOpened) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isOpened]);
+
     const value = useMemo<ModalContextData>(() => ({ isOpened, open, close }), [isOpened, open, close]);
 
     return <ModalContext.Provider value={value}>{props.children}</ModalContext.Provider>;
@@ -51,10 +60,6 @@ export function Modal(props: Props.WithChildren) {
 export function ModalBody(props: ModalProps) {
     const { className, children } = props;
     const { isOpened, close } = useModal();
-
-    function preventBubbling(e: React.MouseEvent<HTMLElement>) {
-        e.stopPropagation();
-    }
 
     return (
         <Portal>

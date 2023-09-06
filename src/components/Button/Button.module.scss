@@ -41,4 +41,9 @@
         text-decoration: underline dashed #000;
         font-size: 1.7rem;
     }
+
+    &:disabled {
+        background-color: rgba(0, 0, 0, 0.2);
+        cursor: not-allowed;
+    }
 }

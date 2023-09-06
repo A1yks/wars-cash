@@ -21,7 +21,7 @@ const meta: Meta<typeof Spinner> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Spinner>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {},

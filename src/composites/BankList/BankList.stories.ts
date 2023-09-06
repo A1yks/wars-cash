@@ -4,7 +4,7 @@ import { BlueTeam, RedTeam } from 'components/BankHeader/BankHeader.stories';
 import { Types } from 'mongoose';
 import { Roles } from 'types/global';
 
-const meta: Meta<typeof BankList> = {
+const meta = {
     title: 'Composites/BankList',
     component: BankList,
     tags: ['autodocs'],
@@ -14,8 +14,7 @@ const meta: Meta<typeof BankList> = {
                 user: {
                     id: '1' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John',
-                    surname: 'Doe',
+                    name: 'John Doe',
                     role: Roles.User,
                 },
                 amount: 19.22,
@@ -24,8 +23,7 @@ const meta: Meta<typeof BankList> = {
                 user: {
                     id: '2' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John',
-                    surname: 'Doe',
+                    name: 'John Doe',
                     role: Roles.User,
                 },
                 amount: 25.92,
@@ -34,8 +32,7 @@ const meta: Meta<typeof BankList> = {
                 user: {
                     id: '3' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John',
-                    surname: 'Doe',
+                    name: 'John Doe',
                     role: Roles.User,
                 },
                 amount: 9.26,
@@ -44,8 +41,7 @@ const meta: Meta<typeof BankList> = {
                 user: {
                     id: '4' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John',
-                    surname: 'Doe',
+                    name: 'John Doe',
                     role: Roles.User,
                 },
                 amount: 33.09,
@@ -54,28 +50,27 @@ const meta: Meta<typeof BankList> = {
                 user: {
                     id: '5' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John',
-                    surname: 'Doe',
+                    name: 'John Doe',
                     role: Roles.User,
                 },
                 amount: 45,
             },
         ],
     },
-};
+} satisfies Meta<typeof BankList>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const RedBankList: Story = {
+export const RedBankList = {
     args: {
         ...RedTeam.args,
     },
-};
+} satisfies Story;
 
-export const BlueBankList: Story = {
+export const BlueBankList = {
     args: {
         ...BlueTeam.args,
     },
-};
+} satisfies Story;

@@ -1,9 +1,17 @@
 .header {
+    width: 100%;
     padding: 3.4rem 0;
 
     .container {
         display: flex;
         gap: 3rem;
         justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: $sm) {
+    .header {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 }

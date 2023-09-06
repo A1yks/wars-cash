@@ -11,13 +11,12 @@ export type ChatMessageProps = {
 
 function ChatMessage(props: ChatMessageProps) {
     const { user, children, className } = props;
-    const fullName = `${user.name} ${user.surname}`;
 
     return (
         <div className={c(styles.message, className)}>
             <Avatar src={user.avatar} role={user.role} />
             <div className={styles.content}>
-                <div className={styles.info}>{fullName}</div>
+                <div className={styles.info}>{user.name}</div>
                 <div className={styles.text}>{children}</div>
             </div>
         </div>

@@ -1,0 +1,21 @@
+.content {
+    font-size: 2rem;
+
+    .changeAvatarBtn {
+        height: 4rem;
+    }
+
+    .history {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .depositHistory {
+            flex: 1;
+        }
+
+        .withdrawalHistory {
+            flex: 2;
+        }
+    }
+}

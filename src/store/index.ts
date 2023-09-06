@@ -1,9 +1,11 @@
 import { AnyAction, Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
 import testSlice from './reducers/testSlide';
 import { api } from './api';
+import authSlice from './reducers/authSlice';
 
 const combineReducer = combineReducers({
     test: testSlice.reducer,
+    auth: authSlice.reducer,
     [api.reducerPath]: api.reducer,
 });
 

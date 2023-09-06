@@ -74,7 +74,7 @@ function BettingForm(props: BettingFormProps) {
 
     return (
         <BlockContainer className={styles.bettingForm}>
-            <div className={styles.betAmount}>
+            <div className={c(styles.betAmount, 'flex', 'center')}>
                 <Button color="dark-gray" variant="round" onClick={plusClickHandler}>
                     <Icon src="/images/plus.png" className={c(styles.icon, styles.plusIcon)} />
                 </Button>

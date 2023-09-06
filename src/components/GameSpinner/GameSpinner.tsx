@@ -4,14 +4,14 @@ import styles from './GameSpinner.module.scss';
 import colors from 'styles/colors.module.scss';
 
 export type GameSpinnerProps = {
-    redColorPercent: number;
+    blueColorPercent: number;
     text: string;
     rotation?: number;
     className?: string;
 };
 
 function GameSpinner(props: GameSpinnerProps) {
-    const { redColorPercent, rotation = 0, text, className } = props;
+    const { blueColorPercent, rotation = 0, text, className } = props;
 
     return (
         <div className={c(styles.gameSpinner, className)}>
@@ -19,13 +19,13 @@ function GameSpinner(props: GameSpinnerProps) {
                 <div className={styles.triangle} />
             </div>
             <CircularProgressbarWithChildren
-                value={redColorPercent}
+                value={blueColorPercent}
                 styles={{
                     ...buildStyles({
                         rotation: rotation / 100,
                         strokeLinecap: 'butt',
                         trailColor: colors.lightRed,
-                        backgroundColor: colors.lightBlue,
+                        pathColor: colors.lightBlue,
                     }),
                     text: {
                         fontWeight: 'bold',

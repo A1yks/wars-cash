@@ -1,0 +1,15 @@
+.bonus {
+    align-items: center;
+
+    .bonusText {
+        text-align: center;
+    }
+
+    .bonusAvailable {
+        color: $light-green;
+    }
+
+    .bonusNotAvailable {
+        color: #d1345b;
+    }
+}

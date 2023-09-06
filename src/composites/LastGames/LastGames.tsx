@@ -8,7 +8,7 @@ import { BetTypes } from 'types/global';
 
 export type LastGamesProps = {
     className?: string;
-    lastGames: BetTypes[];
+    data: BetTypes[];
 };
 
 const MAX_RESULTS = 8;
@@ -18,7 +18,7 @@ function LastGames(props: LastGamesProps) {
         <BlockContainer className={c(styles.lastGames, props.className)}>
             <BlockHeader title="Последние игры" rightContent={<Image src="/images/notes.png" width={62} height={54} alt="" />} />
             <div className={styles.content}>
-                <Results data={props.lastGames.slice(-MAX_RESULTS)} />
+                <Results data={props.data.slice(-MAX_RESULTS)} />
             </div>
         </BlockContainer>
     );

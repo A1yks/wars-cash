@@ -3,7 +3,7 @@ import Chat from '.';
 import { Types } from 'mongoose';
 import { user } from 'stories/mock';
 
-const meta: Meta<typeof Chat> = {
+const meta = {
     title: 'Composites/Chat',
     component: Chat,
     tags: ['autodocs'],
@@ -94,7 +94,7 @@ const meta: Meta<typeof Chat> = {
             </div>
         ),
     ],
-};
+} satisfies Meta<typeof Chat>;
 
 export default meta;
 
@@ -106,4 +106,6 @@ export const LoggedIn: Story = {
     },
 };
 
-export const LoggetOut: Story = {};
+export const LoggetOut: Story = {
+    args: { isLoggedIn: false },
+};

@@ -1,0 +1,15 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["ESNext"],
+        "outDir": "../../.next/production-server/",
+        "noEmit": false,
+        "module": "CommonJS"
+    },
+    "ts-node": {
+        "files": true,
+        "require": ["tsconfig-paths/register"]
+    },
+    "include": ["."]
+}

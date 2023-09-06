@@ -1,0 +1,17 @@
+.history {
+    align-items: center;
+
+    h6 {
+        font-size: 1.8rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        font-weight: 500;
+    }
+
+    .empty {
+        font-size: 1.6rem;
+        padding: 1rem;
+        width: 100%;
+    }
+}

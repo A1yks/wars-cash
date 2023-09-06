@@ -18,8 +18,7 @@ export const LoggedIn: Story = {
         user: {
             id: '1' as unknown as Types.ObjectId,
             avatar: '/images/avatar.jpg',
-            name: 'Степан',
-            surname: 'Иванов',
+            name: 'Степан Иванов',
             role: Roles.User,
         },
     },
