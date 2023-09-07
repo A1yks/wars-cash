@@ -1,5 +1,4 @@
 name: Deployment
-env: NODE_ENV=production
 on:
     workflow_dispatch:
     push:
