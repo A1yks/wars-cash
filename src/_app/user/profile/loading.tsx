@@ -1,3 +1,3 @@
-import Loading from 'app/loading';
+import Loading from '_app/loading';
 
 export default Loading;
