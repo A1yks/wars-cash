@@ -8,7 +8,7 @@ on:
             - '.github/workflows/*'
 jobs:
     lint:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         steps:
             - name: Get repository code
               uses: actions/checkout@v3
@@ -18,11 +18,11 @@ jobs:
                   path: ~/.npm
                   key: node-modules-${{ hashFiles('**/package-lock.json') }}
             - name: Install dependencies
-              run: npm install
+              run: npm ci
             - name: Lint
               run: npm run lint
     deploy:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         needs: lint
         steps:
             - name: Get repository code
@@ -33,17 +33,17 @@ jobs:
                   path: ~/.npm
                   key: node-modules-${{ hashFiles('**/package-lock.json') }}
             - name: Install dependencies
-              run: npm install
+              run: npm ci
             - name: Build
               run: npm run build
             - name: Setup SSH
               run: |
-                  mkdir -p ~/.ssh/
-                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  mkdir -p ~/ssh/
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh/id_rsa
                   echo "${{ secrets.SSH_USER }}" > ~/.ssh/id_rsa.pub
-                  chmod 600 ~/.ssh/id_rsa
-                  chmod 600 ~/.ssh/id_rsa.pub
-                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+                  chmod 600 ~/ssh/id_rsa
+                  chmod 600 ~/ssh/id_rsa.pub
+                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/ssh/known_hosts
             - name: Deploy build on server
               run: |
                   rsync -vrm .next/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash/dist
