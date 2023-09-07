@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default = {
     render: function Render() {
-        const [name, setName] = useState('John Doe');
+        const [name, setName] = useState('Степан Иванов');
         const [isSaving, setIsSaving] = useState(false);
         const { formState, changeHandler } = useFormState(() => ({
             name,

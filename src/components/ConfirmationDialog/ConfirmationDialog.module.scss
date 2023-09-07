@@ -1,0 +1,25 @@
+.dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .content {
+        font-size: 1.8rem;
+    }
+
+    .actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+
+        button {
+            width: 10rem;
+            height: 4rem;
+
+            &.submitBtn {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+    }
+}

@@ -38,6 +38,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             disabled={disabled || loading}
             style={{ height, width }}
             className={c(styles.btn, styles[variant], styles[color], 'flex', 'center', className)}
+            type="button"
             {...btnProps}
         >
             {loading ? <Spinner color="#fff" size={btnHeight * 0.5} /> : children}

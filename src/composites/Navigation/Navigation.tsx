@@ -13,6 +13,7 @@ import { useCallback, useMemo } from 'react';
 import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
+import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
 
 export type NavigationProps = {
     user: User | null;
@@ -23,7 +24,7 @@ export type NavigationProps = {
 
 function Navigation(props: NavigationProps) {
     const { user, className } = props;
-    const { isLoggedIn, isMenuOpened, openMenu, closeMenu, toggleMenu, loginClickHandler, logoutClickHandler } = useNavigation(props);
+    const { isLoggedIn, isMenuOpened, openMenu, closeMenu, toggleMenu, loginHandler, logoutHandler } = useNavigation(props);
 
     const menuJsx = useMemo(
         () => (
@@ -35,7 +36,7 @@ function Navigation(props: NavigationProps) {
                 </li>
                 <li className={styles.menuItem}>
                     <Link href="/user/profile" onClick={closeMenu}>
-                        Личный кабинет
+                        Профиль
                     </Link>
                 </li>
                 <li className={styles.menuItem}>
@@ -79,13 +80,17 @@ function Navigation(props: NavigationProps) {
                     </Modal>
                 </li>
                 <li className={styles.menuItem}>
-                    <Link href="#" className={styles.logout} onClick={logoutClickHandler}>
-                        Выход
-                    </Link>
+                    <ConfirmationDialog content="Вы уверены, что хотите выйти из аккаунта?" onSubmit={logoutHandler}>
+                        <ModalOpener>
+                            <Link href="#" className={styles.logout}>
+                                Выход
+                            </Link>
+                        </ModalOpener>
+                    </ConfirmationDialog>
                 </li>
             </>
         ),
-        [closeMenu, logoutClickHandler]
+        [closeMenu, logoutHandler]
     );
 
     return (
@@ -108,7 +113,7 @@ function Navigation(props: NavigationProps) {
             ) : (
                 <ul className={c(styles.menu, styles.mobileMenu)}>
                     <li>
-                        <Link href="#" className={styles.login} onClick={loginClickHandler}>
+                        <Link href="#" className={styles.login} onClick={loginHandler}>
                             Авторизация
                         </Link>
                     </li>
@@ -119,7 +124,7 @@ function Navigation(props: NavigationProps) {
                     menuJsx
                 ) : (
                     <li>
-                        <Link href="#" className={styles.login} onClick={loginClickHandler}>
+                        <Link href="#" className={styles.login} onClick={loginHandler}>
                             Авторизация
                         </Link>
                     </li>

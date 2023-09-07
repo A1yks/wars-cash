@@ -19,6 +19,8 @@
         margin-top: 1rem;
         display: flex;
         gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
 
         button {
             font-family: OpenSans;
@@ -30,6 +32,7 @@
         margin-top: 1.7rem;
         display: flex;
         gap: 1.8rem;
+        flex-wrap: wrap;
 
         button {
             height: 4.7rem;
@@ -45,5 +48,15 @@
     .icon {
         width: 100%;
         height: 100%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .bettingForm {
+        .betBtns {
+            button {
+                width: 100% !important;
+            }
+        }
     }
 }

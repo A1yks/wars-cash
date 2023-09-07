@@ -12,6 +12,7 @@ export type OperationsHistoryProps<T extends Titles> = {
     }[];
     name?: string;
     className?: string;
+    tableWrapperClassName?: string;
 };
 
 function OperationsHistory<T extends Titles>(props: OperationsHistoryProps<T>) {
@@ -19,31 +20,33 @@ function OperationsHistory<T extends Titles>(props: OperationsHistoryProps<T>) {
 
     return (
         <div className={c(styles.history, 'content', props.className)}>
-            <h6>
+            <h6 className={styles.title}>
                 <FontAwesomeIcon icon={faHistory} />
                 <span>{name}</span>
             </h6>
             {props.data.length === 0 ? (
                 <div className={c(styles.empty, 'flex', 'center')}>История пуста</div>
             ) : (
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            {Object.values(props.titles).map((title, i) => (
-                                <th key={i}>{title}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.data.map((item, i) => (
-                            <tr key={i}>
-                                {Object.values(item).map((value, i) => (
-                                    <td key={i}>{value}</td>
+                <div className={props.tableWrapperClassName}>
+                    <table className={styles.table}>
+                        <thead>
+                            <tr>
+                                {Object.values(props.titles).map((title, i) => (
+                                    <th key={i}>{title}</th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {props.data.map((item, i) => (
+                                <tr key={i}>
+                                    {Object.values(item).map((value, i) => (
+                                        <td key={i}>{value}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

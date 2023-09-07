@@ -1,7 +1,11 @@
 .logo {
     display: block;
     position: relative;
-    width: 21.2rem;
+    width: min(21.2rem, 50vw);
     height: 4.7rem;
     flex-shrink: 0;
+
+    img {
+        object-fit: contain;
+    }
 }

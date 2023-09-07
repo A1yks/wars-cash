@@ -14,7 +14,7 @@ const meta = {
                 user: {
                     id: '1' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John Doe',
+                    name: 'Степан Иванов',
                     role: Roles.User,
                 },
                 amount: 19.22,
@@ -23,7 +23,7 @@ const meta = {
                 user: {
                     id: '2' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John Doe',
+                    name: 'Степан Иванов',
                     role: Roles.User,
                 },
                 amount: 25.92,
@@ -32,7 +32,7 @@ const meta = {
                 user: {
                     id: '3' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John Doe',
+                    name: 'Степан Иванов',
                     role: Roles.User,
                 },
                 amount: 9.26,
@@ -41,7 +41,7 @@ const meta = {
                 user: {
                     id: '4' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John Doe',
+                    name: 'Степан Иванов',
                     role: Roles.User,
                 },
                 amount: 33.09,
@@ -50,7 +50,7 @@ const meta = {
                 user: {
                     id: '5' as unknown as Types.ObjectId,
                     avatar: '/images/avatar.jpg',
-                    name: 'John Doe',
+                    name: 'Степан Иванов',
                     role: Roles.User,
                 },
                 amount: 45,

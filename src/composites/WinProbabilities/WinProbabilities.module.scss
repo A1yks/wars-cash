@@ -9,3 +9,14 @@
         border: 1px dashed #6c7778;
     }
 }
+
+@media screen and (max-width: 420px) {
+    .content {
+        flex-direction: column;
+        gap: 2.5rem;
+
+        .separator {
+            width: 100%;
+        }
+    }
+}

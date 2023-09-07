@@ -11,7 +11,7 @@ function useMainLayout() {
     function loginHandler() {
         dispatch(
             authSlice.actions.setUser({
-                user: { id: '3' as unknown as Types.ObjectId, avatar: '/images/avatar.jpg', name: 'John Doe', role: Roles.User },
+                user: { id: '3' as unknown as Types.ObjectId, avatar: '/images/avatar.jpg', name: 'Степан Иванов', role: Roles.User },
                 token: '123',
             })
         );

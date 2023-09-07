@@ -103,9 +103,9 @@ export function ModalCloser(props: ModalBtnProps) {
 
     return React.cloneElement(props.children, {
         ...props.children.props,
-        onClick(e: React.MouseEvent<HTMLElement>) {
+        async onClick(e: React.MouseEvent<HTMLElement>) {
+            await props.children.props.onClick?.(e);
             close();
-            props.children.props.onClick?.(e);
         },
     });
 }

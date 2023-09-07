@@ -108,6 +108,7 @@ function ProfileContent() {
                         },
                     ]}
                     className={styles.withdrawalHistory}
+                    tableWrapperClassName={styles.withdrawalHistoryTableWrapper}
                 />
             </div>
         </div>

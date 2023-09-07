@@ -18,4 +18,13 @@
             flex: 2;
         }
     }
+
+    .withdrawalHistoryTableWrapper {
+        width: 100%;
+        overflow: auto;
+
+        table {
+            min-width: 80rem;
+        }
+    }
 }
