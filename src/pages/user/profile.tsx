@@ -4,7 +4,7 @@ import MainLayout from 'layouts/MainLayout';
 
 function Profile() {
     return (
-        <MainLayout>
+        <MainLayout title="Профиль">
             <ProfileContent />;
         </MainLayout>
     );

@@ -2,12 +2,23 @@ import Container from 'components/Container';
 import Header from 'composites/Header';
 import styles from './MainLayout.module.scss';
 import useMainLayout from './hooks/useMainLayout';
+import { ReactNode } from 'react';
+import Head from 'next/head';
 
-function MainLayout(props: Props.WithChildren) {
+export type MainLayoutProps = {
+    title?: string;
+    children: ReactNode;
+};
+
+function MainLayout(props: MainLayoutProps) {
     const { user, loginHandler, logoutHandler } = useMainLayout();
+    const title = props.title ? `${props.title} | Wars.Cash` : 'Wars.Cash';
 
     return (
         <div className={styles.mainContent}>
+            <Head>
+                <title>{title}</title>
+            </Head>
             <Container>
                 <Header user={user} onLogin={loginHandler} onLogout={logoutHandler} />
             </Container>
