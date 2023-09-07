@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/useAppSelector';
+import useAppSelector from 'hooks/useAppSelector';
 import useErrorsHandler from 'hooks/useErrorsHandler';
 import useFormState from 'hooks/useFormState';
 

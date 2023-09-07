@@ -20,6 +20,10 @@ declare global {
             children: ReactNode;
         };
     }
+
+    interface Window {
+        lastHref?: string;
+    }
 }
 
 export {};

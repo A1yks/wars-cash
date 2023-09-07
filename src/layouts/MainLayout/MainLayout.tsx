@@ -1,4 +1,3 @@
-'use client';
 import Container from 'components/Container';
 import Header from 'composites/Header';
 import styles from './MainLayout.module.scss';

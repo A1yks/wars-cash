@@ -10,6 +10,7 @@ import OperationsHistory from 'components/OperationsHistory';
 import Image from 'next/image';
 import Avatar from 'components/Avatar';
 import Button from 'components/Button';
+import Container from 'components/Container';
 
 const nameSchema = object({
     name: nameFieldSchema,
@@ -32,86 +33,88 @@ function ProfileContent() {
     const { user, formState, changeHandler, saveHandler } = useProfileContent();
 
     return (
-        <div className={c(styles.content, 'content')}>
-            <div className="content center">
-                <h6 className="title">Изображение профиля</h6>
-                <Avatar src={user!.avatar} size={100} />
-                <Button color="black" className={styles.changeAvatarBtn}>
-                    Изменить
-                </Button>
-            </div>
-            <EditableForm
-                title="Имя"
-                isSaving={false}
-                validationSchema={nameSchema}
-                normalContent={<p>{user?.name}</p>}
-                renderEditModeContent={({ control }) => (
-                    <ControlledInput name="name" control={control} value={formState.name} onChange={changeHandler('name')} autoFocus />
-                )}
-                defaultValidationValues={{ name: user?.name }}
-                onSave={saveHandler}
-            />
-            <div className="content">
-                <OperationsHistory name="История пополнений" titles={depositTitles} {...WithOperations.args} className={styles.depositHistory} />
-                <OperationsHistory
-                    name="История вывода средств"
-                    titles={withdrawalTitles}
-                    data={[
-                        {
-                            date: '22.03.2022',
-                            sum: '1000',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '21.03.2022',
-                            sum: '500',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '20.03.2022',
-                            sum: '750',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '19.03.2022',
-                            sum: '250',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '18.03.2022',
-                            sum: '1250',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '17.03.2022',
-                            sum: '1500',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                        {
-                            date: '16.03.2022',
-                            sum: '2000',
-                            walletType: 'Qiwi',
-                            wallet: '7*******567',
-                            status: 'Выполнено',
-                        },
-                    ]}
-                    className={styles.withdrawalHistory}
-                    tableWrapperClassName={styles.withdrawalHistoryTableWrapper}
+        <Container>
+            <div className={c(styles.content, 'content')}>
+                <div className="content center">
+                    <h6 className="title">Изображение профиля</h6>
+                    <Avatar src={user!.avatar} size={100} />
+                    <Button color="black" className={styles.changeAvatarBtn}>
+                        Изменить
+                    </Button>
+                </div>
+                <EditableForm
+                    title="Имя"
+                    isSaving={false}
+                    validationSchema={nameSchema}
+                    normalContent={<p>{user?.name}</p>}
+                    renderEditModeContent={({ control }) => (
+                        <ControlledInput name="name" control={control} value={formState.name} onChange={changeHandler('name')} autoFocus />
+                    )}
+                    defaultValidationValues={{ name: user?.name }}
+                    onSave={saveHandler}
                 />
+                <div className="content">
+                    <OperationsHistory name="История пополнений" titles={depositTitles} {...WithOperations.args} className={styles.depositHistory} />
+                    <OperationsHistory
+                        name="История вывода средств"
+                        titles={withdrawalTitles}
+                        data={[
+                            {
+                                date: '22.03.2022',
+                                sum: '1000',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '21.03.2022',
+                                sum: '500',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '20.03.2022',
+                                sum: '750',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '19.03.2022',
+                                sum: '250',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '18.03.2022',
+                                sum: '1250',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '17.03.2022',
+                                sum: '1500',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                            {
+                                date: '16.03.2022',
+                                sum: '2000',
+                                walletType: 'Qiwi',
+                                wallet: '7*******567',
+                                status: 'Выполнено',
+                            },
+                        ]}
+                        className={styles.withdrawalHistory}
+                        tableWrapperClassName={styles.withdrawalHistoryTableWrapper}
+                    />
+                </div>
             </div>
-        </div>
+        </Container>
     );
 }
 

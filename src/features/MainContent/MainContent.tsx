@@ -13,7 +13,7 @@ import Container from 'components/Container';
 import BankList from 'composites/BankList';
 // TODO delete
 import bankListMeta, { BlueBankList, RedBankList } from 'composites/BankList/BankList.stories';
-import { useAppSelector } from 'hooks/useAppSelector';
+import useAppSelector from 'hooks/useAppSelector';
 
 export type MainContentProps = {};
 

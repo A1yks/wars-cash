@@ -1,11 +1,14 @@
-'use client';
-
 import Container from 'components/Container';
-import { useAppSelector } from 'hooks/useAppSelector';
+import useAppSelector from 'hooks/useAppSelector';
 import { redirect } from 'next/navigation';
+import { store } from 'store';
 
-function Layout(props: Props.WithChildren) {
-    const user = useAppSelector((state) => state.auth.user);
+async function getUser() {
+    return store.getState().auth.user;
+}
+
+async function Layout(props: Props.WithChildren) {
+    const user = await getUser();
 
     // TODO delete
     if (user === null) {

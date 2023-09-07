@@ -1,5 +1,3 @@
-'use client';
-
 import ProfileContent from 'features/ProfileContent';
 
 function Profile() {

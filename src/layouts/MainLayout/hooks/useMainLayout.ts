@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/useAppSelector';
+import useAppSelector from 'hooks/useAppSelector';
 import { Types } from 'mongoose';
 import { useDispatch } from 'react-redux';
 import authSlice from 'store/reducers/authSlice';

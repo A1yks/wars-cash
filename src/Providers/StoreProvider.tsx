@@ -1,9 +1,8 @@
-'use client';
 import { Provider } from 'react-redux';
-import { RootState, store } from 'store';
+import { AppState, store } from 'store';
 
 export type StoreProviderProps = {
-    data: Partial<RootState>;
+    data: Partial<AppState>;
     children: React.ReactNode;
 };
 
