@@ -37,20 +37,14 @@ export function Modal(props: Props.WithChildren) {
     const [isOpened, setIsOpened] = useState(false);
 
     const open = useCallback(() => {
+        document.body.style.overflow = 'hidden';
         setIsOpened(true);
     }, []);
 
     const close = useCallback(() => {
         setIsOpened(false);
+        document.body.style.overflow = 'auto';
     }, []);
-
-    useEffect(() => {
-        if (isOpened) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-    }, [isOpened]);
 
     const value = useMemo<ModalContextData>(() => ({ isOpened, open, close }), [isOpened, open, close]);
 

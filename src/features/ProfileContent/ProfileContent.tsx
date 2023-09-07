@@ -32,12 +32,16 @@ const withdrawalTitles = {
 function ProfileContent() {
     const { user, formState, changeHandler, saveHandler } = useProfileContent();
 
+    if (user === null) {
+        return null;
+    }
+
     return (
         <Container>
             <div className={c(styles.content, 'content')}>
                 <div className="content center">
                     <h6 className="title">Изображение профиля</h6>
-                    <Avatar src={user!.avatar} size={100} />
+                    <Avatar src={user.avatar} size={100} />
                     <Button color="black" className={styles.changeAvatarBtn}>
                         Изменить
                     </Button>
