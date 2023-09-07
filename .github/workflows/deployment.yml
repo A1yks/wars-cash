@@ -43,5 +43,4 @@ jobs:
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
             - name: Deploy build on server
               run: |
-                  rsync -vrm ./* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash
-                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "pm2 restart wars-cash"
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "git pull origin master && npm ci && npm run build && pm2 restart wars-cash"
