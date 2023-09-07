@@ -44,4 +44,5 @@ jobs:
             - name: Deploy build on server
               run: |
                   rsync -vrm ./* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "npm ci"
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "pm2 restart wars-cash"
