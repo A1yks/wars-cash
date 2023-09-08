@@ -4,7 +4,7 @@ module.exports = {
             name: 'wars-cash',
             script: 'npm',
             args: 'start',
-            watch: true,
+            watch: false,
             env: {
                 PORT: 80,
             },
@@ -13,7 +13,7 @@ module.exports = {
             name: 'wars-cash-staging',
             script: 'npm',
             args: 'start',
-            watch: true,
+            watch: false,
             env: {
                 PORT: 3000,
             },
