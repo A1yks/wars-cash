@@ -7,6 +7,8 @@ import logger from './utils/logger';
 const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 3000;
 
+console.log(port);
+
 (async () => {
     try {
         logger.log('Successfully connected to the database');
@@ -25,7 +27,7 @@ const port = process.env.PORT || 3000;
                 return handle(req, res);
             });
 
-            httpServer.listen(3000, () => {
+            httpServer.listen(port, () => {
                 logger.log('Server running on port ' + port);
             });
         });
