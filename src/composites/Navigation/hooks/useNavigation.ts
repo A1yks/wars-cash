@@ -7,14 +7,14 @@ function useNavigation(props: NavigationProps) {
     const isLoggedIn = user !== null;
     const [isMenuOpened, openMenu, closeMenu, toggleMenu] = useBooleanState();
 
-    function loginHandler(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    async function loginHandler(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
         e.preventDefault();
-        onLogin();
+        await onLogin();
     }
 
-    const logoutHandler = useCallback(() => {
+    const logoutHandler = useCallback(async () => {
         closeMenu();
-        onLogout();
+        await onLogout();
     }, [closeMenu, onLogout]);
 
     return { isLoggedIn, isMenuOpened, openMenu, closeMenu, toggleMenu, loginHandler, logoutHandler };

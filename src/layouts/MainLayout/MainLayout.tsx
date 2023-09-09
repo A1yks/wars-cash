@@ -1,9 +1,10 @@
 import Container from 'components/Container';
 import Header from 'composites/Header';
 import styles from './MainLayout.module.scss';
-import useMainLayout from './hooks/useMainLayout';
+import useAuth from 'hooks/useAuth';
 import { ReactNode } from 'react';
 import Head from 'next/head';
+import useAppSelector from 'hooks/useAppSelector';
 
 export type MainLayoutProps = {
     title?: string;
@@ -11,7 +12,8 @@ export type MainLayoutProps = {
 };
 
 function MainLayout(props: MainLayoutProps) {
-    const { user, loginHandler, logoutHandler } = useMainLayout();
+    const user = useAppSelector((state) => state.auth.user);
+    const { loginHandler, logoutHandler } = useAuth();
     const title = props.title ? `${props.title} | Wars.Cash` : 'Wars.Cash';
 
     return (

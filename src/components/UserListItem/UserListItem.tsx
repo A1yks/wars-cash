@@ -1,10 +1,9 @@
 import UserCard from 'components/UserCard';
-import { UserCardProps } from 'components/UserCard/UserCard';
 import { ReactNode } from 'react';
 import styles from './UserListItem.module.scss';
 import c from 'clsx';
 import ChatMessage from 'components/ChatMessage';
-import { User } from 'types/global';
+import { IUser } from 'backend/models/User/types';
 
 export type UserListItemProps = (
     | {
@@ -17,7 +16,7 @@ export type UserListItemProps = (
           children: string & {};
           profileUrl?: never;
       }
-) & { className?: string; user: User };
+) & { className?: string; user: IUser };
 
 function UserListItem(props: UserListItemProps) {
     const { className, children, variant = 'default', user, profileUrl } = props;

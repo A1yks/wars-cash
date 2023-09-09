@@ -1,6 +1,5 @@
 import c from 'clsx';
 import styles from './Navigation.module.scss';
-import { User } from 'types/global';
 import Link from 'components/Link/Link';
 import UserCard from 'components/UserCard';
 import { Modal, ModalOpener } from 'components/Modal';
@@ -14,9 +13,10 @@ import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
 import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
+import { IUser } from 'backend/models/User/types';
 
 export type NavigationProps = {
-    user: User | null;
+    user: IUser | null;
     className?: string;
     onLogin: () => void;
     onLogout: () => void;
@@ -106,6 +106,7 @@ function Navigation(props: NavigationProps) {
                             profileUrl="/user/profile"
                             className={styles.mobileUserCard}
                             onClick={closeMenu}
+                            avatarPriority
                         />
                         <ul className={c(styles.menu, styles.burgerMenu)}>{menuJsx}</ul>
                     </Menu>

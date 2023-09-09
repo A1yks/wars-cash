@@ -2,7 +2,6 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "target": "ESNext",
-        "lib": ["ESNext"],
         "outDir": "../../.next/production-server/",
         "noEmit": false,
         "module": "CommonJS"

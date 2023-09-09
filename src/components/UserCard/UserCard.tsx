@@ -8,13 +8,14 @@ export type UserCardProps = {
     avatarSrc: AvatarProps['src'];
     avatarSize?: AvatarProps['size'];
     avatarRole?: AvatarProps['role'];
+    avatarPriority?: boolean;
     profileUrl?: string;
     className?: string;
     onClick?: () => void;
 };
 
 function UserCard(props: UserCardProps) {
-    const avatarJsx = <Avatar src={props.avatarSrc} size={props.avatarSize} role={props.avatarRole} />;
+    const avatarJsx = <Avatar src={props.avatarSrc} size={props.avatarSize} role={props.avatarRole} priority={props.avatarPriority} />;
 
     return (
         <div className={c(styles.userCard, props.className)} onClick={props.onClick}>

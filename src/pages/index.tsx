@@ -3,12 +3,12 @@ import MainLayout from 'layouts/MainLayout';
 import getInitialPageProps from 'utils/getInitialPageProps';
 
 export default function Main() {
-    return (
-        <MainLayout>
-            <MainContent />
-        </MainLayout>
-    );
+    return <MainContent />;
 }
+
+Main.getLayout = function getLayout(page: React.ReactNode) {
+    return <MainLayout>{page}</MainLayout>;
+};
 
 // Main.getInitialProps = getInitialPageProps((store, ctx) => {
 //     const isAuthorized = store.getState().auth.token !== null;

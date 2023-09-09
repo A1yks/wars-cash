@@ -1,45 +1,28 @@
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
-import useBrowserLayoutEffect from 'hooks/useBrowserLayoutEffect';
 import useAppSelector from 'hooks/useAppSelector';
 import { AuthCheckerProps } from './AuthChecker.type';
+import PageLoader from 'components/PageLoader';
+import useBrowserLayoutEffect from 'hooks/useBrowserLayoutEffect';
+import { useRouter } from 'next/router';
 
 function AuthChecker(props: AuthCheckerProps) {
+    const { user, isLoading, isLoginCompleted } = useAppSelector((state) => state.auth);
     const router = useRouter();
-    const { user } = useAppSelector((state) => state.auth);
-    const [isLoading, setIsLoading] = useState(true);
-    const { isProtectedRoute } = props.children.type;
-    const lastHrefRef = useRef('');
-
-    useEffect(() => {
-        if (lastHrefRef.current !== router.asPath) {
-            if (lastHrefRef.current !== '') {
-                window.lastHref = lastHrefRef.current;
-            }
-
-            lastHrefRef.current = router.asPath;
-        }
-    }, [router.asPath]);
+    const getLayout = props.children?.props?.children?.type?.getLayout;
+    const isProtectedRoute =
+        props.children.type.isProtectedRoute !== undefined || props.children?.props?.children?.type?.isProtectedRoute !== undefined;
 
     useBrowserLayoutEffect(() => {
-        const routeChangeStartHandler = () => setIsLoading(true);
-        const routeChangeCompleteHandler = () => setIsLoading(false);
-
-        router.events.on('routeChangeStart', routeChangeStartHandler);
-        router.events.on('routeChangeComplete', routeChangeCompleteHandler);
-
-        if (isProtectedRoute && user === null && router.pathname !== '/') {
+        if (user === null && !isLoading && isLoginCompleted) {
             router.push('/');
         }
+    }, [user, isLoading]);
 
-        return () => {
-            router.events.off('routeChangeStart', routeChangeStartHandler);
-            router.events.off('routeChangeComplete', routeChangeCompleteHandler);
-        };
-    }, [user, router, isProtectedRoute, router.pathname]);
+    if (isProtectedRoute && isLoading) {
+        if (getLayout !== undefined) {
+            return getLayout(<PageLoader />);
+        }
 
-    if (isProtectedRoute && user === null && isLoading && router.pathname !== '/') {
-        return null;
+        return <PageLoader />;
     }
 
     return <>{props.children}</>;

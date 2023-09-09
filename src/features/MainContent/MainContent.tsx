@@ -15,9 +15,7 @@ import BankList from 'composites/BankList';
 import bankListMeta, { BlueBankList, RedBankList } from 'composites/BankList/BankList.stories';
 import useAppSelector from 'hooks/useAppSelector';
 
-export type MainContentProps = {};
-
-function MainContent(props: MainContentProps) {
+function MainContent() {
     const user = useAppSelector((state) => state.auth.user);
 
     return (

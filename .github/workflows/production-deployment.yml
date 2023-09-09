@@ -21,6 +21,8 @@ jobs:
               run: npm ci
             - name: Build
               run: npm run build
+            - name: Create env files
+              run: echo ${{ secrets.ENV_PROD }} > .env.production
             - name: Setup SSH
               uses: shimataro/ssh-key-action@v2
               with:
@@ -28,4 +30,5 @@ jobs:
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
             - name: Deploy on server
               run: |
+                  rsync -vrm .env.production ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin master && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash"

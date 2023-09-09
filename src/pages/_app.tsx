@@ -4,10 +4,15 @@ import { SnackbarProvider } from 'notistack';
 import { Provider } from 'react-redux';
 import { wrapper } from 'store';
 import AuthChecker from 'features/AuthChecker';
+import Script from 'next/script';
 import 'react-circular-progressbar/dist/styles.css';
 import 'simplebar-react/dist/simplebar.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'styles/global.scss';
+import 'facebook/init';
+import { NextComponentType } from 'next';
+import { ReactElement, ReactNode } from 'react';
+import { AuthCheckerProps } from 'features/AuthChecker/AuthChecker.type';
 
 type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
 
@@ -17,16 +22,19 @@ function MyApp({ Component, ...rest }: AppProps) {
         props: { pageProps },
     } = wrapper.useWrappedStore(rest) as WrapperResult;
 
+    const getLayout =
+        (Component as typeof Component & { getLayout: (page: ReactElement) => AuthCheckerProps['children'] }).getLayout ||
+        ((page: NextComponentType) => page);
+
     return (
         <Provider store={store}>
             <SnackbarProvider maxSnack={3}>
                 <Head>
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                 </Head>
-                <AuthChecker>
-                    <Component {...pageProps} />
-                </AuthChecker>
+                <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
             </SnackbarProvider>
+            <Script src="https://connect.facebook.net/en_US/sdk.js" />
         </Provider>
     );
 }
