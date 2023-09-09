@@ -1,4 +1,4 @@
-import { ErrorTypes } from 'backend/enums/errors';
+import { ErrorTypes } from '@backend/enums/errors';
 import logger from '../logger';
 
 type ErrorConstructor = Partial<typeof Error> & {

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import ChatMessage from '.';
-import { Roles } from 'backend/models/User/types';
+import { Roles } from '@backend/models/User/types';
 import { user } from 'stories/mock';
 
 const meta: Meta<typeof ChatMessage> = {

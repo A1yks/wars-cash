@@ -1,5 +1,5 @@
-import { LoginReq } from 'backend/controllers/user/types';
-import { IUser } from 'backend/models/User/types';
+import { LoginReq } from '@backend/controllers/user/types';
+import { IUser } from '@backend/models/User/types';
 import { api } from '.';
 
 export const authApi = api.injectEndpoints({

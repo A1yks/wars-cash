@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import styles from './UserListItem.module.scss';
 import c from 'clsx';
 import ChatMessage from 'components/ChatMessage';
-import { IUser } from 'backend/models/User/types';
+import { IUser } from '@backend/models/User/types';
 
 export type UserListItemProps = (
     | {

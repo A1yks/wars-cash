@@ -1,4 +1,4 @@
-import { IUser } from 'backend/models/User';
+import { IUser } from '@backend/models/User/types';
 import { Types } from 'mongoose';
 
 export enum BetTypes {

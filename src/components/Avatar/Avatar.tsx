@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import c from 'clsx';
 import styles from './Avatar.module.scss';
-import { Roles } from 'backend/models/User/types';
+import { Roles } from '@backend/models/User/types';
 import getImageSrc from 'utils/getImageSrc';
 
 export type AvatarProps = {

@@ -2,6 +2,8 @@ import express from 'express';
 import { Types } from 'mongoose';
 
 declare global {
+    type MaybePromise<T> = T | Promise<T>;
+
     namespace Server {
         export type ResponseBody<T = any> = { data: T; error?: never } | { error: string; data?: never };
 

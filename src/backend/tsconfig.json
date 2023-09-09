@@ -1,10 +1,25 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "target": "ESNext",
+        "lib": ["ESNext", "dom"],
         "outDir": "../../.next/production-server/",
         "noEmit": false,
-        "module": "CommonJS"
+        "module": "CommonJS",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "baseUrl": "../../src",
+        "forceConsistentCasingInFileNames": true,
+        "sourceMap": true,
+        "paths": {
+            "@backend/*": ["backend/*"]
+        }
     },
     "ts-node": {
         "files": true,

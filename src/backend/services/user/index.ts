@@ -1,7 +1,7 @@
-import { USER_AVATARS_FOLDER_PATH } from 'backend/constants/paths';
-import User from 'backend/models/User';
-import { IUser } from 'backend/models/User/types';
-import downloadImage from 'backend/utils/downloadImage';
+import { USER_AVATARS_FOLDER_PATH } from '@backend/constants/paths';
+import User from '@backend/models/User';
+import { IUser } from '@backend/models/User/types';
+import downloadImage from '@backend/utils/downloadImage';
 import { Types } from 'mongoose';
 
 namespace UserService {

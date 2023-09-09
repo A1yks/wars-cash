@@ -8,13 +8,18 @@ import connect from './db/connect';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
+import { exec as execDefault } from 'child_process';
 import { USER_AVATARS_FOLDER_PATH } from './constants/paths';
-import { exec } from 'child_process';
+import retry from './utils/retry';
+
+const exec = util.promisify(execDefault);
 
 const dev = process.env.NODE_ENV !== 'production';
 
 dotenv.config({ path: path.resolve(`./.env.${dev ? 'development' : 'production'}`) });
 
+const useSSLProxy = process.env.USE_SSL_PROXY === 'true';
 const port = process.env.PORT || 3000;
 
 (async () => {
@@ -46,20 +51,13 @@ const port = process.env.PORT || 3000;
             httpServer.listen(port, () => {
                 logger.log('Server running on port ' + port);
 
-                if (dev) {
-                    exec('npm run ssl-proxy', (err, stdout, stderr) => {
-                        if (err) {
-                            logger.error(err);
-                        }
-
-                        if (stdout) {
-                            logger.log(stdout);
-                        }
-
-                        if (stderr) {
-                            logger.error(stderr);
-                        }
-                    });
+                if (useSSLProxy) {
+                    retry(
+                        async () => {
+                            await exec('npm run ssl-proxy');
+                        },
+                        { count: 3 }
+                    );
                 }
             });
         });

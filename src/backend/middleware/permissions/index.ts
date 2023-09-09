@@ -1,5 +1,5 @@
 import { ErrorTypes } from '@backend/enums/errors';
-import errorsHandler from '@backend/utils/errorsHandler';
+import { errorsHandler } from '@backend/utils/errorsHandler';
 import { NextFunction } from 'express';
 
 export type PermissionsValidationCallback = (req: Server.Request) => boolean | Promise<boolean>;

@@ -13,7 +13,7 @@ import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
 import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
-import { IUser } from 'backend/models/User/types';
+import { IUser } from '@backend/models/User/types';
 
 export type NavigationProps = {
     user: IUser | null;

@@ -1,4 +1,4 @@
-import { IUser, Roles } from 'backend/models/User/types';
+import { IUser, Roles } from '@backend/models/User/types';
 import { Types } from 'mongoose';
 
 export const user = {

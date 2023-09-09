@@ -1,5 +1,5 @@
+import { IUser } from '@backend/models/User/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IUser } from 'backend/models/User/types';
 import { authApi } from 'store/api/auth';
 
 export type UserState = {

@@ -1,7 +1,7 @@
 import c from 'clsx';
 import styles from './ChatMessage.module.scss';
 import Avatar from 'components/Avatar';
-import { IUser } from 'backend/models/User/types';
+import { IUser } from '@backend/models/User/types';
 
 export type ChatMessageProps = {
     user: IUser;
