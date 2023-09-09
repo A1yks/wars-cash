@@ -35,7 +35,7 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   source: '.env.development'
-                  target: '~/apps/wars-cash/.env.development'
+                  target: '~/apps/wars-cash-staging/.env.development'
             - name: Deploy on server
               run: |
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin staging && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash-staging --update-env"
