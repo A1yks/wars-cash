@@ -1,4 +1,4 @@
-name: Deployment
+name: Production Deployment
 on:
     workflow_dispatch:
     push:
@@ -21,14 +21,21 @@ jobs:
               run: npm ci
             - name: Build
               run: npm run build
-            - name: Create env files
+            - name: Create env file
               run: echo ${{ secrets.ENV_PROD }} > .env.production
             - name: Setup SSH
               uses: shimataro/ssh-key-action@v2
               with:
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
+            - name: Copy env file to server using SCP
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  source: '.env.production'
+                  target: '~/apps/wars-cash/.env.production'
             - name: Deploy on server
               run: |
-                  rsync -vrm .env.production ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin master && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash --update-env"
