@@ -39,7 +39,8 @@ export async function login() {
                 if (response.status === 'connected') {
                     getUserInfo().then(resolve);
                 } else {
-                    reject();
+                    console.log(123);
+                    reject(new Error('Авторизация не была завершена'));
                 }
             },
             { scope: 'public_profile' }

@@ -28,7 +28,7 @@ function MyApp({ Component, ...rest }: AppProps) {
 
     return (
         <Provider store={store}>
-            <SnackbarProvider maxSnack={3}>
+            <SnackbarProvider maxSnack={3} classes={{ root: 'snackbar-content', containerRoot: 'snackbar-content' }}>
                 <Head>
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                 </Head>
