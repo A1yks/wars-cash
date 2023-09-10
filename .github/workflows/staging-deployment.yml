@@ -33,4 +33,4 @@ jobs:
             - name: Deploy on server
               run: |
                   rsync -avz ./.env.development ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash-staging
-                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin staging && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash-staging --update-env"
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && pm2 stop wars-cash-staging && git pull origin staging && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash-staging --update-env"
