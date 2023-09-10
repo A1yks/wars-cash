@@ -4,8 +4,8 @@ on:
     push:
         branches:
             - staging
-        paths-ignore:
-            - '.github/workflows/*'
+        # paths-ignore:
+        #     - '.github/workflows/*'
 jobs:
     deploy:
         runs-on: ubuntu-22.04
@@ -30,5 +30,6 @@ jobs:
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
             - name: Deploy on server
               run: |
+                  stat .env.development
                   rsync -avz ./.env.development ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash-staging
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin staging && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash-staging --update-env"
