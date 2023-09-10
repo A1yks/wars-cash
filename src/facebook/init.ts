@@ -1,3 +1,4 @@
+import { enqueueSnackbar } from 'notistack';
 import { checkAuth } from './auth';
 
 if (typeof window !== 'undefined') {
@@ -9,6 +10,8 @@ if (typeof window !== 'undefined') {
             version: 'v17.0',
         });
 
-        checkAuth();
+        checkAuth().catch((err) => {
+            enqueueSnackbar(err.message, { variant: 'error' });
+        });
     };
 }
