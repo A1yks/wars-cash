@@ -22,7 +22,11 @@ jobs:
             - name: Build
               run: npm run build
             - name: Create env file
-              run: echo ${{ secrets.ENV_DEV }} > .env.development
+              run: |
+                  echo $ENV_DEV > .env.development
+                  cat .env.development
+              env:
+                  ENV_DEV: ${{ secrets.ENV_DEV }}
             - name: Setup SSH
               uses: shimataro/ssh-key-action@v2
               with:
@@ -30,6 +34,5 @@ jobs:
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
             - name: Deploy on server
               run: |
-                  stat .env.development
                   rsync -avz ./.env.development ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash-staging
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin staging && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash-staging --update-env"
