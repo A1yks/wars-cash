@@ -51,12 +51,14 @@ const port = process.env.PORT || 3000;
             httpServer.listen(port, () => {
                 logger.log('Server running on port ' + port);
 
+                console.log(useSSLProxy);
+
                 if (useSSLProxy) {
                     retry(
                         async () => {
                             await exec('npm run ssl-proxy');
                         },
-                        { count: 3 }
+                        { count: 3, timeout: 5000 }
                     );
                 }
             });

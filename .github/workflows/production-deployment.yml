@@ -22,9 +22,9 @@ jobs:
             - name: Build
               run: npm run build
             - name: Create env file
-              run: echo $ENV_DEV > .env.production
+              run: echo "$ENV_PROD" > .env.production
               env:
-                  ENV_DEV: ${{ secrets.ENV_PROD }}
+                  ENV_PROD: ${{ secrets.ENV_PROD }}
             - name: Setup SSH
               uses: shimataro/ssh-key-action@v2
               with:

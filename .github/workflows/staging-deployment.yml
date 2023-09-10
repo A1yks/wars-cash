@@ -22,7 +22,7 @@ jobs:
             - name: Build
               run: npm run build
             - name: Create env file
-              run: echo $ENV_DEV > .env.development
+              run: echo "$ENV_DEV" > .env.development
               env:
                   ENV_DEV: ${{ secrets.ENV_DEV }}
             - name: Setup SSH
