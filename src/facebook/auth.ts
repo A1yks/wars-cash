@@ -22,7 +22,7 @@ export function isFacebookLoginError(data: FacebookUserData): data is { error: s
 
 export async function getUserInfo() {
     return new Promise<FacebookUserData>((resolve) => {
-        FB.api('/me?fields=name,picture', resolve);
+        FB.api('/me?fields=name,picture.width(100)', resolve);
     });
 }
 

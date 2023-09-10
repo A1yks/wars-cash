@@ -16,8 +16,11 @@ import retry from './utils/retry';
 const exec = util.promisify(execDefault);
 
 const dev = process.env.NODE_ENV !== 'production';
+const isLocal = fs.existsSync(path.resolve('./.env.development.local')) || fs.existsSync(path.resolve('./.env.production.local'));
 
-dotenv.config({ path: path.resolve(`./.env.${dev ? 'development' : 'production'}`) });
+dotenv.config({
+    path: path.resolve(`./.env.${dev ? (isLocal ? 'development.local' : 'development') : isLocal ? 'production.local' : 'production'}`),
+});
 
 const useSSLProxy = process.env.USE_SSL_PROXY === 'true';
 const port = process.env.PORT || 3000;
