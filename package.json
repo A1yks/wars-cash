@@ -8,7 +8,7 @@
         "build:server": "tsc --project ./src/backend/tsconfig.json && tsc-alias -p ./src/backend/tsconfig.json",
         "build:next": "next build",
         "build": "npm run build:next && npm run build:server",
-        "start": "cross-env NODE_ENV=production node .next/production-server/index.js",
+        "start": "node .next/production-server/index.js",
         "lint": "next lint",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build"

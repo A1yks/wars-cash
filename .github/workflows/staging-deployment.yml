@@ -4,8 +4,8 @@ on:
     push:
         branches:
             - staging
-        # paths-ignore:
-        #     - '.github/workflows/*'
+        paths-ignore:
+            - '.github/workflows/*'
 jobs:
     deploy:
         runs-on: ubuntu-22.04
@@ -22,9 +22,7 @@ jobs:
             - name: Build
               run: npm run build
             - name: Create env file
-              run: |
-                  echo $ENV_DEV > .env.development
-                  cat .env.development
+              run: echo $ENV_DEV > .env.development
               env:
                   ENV_DEV: ${{ secrets.ENV_DEV }}
             - name: Setup SSH
