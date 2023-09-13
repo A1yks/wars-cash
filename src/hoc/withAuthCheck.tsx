@@ -17,9 +17,7 @@ function withAuthCheck<T extends Record<string, unknown>>(
         WrapperComponent.getInitialProps = getInitialPageProps(async (store, ctx) => {
             try {
                 const { res } = ctx;
-                const {
-                    auth: { user },
-                } = store.getState();
+                const { user } = store.getState();
 
                 if (user === null) {
                     res?.writeHead(302, {

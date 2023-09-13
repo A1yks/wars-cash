@@ -8,6 +8,7 @@ import UserListItem from 'components/UserListItem';
 import SimpleBar from 'simplebar-react';
 import Icon from 'components/Icon/Icon';
 import useChat from './hooks/useChat';
+import { memo } from 'react';
 
 export type ChatProps = {
     className?: string;
@@ -57,4 +58,4 @@ function Chat(props: ChatProps) {
     );
 }
 
-export default Chat;
+export default memo(Chat);

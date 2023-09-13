@@ -4,6 +4,7 @@ import styles from './BankList.module.scss';
 import c from 'clsx';
 import { Bet } from 'types/global';
 import UserListItem from 'components/UserListItem';
+import { memo } from 'react';
 
 export type BankListProps = {
     className?: string;
@@ -27,4 +28,4 @@ function BankList(props: BankListProps) {
     );
 }
 
-export default BankList;
+export default memo(BankList);

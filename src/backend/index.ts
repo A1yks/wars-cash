@@ -3,7 +3,6 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import next from 'next';
 import logger from './utils/logger';
-import authRouter from './routes/auth';
 import connect from './db/connect';
 import dotenv from 'dotenv';
 import fs from 'fs';
@@ -12,6 +11,10 @@ import util from 'util';
 import { exec as execDefault } from 'child_process';
 import { USER_AVATARS_FOLDER_PATH } from './constants/paths';
 import retry from './utils/retry';
+import SocketService from './services/socket';
+import authRouter from './routes/auth';
+import betsRouter from './routes/bets';
+import tokensRouter from './routes/tokens';
 
 const exec = util.promisify(execDefault);
 
@@ -40,12 +43,16 @@ const port = process.env.PORT || 3000;
             const app = express();
             const httpServer = http.createServer(app);
 
+            SocketService.init(httpServer);
+
             app.use('/static/images/users', express.static(USER_AVATARS_FOLDER_PATH));
 
             app.use(express.json());
             app.use(cookieParser());
 
             app.use('/api/auth', authRouter);
+            app.use('/api/bets', betsRouter);
+            app.use('/api/tokens', tokensRouter);
 
             app.all('*', (req, res) => {
                 return handle(req, res);
@@ -53,8 +60,6 @@ const port = process.env.PORT || 3000;
 
             httpServer.listen(port, () => {
                 logger.log('Server running on port ' + port);
-
-                console.log(useSSLProxy);
 
                 if (useSSLProxy) {
                     retry(

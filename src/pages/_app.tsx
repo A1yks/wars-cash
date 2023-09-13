@@ -11,8 +11,11 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'styles/global.scss';
 import 'facebook/init';
 import { NextComponentType } from 'next';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 import { AuthCheckerProps } from 'features/AuthChecker/AuthChecker.type';
+import { getAccessToken } from 'store/api/auth';
+import { getRunningQueriesThunk } from 'store/api';
+import App from 'next/app';
 
 type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
 
@@ -39,38 +42,40 @@ function MyApp({ Component, ...rest }: AppProps) {
     );
 }
 
-// MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext) => {
-//     const { ctx } = appContext;
+MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext) => {
+    const { ctx } = appContext;
 
-//     if (ctx.req !== undefined) {
-//         try {
-//             const { data: response } = await store.dispatch(getAccessToken.initiate(ctx.req.headers.cookie || ''));
+    // console.log(ctx);
 
-//             if (response !== undefined) {
-//                 const {
-//                     data: { cookie },
-//                 } = response;
+    if (ctx.req !== undefined) {
+        try {
+            const { data: response, error } = await store.dispatch(getAccessToken.initiate(ctx.req.headers.cookie || ''));
 
-//                 if (cookie !== undefined) {
-//                     ctx.res?.setHeader('set-cookie', cookie);
-//                 }
-//             }
+            if (response !== undefined) {
+                const {
+                    data: { cookie },
+                } = response;
 
-//             await Promise.all(store.dispatch(getRunningQueriesThunk()));
+                if (cookie !== undefined) {
+                    ctx.res?.setHeader('set-cookie', cookie);
+                }
+            }
 
-//             const componentProps = await App.getInitialProps(appContext);
+            await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
-//             return {
-//                 pageProps: {
-//                     ...componentProps.pageProps,
-//                 },
-//             };
-//         } catch (err) {
-//             console.error(err);
-//         }
-//     }
+            const componentProps = await App.getInitialProps(appContext);
 
-//     return { pageProps: {} };
-// });
+            return {
+                pageProps: {
+                    ...componentProps.pageProps,
+                },
+            };
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    return { pageProps: {} };
+});
 
 export default MyApp;

@@ -1,16 +1,14 @@
-import { IUser } from '@backend/models/User/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'store/api/auth';
+import userSlice from './userSlice';
 
-export type UserState = {
-    user: IUser | null;
+export type AuthState = {
     token: string | null;
     isLoading: boolean;
     isLoginCompleted: boolean;
 };
 
-const initialState: UserState = {
-    user: null,
+const initialState: AuthState = {
     token: null,
     isLoading: false,
     isLoginCompleted: false,
@@ -20,8 +18,11 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuth: (state, action: PayloadAction<UserState>) => {
+        setAuth(state, action: PayloadAction<AuthState>) {
             return action.payload;
+        },
+        setToken(state, action: PayloadAction<string>) {
+            state.token = action.payload;
         },
         setIsLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
@@ -31,11 +32,15 @@ const authSlice = createSlice({
         },
     },
     extraReducers(builder) {
-        return builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
-            state.user = action.payload.data;
-            state.isLoading = false;
-            state.isLoginCompleted = true;
-        });
+        return builder
+            .addMatcher(authApi.endpoints.auth.matchFulfilled, (state, action) => {
+                state.token = action.payload.data.accessToken;
+                state.isLoading = false;
+                state.isLoginCompleted = true;
+            })
+            .addMatcher(authApi.endpoints.getAccessToken.matchFulfilled, (state, action) => {
+                state.token = action.payload.data.accessToken;
+            });
     },
 });
 

@@ -3,7 +3,7 @@ import useErrorsHandler from 'hooks/useErrorsHandler';
 import useFormState from 'hooks/useFormState';
 
 function useProfileContent() {
-    const user = useAppSelector((state) => state.auth.user);
+    const user = useAppSelector((state) => state.user);
     const { formState, changeHandler } = useFormState(() => ({
         name: user?.name,
     }));

@@ -1,14 +1,14 @@
 import { AnyAction, Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
-import testSlice from './reducers/testSlide';
 import { api } from './api';
 import authSlice from './reducers/authSlice';
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
+import userSlice from './reducers/userSlice';
 
 export let store: ReturnType<typeof configStore>;
 
 const combineReducer = combineReducers({
-    test: testSlice.reducer,
     auth: authSlice.reducer,
+    user: userSlice.reducer,
     [api.reducerPath]: api.reducer,
 });
 

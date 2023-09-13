@@ -1,6 +1,7 @@
 import { store } from 'store';
 import { authApi } from 'store/api/auth';
 import authSlice from 'store/reducers/authSlice';
+import userSlice from 'store/reducers/userSlice';
 
 export type FacebookUserData =
     | {
@@ -39,7 +40,6 @@ export async function login() {
                 if (response.status === 'connected') {
                     getUserInfo().then(resolve);
                 } else {
-                    console.log(123);
                     reject(new Error('Авторизация не была завершена'));
                 }
             },
@@ -54,6 +54,7 @@ export async function logout() {
     });
 
     store.dispatch(authSlice.actions.setAuth(authSlice.getInitialState()));
+    store.dispatch(userSlice.actions.setUser(userSlice.getInitialState()));
 }
 
 export async function checkAuth() {
@@ -71,12 +72,15 @@ export async function checkAuth() {
             }
 
             await store.dispatch(
-                authApi.endpoints.login.initiate({
-                    facebookId: fbLoginData.id,
+                authApi.endpoints.auth.initiate({
+                    provider: 'facebook',
+                    providerAccountId: fbLoginData.id,
                     name: fbLoginData.name,
                     avatar: fbLoginData.picture.data.url,
+                    token: response.authResponse.accessToken,
                 })
             );
+            // store.dispatch(authSlice.actions.setToken(response.authResponse.accessToken));
 
             return true;
         }

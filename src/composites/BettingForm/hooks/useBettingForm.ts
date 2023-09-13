@@ -1,29 +1,35 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useEvent from 'hooks/useEvent';
 import { BettingFormProps, ControlData } from '../BettingForm';
+import { useSnackbar } from 'notistack';
+import { BetTypes } from '@backend/services/game/types';
 
 function useBettingForm(props: BettingFormProps) {
     const [balance, setBalance] = useState(props.balance);
     const [betValue, setBetValue] = useState(0);
     const [inpValue, setInpValue] = useState('');
     const inpRef = useRef<HTMLInputElement>(null);
+    const { enqueueSnackbar } = useSnackbar();
 
-    const changeBetValue = useCallback(
-        (value: number) => {
-            const roundedValue = Number(value.toFixed(2));
-            let finalValue = roundedValue;
+    const changeBetValue = useCallback((value: number, changeInpValue = true) => {
+        const roundedValue = Number(value.toFixed(2));
+        let finalValue = roundedValue;
 
-            if (roundedValue < 0) {
-                finalValue = 0;
-            } else if (roundedValue > props.balance) {
-                finalValue = props.balance;
-            }
+        if (roundedValue < 0) {
+            finalValue = 0;
+        }
 
-            setBetValue(finalValue);
+        setBetValue(finalValue);
+
+        if (changeInpValue) {
             setInpValue(finalValue === 0 ? '' : finalValue.toString());
-        },
-        [props.balance]
-    );
+        }
+    }, []);
+
+    function resetBetValue() {
+        setBetValue(0);
+        setInpValue('');
+    }
 
     useEffect(() => {
         setBalance(props.balance);
@@ -44,6 +50,7 @@ function useBettingForm(props: BettingFormProps) {
             return;
         }
 
+        changeBetValue(Number(value), false);
         setInpValue(value);
     });
 
@@ -70,16 +77,24 @@ function useBettingForm(props: BettingFormProps) {
         };
     }
 
-    function betClickHandler(team: 'red' | 'blue') {
-        return () => {
+    function betClickHandler(team: BetTypes) {
+        return async () => {
+            if (balance === 0 || betValue > balance) {
+                enqueueSnackbar('Недостаточно средств', { variant: 'error' });
+                return;
+            }
+
             switch (team) {
-                case 'red':
-                    props.onRedTeamBet(betValue);
+                case BetTypes.Red:
+                    await props.onRedTeamBet(betValue);
                     break;
-                case 'blue':
-                    props.onBlueTeamBet(betValue);
+                case BetTypes.Blue:
+                    await props.onBlueTeamBet(betValue);
                     break;
             }
+
+            resetBetValue();
+            inpRef.current?.focus();
         };
     }
 

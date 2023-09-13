@@ -1,4 +1,4 @@
-import { BetTypes } from 'types/global';
+import { BetTypes } from '@backend/services/game/types';
 import styles from './Results.module.scss';
 import c from 'clsx';
 

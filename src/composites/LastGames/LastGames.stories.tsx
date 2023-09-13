@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import LastGames from '.';
-import { BetTypes } from 'types/global';
+import { BetTypes } from '@backend/services/game/types';
 
 const meta: Meta<typeof LastGames> = {
     title: 'Composites/LastGames',

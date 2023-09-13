@@ -10,8 +10,8 @@ if (typeof window !== 'undefined') {
             version: 'v17.0',
         });
 
-        checkAuth().catch((err) => {
-            enqueueSnackbar(err.message, { variant: 'error' });
-        });
+        // checkAuth().catch((err) => {
+        //     enqueueSnackbar(err.message, { variant: 'error' });
+        // });
     };
 }

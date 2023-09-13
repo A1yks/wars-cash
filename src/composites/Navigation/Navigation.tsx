@@ -8,7 +8,7 @@ import DepositContent from 'features/DepositContent';
 import WithdrawalContent from 'features/WithdrawalContent';
 import BonusContent from 'features/BonusContent';
 import FaqContent from 'features/FaqContent';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
@@ -18,8 +18,8 @@ import { IUser } from '@backend/models/User/types';
 export type NavigationProps = {
     user: IUser | null;
     className?: string;
-    onLogin: () => void;
-    onLogout: () => void;
+    onLogin: () => MaybePromise<void>;
+    onLogout: () => MaybePromise<void>;
 };
 
 function Navigation(props: NavigationProps) {

@@ -4,6 +4,7 @@ import Block from 'composites/Block';
 import Image from 'next/image';
 import TeamChance from 'components/TeamChance';
 import { TeamChanceProps } from 'components/TeamChance/TeamChance';
+import { memo } from 'react';
 
 type TeamInfo = Omit<TeamChanceProps, 'teamType' | 'percentageValue'>;
 
@@ -27,4 +28,4 @@ function WinProbabilities(props: WinProbabilitiesProps) {
     );
 }
 
-export default WinProbabilities;
+export default memo(WinProbabilities);

@@ -4,7 +4,8 @@ import BlockContainer from 'components/BlockContainer';
 import BlockHeader from 'components/BlockHeader';
 import Image from 'next/image';
 import Results from 'components/Results';
-import { BetTypes } from 'types/global';
+import { BetTypes } from '@backend/services/game/types';
+import { memo } from 'react';
 
 export type LastGamesProps = {
     className?: string;
@@ -24,4 +25,4 @@ function LastGames(props: LastGamesProps) {
     );
 }
 
-export default LastGames;
+export default memo(LastGames);

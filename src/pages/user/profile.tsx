@@ -11,4 +11,4 @@ Profile.getLayout = function getLayout(page: ReactNode) {
     return <MainLayout title="Профиль">{page}</MainLayout>;
 };
 
-export default withAuthCheck(Profile, true);
+export default withAuthCheck(Profile);

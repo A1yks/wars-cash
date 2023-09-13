@@ -1,11 +1,6 @@
 import { IUser } from '@backend/models/User/types';
 import { Types } from 'mongoose';
 
-export enum BetTypes {
-    Blue = 'blue',
-    Red = 'red',
-}
-
 export type Bet = {
     amount: number;
     user: IUser;

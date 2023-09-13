@@ -12,7 +12,7 @@ export type MainLayoutProps = {
 };
 
 function MainLayout(props: MainLayoutProps) {
-    const user = useAppSelector((state) => state.auth.user);
+    const user = useAppSelector((state) => state.user);
     const { loginHandler, logoutHandler } = useAuth();
     const title = props.title ? `${props.title} | Wars.Cash` : 'Wars.Cash';
 

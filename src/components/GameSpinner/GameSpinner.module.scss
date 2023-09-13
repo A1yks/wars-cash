@@ -9,10 +9,10 @@
         background: $dark-gray;
         box-sizing: content-box;
         position: absolute;
-        top: 2rem;
+        top: 30px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 1;
+        z-index: 10;
 
         .triangle {
             width: 0;
@@ -26,9 +26,23 @@
         }
     }
 
+    .wheelWrapper {
+        transform: rotate(-46deg);
+
+        & > div {
+            width: 32rem;
+            height: 32rem;
+        }
+    }
+
     .text {
         font-weight: bold;
         font-size: 9rem;
         font-family: Geometria;
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 }

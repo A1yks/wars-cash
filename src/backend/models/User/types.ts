@@ -1,3 +1,4 @@
+import { TokenProviders } from '@backend/middleware/tokens/types';
 import { Types } from 'mongoose';
 
 export enum Roles {
@@ -10,17 +11,14 @@ export enum Roles {
 
 export interface IUser {
     _id: Types.ObjectId;
-    facebookId: string;
+    provider: TokenProviders;
+    providerAccountId: string;
     name: string;
     avatar: string;
     balance: number;
     role: Roles;
 }
 
-export interface IClientUser {
-    _id: Types.ObjectId;
-    name: string;
-    avatar: string;
-    balance: number;
-    role: Roles;
-}
+export type ClientUser = IUser;
+
+export type PublicUserData = Pick<IUser, '_id' | 'name' | 'avatar' | 'role'>;

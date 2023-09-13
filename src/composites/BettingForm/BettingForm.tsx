@@ -5,11 +5,14 @@ import Button from 'components/Button';
 import useBettingForm from './hooks/useBettingForm';
 import Input from 'components/Input';
 import Icon from 'components/Icon/Icon';
+import { memo } from 'react';
+import { BetTypes } from '@backend/services/game/types';
 
 export type BettingFormProps = {
     balance: number;
-    onRedTeamBet: (value: number) => void;
-    onBlueTeamBet: (value: number) => void;
+    isPlacingBet: boolean;
+    onRedTeamBet: (value: number) => MaybePromise<void>;
+    onBlueTeamBet: (value: number) => MaybePromise<void>;
 };
 
 export type ControlData = {
@@ -83,15 +86,7 @@ function BettingForm(props: BettingFormProps) {
                     <Icon src="/images/minus.png" className={c(styles.icon, styles.minusIcon)} />
                 </Button>
             </div>
-            <Input
-                ref={inpRef}
-                type="text"
-                inputMode="numeric"
-                className={styles.betInput}
-                value={inpValue}
-                onChange={inpChangeHandler}
-                onBlur={inpBlurHandler}
-            />
+            <Input ref={inpRef} type="text" inputMode="numeric" className={styles.betInput} value={inpValue} onChange={inpChangeHandler} />
             <div className={styles.betControls}>
                 <Button variant="text" onClick={minClickHandler}>
                     <Icon src="/images/trash.png" width={22} height={22} />
@@ -106,13 +101,13 @@ function BettingForm(props: BettingFormProps) {
                 </Button>
             </div>
             <div className={styles.betBtns}>
-                <Button color="red" onClick={betClickHandler('red')}>
+                <Button color="red" onClick={betClickHandler(BetTypes.Red)} loading={props.isPlacingBet}>
                     <div className={styles.betBtnContent}>
                         <Icon src="/images/set.png" width={22} height={22} />
                         <span>Поставить</span>
                     </div>
                 </Button>
-                <Button color="blue" onClick={betClickHandler('blue')}>
+                <Button color="blue" onClick={betClickHandler(BetTypes.Red)} loading={props.isPlacingBet}>
                     <div className={styles.betBtnContent}>
                         <Icon src="/images/set.png" width={22} height={22} />
                         <span>Поставить</span>
@@ -123,4 +118,4 @@ function BettingForm(props: BettingFormProps) {
     );
 }
 
-export default BettingForm;
+export default memo(BettingForm);

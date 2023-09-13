@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="63" height="63" viewBox="0 0 1000 1000" xml:space="preserve">
+<defs>
+</defs>
+<rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
+<g transform="matrix(7.6782 0 0 7.6782 500.1694 500.1694)" id="662361">
+<path style="stroke: rgb(0,153,255); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(62,88,91); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-67.5, -67.5)" d="M 132.5 67.5 C 132.5 103.399 103.399 132.5 67.5 132.5 C 31.6015 132.5 2.5 103.399 2.5 67.5 C 2.5 31.6015 31.6015 2.5 67.5 2.5 C 103.399 2.5 132.5 31.6015 132.5 67.5 Z" stroke-linecap="round"/>
+</g>
+<g transform="matrix(2.9192 0 0 2.9192 500.1655 459.7863)" id="977859" clip-path="url(#CLIPPATH_5)">
+<clipPath id="CLIPPATH_5">
+	<rect transform="matrix(1 0 0 1 0 0.0004)" id="clip0_302_128" x="-78" y="-78" rx="0" ry="0" width="156" height="156"/>
+</clipPath>
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; is-custom-font: none; font-file-url: none; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-78, -77.9996)" d="M 155.052 140.236 L 80.5821 11.6055 C 80.3434 11.2592 80.0435 10.9594 79.6973 10.7207 C 78.1271 9.63889 75.9771 10.0353 74.8953 11.6055 L 0.425229 140.912 C 0.154535 141.394 0.00823949 141.936 0.000305908 142.489 C -0.0266683 144.321 1.43692 145.828 3.26863 145.854 H 152.208 C 152.354 145.875 152.501 145.887 152.649 145.888 C 154.481 145.907 155.981 144.437 156 142.605 C 156.005 141.722 155.665 140.871 155.052 140.236 Z" stroke-linecap="round"/>
+</g>
+</svg>

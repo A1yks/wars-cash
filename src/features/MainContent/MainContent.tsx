@@ -7,22 +7,23 @@ import Chat from 'composites/Chat';
 import meta from 'composites/Chat/Chat.stories';
 import BettingForm from 'composites/BettingForm';
 import WinProbabilities from 'composites/WinProbabilities';
-import { BetTypes } from 'types/global';
+import { BetTypes } from '@backend/services/game/types';
 import LastGames from 'composites/LastGames';
 import Container from 'components/Container';
 import BankList from 'composites/BankList';
 // TODO delete
 import bankListMeta, { BlueBankList, RedBankList } from 'composites/BankList/BankList.stories';
 import useAppSelector from 'hooks/useAppSelector';
+import BettingFormContainer from 'containers/BettingFormContainer/BettingFormContainer';
 
 function MainContent() {
-    const user = useAppSelector((state) => state.auth.user);
+    const user = useAppSelector((state) => state.user);
 
     return (
         <div className={styles.mainWrapper}>
             <Container className={styles.mainContainer}>
                 <div className={styles.leftSide}>
-                    <BettingForm balance={100} onBlueTeamBet={() => {}} onRedTeamBet={() => {}} />
+                    <BettingFormContainer />
                     <WinProbabilities
                         percentageValue={1000}
                         redTeamInfo={{ minValue: 1, maxValue: 532 }}
@@ -33,7 +34,7 @@ function MainContent() {
                     />
                 </div>
                 <div className={c(styles.gameSpinner, 'flex', 'center')}>
-                    <GameSpinner blueColorPercent={47} text="57" />
+                    <GameSpinner blueColorPercent={47} text="57" isSpinning={false} winner={BetTypes.Blue} onStopSpinning={() => {}} />
                 </div>
                 <div className={styles.rightSide}>
                     <Chat inChat={257} isLoggedIn={user !== null} messages={meta.args.messages} />
