@@ -1,10 +1,12 @@
 import { IUser, PublicUserData } from '@backend/models/User/types';
 import { Socket } from 'socket.io';
-import { BetData } from '../game/types';
+import { BetData, BetTypes, GameData, GameEventPayload } from '../game/types';
+import { Types } from 'mongoose';
+import { IGameResult } from '@backend/models/GameResult/types';
 
 export enum Rooms {
     Chat = 'chat',
-    Betting = 'betting',
+    Game = 'game',
 }
 
 export type MessageData = {
@@ -17,20 +19,30 @@ export type OnlineData = {
 };
 
 export type ClientToServerEvents = {
-    joinChat: () => void;
-    joinBetting: () => void;
+    connected: () => void;
+};
+
+export type BalanceData = {
+    balance: number;
 };
 
 export type ServerToClientEvents = {
     onlineChanged: (data: OnlineData) => void;
     message: (data: MessageData) => void;
-    bet: (data: BetData) => void;
+    bet: (data: GameData) => void;
+    winner: (winner: BetTypes) => void;
+    gameEnd: (gameData: GameData) => void;
+    gameResult: (gameData: IGameResult) => void;
+    gameCancelled: (gameData: GameData) => void;
+    spinning: (progress: number) => void;
+    winnerDegrees: (data: GameEventPayload['winnerDegrees']) => void;
+    updateBalance: (data: BalanceData) => void;
 };
 
 export type InterServerEvents = Record<string, never>;
 
 export type SocketData = {
-    userId: string;
+    userId: Types.ObjectId;
 };
 
 export type HandshakeAuth = {

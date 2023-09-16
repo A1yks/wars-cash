@@ -1,12 +1,11 @@
+import { dev } from './config';
 import http from 'http';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import next from 'next';
 import logger from './utils/logger';
 import connect from './db/connect';
-import dotenv from 'dotenv';
 import fs from 'fs';
-import path from 'path';
 import util from 'util';
 import { exec as execDefault } from 'child_process';
 import { USER_AVATARS_FOLDER_PATH } from './constants/paths';
@@ -15,15 +14,9 @@ import SocketService from './services/socket';
 import authRouter from './routes/auth';
 import betsRouter from './routes/bets';
 import tokensRouter from './routes/tokens';
+import '@backend/services/game/setup';
 
 const exec = util.promisify(execDefault);
-
-const dev = process.env.NODE_ENV !== 'production';
-const isLocal = fs.existsSync(path.resolve('./.env.development.local')) || fs.existsSync(path.resolve('./.env.production.local'));
-
-dotenv.config({
-    path: path.resolve(`./.env.${dev ? (isLocal ? 'development.local' : 'development') : isLocal ? 'production.local' : 'production'}`),
-});
 
 const useSSLProxy = process.env.USE_SSL_PROXY === 'true';
 const port = process.env.PORT || 3000;
@@ -64,9 +57,11 @@ const port = process.env.PORT || 3000;
                 if (useSSLProxy) {
                     retry(
                         async () => {
-                            await exec('npm run ssl-proxy');
+                            const { stdout, stderr } = await exec('npm run ssl-proxy');
+                            if (stdout) console.log(stdout);
+                            if (stderr) console.error(stderr);
                         },
-                        { count: 3, timeout: 5000 }
+                        { count: 3, timeout: 5000, errMsg: 'Не удалось запустить ssl' }
                     );
                 }
             });

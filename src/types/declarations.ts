@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 
 declare global {
-    type MaybePromise<T> = T | Promise<T>;
-
     namespace API {
         type Response<T = unknown> = {
             data: T;

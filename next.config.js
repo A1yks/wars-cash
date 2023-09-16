@@ -8,7 +8,7 @@ const nextConfig = {
         prependData: `@import "variables.scss";`,
     },
     images: {
-        domains: ['localhost', '116.202.113.54'],
+        domains: ['localhost', '127.0.0.1', '116.202.113.54'],
     },
 };
 

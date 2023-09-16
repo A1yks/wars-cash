@@ -11,22 +11,16 @@ function BettingFormContainer() {
     const user = useAppSelector((state) => state.user);
     const [placeBet, { isLoading: isPlacingBet }] = usePlaceBetMutation();
 
-    function placeBetHelper(team: BetTypes) {
-        return async (betAmount: number) => {
-            await placeBet({ team, betAmount }).unwrap();
-            enqueueSnackbar('Ставка принята', { variant: 'success' });
-        };
-    }
-
-    const blueTeamBetHandler = useErrorsHandler(placeBetHelper(BetTypes.Blue));
-
-    const redTeamBetHandler = useErrorsHandler(placeBetHelper(BetTypes.Red));
+    const betHandler = useErrorsHandler(async (team: BetTypes, betAmount: number) => {
+        await placeBet({ team, betAmount }).unwrap();
+        enqueueSnackbar('Ставка принята', { variant: 'success' });
+    });
 
     if (user === null) {
         return null;
     }
 
-    return <BettingForm isPlacingBet={isPlacingBet} balance={user.balance} onBlueTeamBet={blueTeamBetHandler} onRedTeamBet={redTeamBetHandler} />;
+    return <BettingForm isPlacingBet={isPlacingBet} balance={user.balance} onBet={betHandler} />;
 }
 
 export default memo(BettingFormContainer);

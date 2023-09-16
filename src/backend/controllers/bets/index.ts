@@ -4,7 +4,7 @@ import BetsService from '@backend/services/bets';
 import SocketService from '@backend/services/socket';
 import UserService from '@backend/services/user';
 import { BetData } from '@backend/services/game/types';
-import gameInstance from '@backend/services/game';
+import gameInstance from '@backend/services/game/setup';
 
 namespace BetsController {
     export const placeBet = handleServerErrors<PlaceBetReq>(async (req, res) => {
@@ -16,8 +16,16 @@ namespace BetsController {
 
         gameInstance.placeBet(team, betData);
 
+        const gameData = gameInstance.getGameData();
+
         res.status(200).json({ data: user.balance });
-        SocketService.broadcastBet(betData);
+        SocketService.broadcastGame(gameData);
+    });
+
+    export const getLastGames = handleServerErrors(async (req, res) => {
+        const lastGames = await BetsService.getLastGames();
+
+        res.status(200).json({ data: lastGames });
     });
 }
 

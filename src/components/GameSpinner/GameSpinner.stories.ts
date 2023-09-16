@@ -18,5 +18,10 @@ export const Default = {
         text: '57',
         isSpinning: false,
         winner: BetTypes.Blue,
+        isWaiting: false,
+        isCancelled: false,
+        rotation: 0,
+        spinDuration: 10,
+        spinningPercent: 0,
     },
 } satisfies Story;

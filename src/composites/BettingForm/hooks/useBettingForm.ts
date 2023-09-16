@@ -79,19 +79,17 @@ function useBettingForm(props: BettingFormProps) {
 
     function betClickHandler(team: BetTypes) {
         return async () => {
+            if (betValue === 0) {
+                enqueueSnackbar('Введите сумму ставки', { variant: 'error' });
+                return;
+            }
+
             if (balance === 0 || betValue > balance) {
                 enqueueSnackbar('Недостаточно средств', { variant: 'error' });
                 return;
             }
 
-            switch (team) {
-                case BetTypes.Red:
-                    await props.onRedTeamBet(betValue);
-                    break;
-                case BetTypes.Blue:
-                    await props.onBlueTeamBet(betValue);
-                    break;
-            }
+            await props.onBet(team, betValue);
 
             resetBetValue();
             inpRef.current?.focus();

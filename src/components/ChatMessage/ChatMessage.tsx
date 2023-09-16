@@ -1,10 +1,10 @@
 import c from 'clsx';
 import styles from './ChatMessage.module.scss';
 import Avatar from 'components/Avatar';
-import { IUser } from '@backend/models/User/types';
+import { PublicUserData } from '@backend/models/User/types';
 
 export type ChatMessageProps = {
-    user: IUser;
+    user: PublicUserData;
     children: string; // message itself
     className?: string;
 };

@@ -1,28 +1,41 @@
-import c from 'clsx';
 import styles from './WinProbabilities.module.scss';
 import Block from 'composites/Block';
 import Image from 'next/image';
 import TeamChance from 'components/TeamChance';
-import { TeamChanceProps } from 'components/TeamChance/TeamChance';
 import { memo } from 'react';
-
-type TeamInfo = Omit<TeamChanceProps, 'teamType' | 'percentageValue'>;
+import { GameData } from '@backend/services/game/types';
 
 export type WinProbabilitiesProps = {
-    redTeamInfo: TeamInfo;
-    blueTeamInfo: TeamInfo;
-    percentageValue: TeamChanceProps['percentageValue'];
+    redTeam: {
+        percent: number;
+        values: [number, number];
+    };
+    blueTeam: {
+        percent: number;
+        values: [number, number];
+    };
+    percentageValue: number;
 };
 
 function WinProbabilities(props: WinProbabilitiesProps) {
-    const { redTeamInfo, blueTeamInfo, percentageValue } = props;
+    const {
+        redTeam: {
+            percent: redPercent,
+            values: [minRedValue, maxRedValue],
+        },
+        blueTeam: {
+            percent: bluePercent,
+            values: [minBlueValue, maxBlueValue],
+        },
+        percentageValue,
+    } = props;
 
     return (
         <Block title="Честная игра" rightContent={<Image src="/images/gamepad.png" width={64} height={61} alt="" />}>
             <div className={styles.content}>
-                <TeamChance {...redTeamInfo} percentageValue={percentageValue} teamType="red" />
+                <TeamChance percent={redPercent} minValue={minRedValue} maxValue={maxRedValue} percentageValue={percentageValue} teamType="red" />
                 <div className={styles.separator} />
-                <TeamChance {...blueTeamInfo} percentageValue={percentageValue} teamType="blue" />
+                <TeamChance percent={bluePercent} minValue={minBlueValue} maxValue={maxBlueValue} percentageValue={percentageValue} teamType="blue" />
             </div>
         </Block>
     );

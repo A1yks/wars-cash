@@ -16,6 +16,8 @@ import { AuthCheckerProps } from 'features/AuthChecker/AuthChecker.type';
 import { getAccessToken } from 'store/api/auth';
 import { getRunningQueriesThunk } from 'store/api';
 import App from 'next/app';
+import { SocketContextProvider } from 'context/SocketContext';
+import { loadLastGamesHelper } from 'initialPropsHelpers/loadLastGames';
 
 type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
 
@@ -35,9 +37,11 @@ function MyApp({ Component, ...rest }: AppProps) {
                 <Head>
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                 </Head>
-                <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
+                <SocketContextProvider>
+                    <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
+                </SocketContextProvider>
             </SnackbarProvider>
-            <Script src="https://connect.facebook.net/en_US/sdk.js" />
+            <Script src="https://connect.facebook.net/en_US/sdk.js" async />
         </Provider>
     );
 }
@@ -45,11 +49,13 @@ function MyApp({ Component, ...rest }: AppProps) {
 MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext) => {
     const { ctx } = appContext;
 
-    // console.log(ctx);
-
     if (ctx.req !== undefined) {
         try {
             const { data: response, error } = await store.dispatch(getAccessToken.initiate(ctx.req.headers.cookie || ''));
+
+            if (error) {
+                console.log(error);
+            }
 
             if (response !== undefined) {
                 const {
@@ -61,6 +67,7 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext)
                 }
             }
 
+            await loadLastGamesHelper(store);
             await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
             const componentProps = await App.getInitialProps(appContext);

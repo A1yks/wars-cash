@@ -2,7 +2,6 @@ import { ClientUser } from '@backend/models/User/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'store/api/auth';
 import { betsApi } from 'store/api/bet';
-import { RequiredProperty } from 'types/utility';
 
 export type UserState = ClientUser | null;
 
@@ -14,6 +13,11 @@ const userSlice = createSlice({
     reducers: {
         setUser(state, action: PayloadAction<UserState>) {
             return action.payload;
+        },
+        setBalance(state, action: PayloadAction<number>) {
+            if (state !== null) {
+                state.balance = action.payload;
+            }
         },
     },
     extraReducers(builder) {

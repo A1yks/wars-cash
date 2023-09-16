@@ -8,4 +8,6 @@ const router = Router();
 
 router.post('/', TokensMiddleware.verifyAcessToken, ValidationMiddleware.validate(placeBetSchema), BetsController.placeBet);
 
+router.get('/last-games', BetsController.getLastGames);
+
 export default router;

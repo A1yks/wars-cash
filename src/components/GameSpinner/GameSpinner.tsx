@@ -4,71 +4,96 @@ import colors from 'styles/colors.module.scss';
 import { BetTypes } from '@backend/services/game/types';
 import { PointerProps, WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
 import dynamic from 'next/dynamic';
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHourglassEnd, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import { useAnimation, usePreviousRef } from '@lilib/hooks';
 
-const Wheel = dynamic(() => import('react-custom-roulette').then((module) => module.Wheel), { ssr: false });
+// const Wheel = dynamic(() => import('components/Wheel').then((module) => module.Wheel), { ssr: false });
 
 export type GameSpinnerProps = {
     blueColorPercent: number;
     isSpinning: boolean;
+    isWaiting: boolean;
+    isCancelled: boolean;
+    rotation: number;
+    spinningPercent: number;
+    spinDuration: number;
     text: string;
     onStopSpinning: () => void;
-    winner: BetTypes;
+    winner: BetTypes | null;
     className?: string;
 };
 
-const pointerProps: PointerProps = { style: { display: 'none' } };
+const easingFunction = (percent: number) => -(Math.cos(Math.PI * percent) - 1) / 2;
 
 function GameSpinner(props: GameSpinnerProps) {
-    const { blueColorPercent, isSpinning, text, winner, className, onStopSpinning } = props;
-    const prizeNumber = winner === BetTypes.Red ? 0 : 1;
-    const blueColorValue = blueColorPercent * 10;
+    const { blueColorPercent, isSpinning, text, isWaiting, isCancelled, className, rotation, spinningPercent, spinDuration, winner, onStopSpinning } =
+        props;
+    const fakeDegrees = 360 * 5;
+    const fullDegrees = fakeDegrees + rotation;
+    const spinnerRef = useRef<HTMLDivElement>(null);
+    const winnerText = winner === null ? '' : winner === BetTypes.Blue ? 'Синяя' : 'Красная';
+    const isWaitingPrevRef = usePreviousRef(isWaiting);
 
-    const wheelData: WheelData[] = [{ optionSize: 1000 - blueColorValue }, { optionSize: blueColorValue }];
+    const [startSpinning, stopSpinning] = useAnimation(
+        (percent) => {
+            if (spinnerRef.current !== null) {
+                const finalPercent = percent;
+
+                spinnerRef.current.style.transform = `rotate(${finalPercent * fullDegrees}deg)`;
+            }
+        },
+        {
+            duration: spinDuration * 1000 * (1 - spinningPercent),
+            algorithm(percent) {
+                return easingFunction(Math.min(percent + spinningPercent, 1));
+            },
+        }
+    );
+
+    useEffect(() => {
+        if (isSpinning) {
+            startSpinning();
+        } else {
+            stopSpinning();
+        }
+    }, [isSpinning, startSpinning, stopSpinning]);
+
+    useEffect(() => {
+        if (!isWaitingPrevRef.current && isWaiting) {
+            spinnerRef.current?.style.removeProperty('transform');
+        }
+    }, [isWaiting, isWaitingPrevRef]);
 
     return (
         <div className={c(styles.gameSpinner, className)}>
             <div className={c('flex', 'center', styles.arrow)}>
                 <div className={styles.triangle} />
             </div>
-            <div className={styles.wheelWrapper}>
-                <Wheel
-                    mustStartSpinning={isSpinning}
-                    prizeNumber={prizeNumber}
-                    data={wheelData}
-                    onStopSpinning={onStopSpinning}
-                    backgroundColors={[colors.lightRed, colors.lightBlue]}
-                    outerBorderWidth={0}
-                    radiusLineWidth={1}
-                    radiusLineColor="transparent"
-                    innerRadius={70}
-                    pointerProps={pointerProps}
+            <div className={styles.wheelWrapper} ref={spinnerRef}>
+                <CircularProgressbar
+                    value={blueColorPercent}
+                    styles={{
+                        ...buildStyles({
+                            strokeLinecap: 'butt',
+                            trailColor: colors.lightRed,
+                            pathColor: colors.lightBlue,
+                        }),
+                    }}
+                    strokeWidth={15}
                 />
             </div>
-
-            <span className={styles.text}>{text}</span>
-            {/* <CircularProgressbarWithChildren
-                value={blueColorPercent}
-                styles={{
-                    ...buildStyles({
-                        rotation: rotation / 100,
-                        strokeLinecap: 'butt',
-                        trailColor: colors.lightRed,
-                        pathColor: colors.lightBlue,
-                    }),
-                    text: {
-                        fontWeight: 'bold',
-                        fontFamily: 'Geometria',
-                        fill: colors.black,
-                        fontSize: '3.2rem',
-                        textAnchor: 'middle',
-                        alignmentBaseline: 'middle',
-                    },
-                }}
-                strokeWidth={15}
-            >
-                <span className={styles.text}>{text}</span>
-            </CircularProgressbarWithChildren> */}
+            <div className={c(styles.content, 'flex', 'center')}>
+                {!isCancelled && isWaiting && winner === null && (
+                    <FontAwesomeIcon icon={faHourglassEnd} rotation={180} className={styles.contentIcon} />
+                )}
+                {!isCancelled && isSpinning && winner === null && <FontAwesomeIcon icon={faPlay} className={styles.contentIcon} />}
+                {winner !== null && <span className={c(styles.winner, styles[winner])}>{winnerText}</span>}
+                {isCancelled && <span className={styles.cancelled}>Игра не состоялась</span>}
+                {!isCancelled && !isSpinning && !isWaiting && winner === null && <span className={styles.timer}>{text}</span>}
+            </div>
         </div>
     );
 }

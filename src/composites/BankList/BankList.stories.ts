@@ -12,23 +12,23 @@ const meta = {
     args: {
         bets: [
             {
-                user: { ...user, _id: '1' as unknown as Types.ObjectId },
+                bettor: { ...user, _id: '1' as unknown as Types.ObjectId },
                 amount: 19.22,
             },
             {
-                user: { ...user, _id: '2' as unknown as Types.ObjectId },
+                bettor: { ...user, _id: '2' as unknown as Types.ObjectId },
                 amount: 25.92,
             },
             {
-                user: { ...user, _id: '3' as unknown as Types.ObjectId },
+                bettor: { ...user, _id: '3' as unknown as Types.ObjectId },
                 amount: 9.26,
             },
             {
-                user: { ...user, _id: '4' as unknown as Types.ObjectId },
+                bettor: { ...user, _id: '4' as unknown as Types.ObjectId },
                 amount: 33.09,
             },
             {
-                user: { ...user, _id: '5' as unknown as Types.ObjectId },
+                bettor: { ...user, _id: '5' as unknown as Types.ObjectId },
                 amount: 45,
             },
         ],

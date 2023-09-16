@@ -21,13 +21,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        redTeamInfo: {
-            minValue: 1,
-            maxValue: 642,
+        redTeam: {
+            percent: 12,
+            values: [1, 642],
         },
-        blueTeamInfo: {
-            minValue: 643,
-            maxValue: 1000,
+        blueTeam: {
+            percent: 12,
+            values: [643, 1000],
         },
         percentageValue: 1000,
     },

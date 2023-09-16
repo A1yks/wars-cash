@@ -27,7 +27,7 @@
     }
 
     .wheelWrapper {
-        transform: rotate(-46deg);
+        // transform: rotate(-46deg);
 
         & > div {
             width: 32rem;
@@ -35,14 +35,38 @@
         }
     }
 
-    .text {
+    .content {
         font-weight: bold;
-        font-size: 9rem;
         font-family: Geometria;
         position: absolute;
         text-align: center;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+
+        .timer {
+            font-size: 9rem;
+        }
+
+        .contentIcon {
+            font-size: 10rem;
+        }
+
+        .winner {
+            font-size: 3.5rem;
+
+            &.blue {
+                color: $blue;
+            }
+
+            &.red {
+                color: $red;
+            }
+        }
+
+        .cancelled {
+            font-size: 2.8rem;
+            text-align: center;
+        }
     }
 }

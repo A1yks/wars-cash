@@ -15,6 +15,11 @@ import BankList from 'composites/BankList';
 import bankListMeta, { BlueBankList, RedBankList } from 'composites/BankList/BankList.stories';
 import useAppSelector from 'hooks/useAppSelector';
 import BettingFormContainer from 'containers/BettingFormContainer/BettingFormContainer';
+import WinProbabilitiesContainer from 'containers/WinProbabilitiesContainer';
+import GameSpinnerContainer from 'containers/GameSpinnerContainer';
+import RedBankListContainer from 'containers/RedBankListContainer';
+import BlueBankListContainer from 'containers/BlueBankListContainer';
+import LastGamesContainer from 'containers/LastGamesContainer';
 
 function MainContent() {
     const user = useAppSelector((state) => state.user);
@@ -24,25 +29,23 @@ function MainContent() {
             <Container className={styles.mainContainer}>
                 <div className={styles.leftSide}>
                     <BettingFormContainer />
-                    <WinProbabilities
-                        percentageValue={1000}
-                        redTeamInfo={{ minValue: 1, maxValue: 532 }}
-                        blueTeamInfo={{ minValue: 533, maxValue: 1000 }}
-                    />
-                    <LastGames
-                        data={[BetTypes.Blue, BetTypes.Red, BetTypes.Red, BetTypes.Blue, BetTypes.Red, BetTypes.Blue, BetTypes.Blue, BetTypes.Red]}
-                    />
+                    <WinProbabilitiesContainer />
+                    <LastGamesContainer />
                 </div>
                 <div className={c(styles.gameSpinner, 'flex', 'center')}>
-                    <GameSpinner blueColorPercent={47} text="57" isSpinning={false} winner={BetTypes.Blue} onStopSpinning={() => {}} />
+                    <GameSpinnerContainer />
                 </div>
                 <div className={styles.rightSide}>
                     <Chat inChat={257} isLoggedIn={user !== null} messages={meta.args.messages} />
                 </div>
             </Container>
             <Container className={styles.bankLists}>
-                <BankList bets={bankListMeta.args.bets} {...RedBankList.args} className={styles.bankList} />
-                <BankList bets={bankListMeta.args.bets} {...BlueBankList.args} className={styles.bankList} />
+                <div className={styles.bankList}>
+                    <RedBankListContainer />
+                </div>
+                <div className={styles.bankList}>
+                    <BlueBankListContainer />
+                </div>
             </Container>
         </div>
     );

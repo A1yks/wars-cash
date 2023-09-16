@@ -15,6 +15,8 @@ import TokensService from '@backend/services/tokens';
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
 import setRefreshTokenCookie from '@backend/utils/setRefreshTokenCookie';
 
+let facebookAccessToken = `${process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}|${process.env.FACEBOOK_APP_SECRET}`;
+
 namespace TokensMiddleware {
     function extractAcessToken(headers: Server.Request['headers']) {
         const authHeader = headers.authorization;
@@ -154,7 +156,7 @@ namespace TokensMiddleware {
     }
 
     async function verifyFacebookToken(token: string) {
-        const appToken = await getFacebookAppToken();
+        const appToken = facebookAccessToken || (await getFacebookAppToken());
         const res = await fetch(`https://graph.facebook.com/debug_token?input_token=${token}&access_token=${appToken}`);
         const result = await res.json();
 

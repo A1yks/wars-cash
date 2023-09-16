@@ -11,8 +11,7 @@ import { BetTypes } from '@backend/services/game/types';
 export type BettingFormProps = {
     balance: number;
     isPlacingBet: boolean;
-    onRedTeamBet: (value: number) => MaybePromise<void>;
-    onBlueTeamBet: (value: number) => MaybePromise<void>;
+    onBet: (team: BetTypes, value: number) => MaybePromise<void>;
 };
 
 export type ControlData = {
@@ -107,7 +106,7 @@ function BettingForm(props: BettingFormProps) {
                         <span>Поставить</span>
                     </div>
                 </Button>
-                <Button color="blue" onClick={betClickHandler(BetTypes.Red)} loading={props.isPlacingBet}>
+                <Button color="blue" onClick={betClickHandler(BetTypes.Blue)} loading={props.isPlacingBet}>
                     <div className={styles.betBtnContent}>
                         <Icon src="/images/set.png" width={22} height={22} />
                         <span>Поставить</span>

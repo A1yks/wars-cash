@@ -5,7 +5,6 @@ import { useLogoutMutation } from 'store/api/auth';
 import useAppDispatch from './useAppDispatch';
 import authSlice from 'store/reducers/authSlice';
 import userSlice from 'store/reducers/userSlice';
-
 const { setAuth } = authSlice.actions;
 const { setUser } = userSlice.actions;
 

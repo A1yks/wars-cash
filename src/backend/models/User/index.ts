@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IUser, Roles } from './types';
-import formatNumber from '@backend/utils/formatBalance';
+import formatNumber from '@backend/utils/formatNumber';
 
 const userSchema = new Schema<IUser>(
     {
@@ -10,9 +10,7 @@ const userSchema = new Schema<IUser>(
         name: { type: String, required: true },
         balance: {
             type: Number,
-            default: 0,
-            get: (balance: number) => formatNumber(balance / 100),
-            set: (balance: number) => formatNumber(balance * 100),
+            default: 1000000,
         },
         role: { type: String, default: Roles.User, enum: Object.values(Roles) },
     },
@@ -20,6 +18,9 @@ const userSchema = new Schema<IUser>(
         collection: 'users',
         toJSON: {
             getters: true,
+            transform(doc, ret, options) {
+                ret.balance = formatNumber(ret.balance / 100);
+            },
         },
     }
 );

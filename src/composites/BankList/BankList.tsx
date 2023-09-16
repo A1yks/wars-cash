@@ -2,13 +2,13 @@ import BankHeader, { BankHeaderProps } from 'components/BankHeader/BankHeader';
 import UserList from 'components/UserList';
 import styles from './BankList.module.scss';
 import c from 'clsx';
-import { Bet } from 'types/global';
 import UserListItem from 'components/UserListItem';
 import { memo } from 'react';
+import { BetData } from '@backend/services/game/types';
 
 export type BankListProps = {
     className?: string;
-    bets: Bet[];
+    bets: BetData[];
 } & Omit<BankHeaderProps, 'className'>;
 
 function BankList(props: BankListProps) {
@@ -18,8 +18,8 @@ function BankList(props: BankListProps) {
         <div className={c(styles.bankList, styles[bankHeaderProps.variant], className)}>
             <BankHeader {...bankHeaderProps} />
             <UserList>
-                {bets.map(({ user, amount }) => (
-                    <UserListItem key={user._id.toString()} user={user}>
+                {bets.map(({ bettor, amount }, i) => (
+                    <UserListItem key={i} user={bettor}>
                         <span className={styles.betAmount}>{amount.toFixed(2)}</span>
                     </UserListItem>
                 ))}
