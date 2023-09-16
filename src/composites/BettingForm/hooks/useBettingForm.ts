@@ -46,7 +46,7 @@ function useBettingForm(props: BettingFormProps) {
     const inpChangeHandler = useEvent((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
-        if (!/^\d+\.?\d*$/.test(value)) {
+        if (!/^\d+\.?\d*$/.test(value) && value !== '') {
             return;
         }
 
