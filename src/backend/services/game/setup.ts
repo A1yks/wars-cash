@@ -2,7 +2,7 @@ import Game from '@backend/services/game';
 import SocketService from '@backend/services/socket';
 import BetsService from '../bets';
 import { BetTypes, GameData } from './types';
-import { Rooms } from '../socket/types';
+import { BackendSocket, Rooms } from '../socket/types';
 import { Types } from 'mongoose';
 
 const gameInstance = new Game();
@@ -52,28 +52,15 @@ gameInstance.on('beforeReset', async (gameData) => {
         }
     });
 
-    SocketService.io
-        .in(Rooms.Game)
-        .fetchSockets()
-        .then((sockets) => {
-            sockets.forEach(async (socket) => {
-                const userId = socket?.data?.userId?.toString();
+    winnersTable.forEach(async (betSum, userId) => {
+        const newBalance = await BetsService.cashOut(new Types.ObjectId(userId), betSum, winnerTeam.coeff);
 
-                if (!userId) {
-                    return;
-                }
+        const socket = SocketService.sockets.get(userId);
 
-                let betSum = winnersTable.get(userId);
-
-                if (betSum === undefined) {
-                    return;
-                }
-
-                const newBalance = await BetsService.cashOut(new Types.ObjectId(userId), betSum, winnerTeam.coeff);
-
-                socket.emit('updateBalance', { balance: newBalance });
-            });
-        });
+        if (socket?.connected) {
+            socket.emit('updateBalance', { balance: newBalance });
+        }
+    });
 
     if (winner !== null) {
         const gameResult = await BetsService.saveGameResults({ ...gameData, winner });

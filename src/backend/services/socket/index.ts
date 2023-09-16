@@ -10,6 +10,8 @@ import gameInstance from '../game/setup';
 namespace SocketService {
     export let io: Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
 
+    export const sockets = new Map<string, BackendSocket>();
+
     export function init(httpServer: http.Server) {
         if (io === undefined) {
             io = new Server(httpServer, {
@@ -67,10 +69,18 @@ namespace SocketService {
             socket.leave(Rooms.Chat);
             socket.leave(Rooms.Game);
             socket.to(Rooms.Chat).emit('onlineChanged', { online: getChatOnline() });
+
+            if (socket.data.userId !== undefined) {
+                sockets.delete(socket.data.userId.toString());
+            }
         });
     }
 
     function connectionHandler(socket: BackendSocket) {
+        if (socket.data.userId !== undefined) {
+            sockets.set(socket.data.userId.toString(), socket);
+        }
+
         socket.join(Rooms.Chat);
         socket.join(Rooms.Game);
 
