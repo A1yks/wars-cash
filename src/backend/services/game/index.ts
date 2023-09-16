@@ -92,6 +92,35 @@ class Game {
         return winner;
     }
 
+    getRawGameData(remainingTime?: number): GameData {
+        const winChances = this.getWinChances();
+        const maxRedWinNumber = Math.round(winChances.red * NUMBERS);
+        const coeffs = this.coeffs;
+
+        return {
+            blueTeam: {
+                bank: this.blueTeamSum,
+                bettors: this.blueTeamBettors,
+                coeff: coeffs.blue,
+                percent: winChances.blue * 100,
+                values: maxRedWinNumber === NUMBERS ? [0, 0] : [maxRedWinNumber + 1, NUMBERS],
+            },
+            redTeam: {
+                bank: this.redTeamSum,
+                bettors: this.redTeamBettors,
+                coeff: coeffs.red,
+                percent: winChances.red * 100,
+                values: [1, maxRedWinNumber],
+            },
+            percentageValue: NUMBERS,
+            remainingTime: Math.max(remainingTime ?? this.getRemainingTime(), 0),
+            isGameStarted: this.isGameStarted,
+            isAcceptingBets: this.isAcceptingBets,
+            isSpinning: this.isSpinning,
+            isCancelled: this.isCancelled,
+        };
+    }
+
     getGameData(remainingTime?: number): GameData {
         const winChances = this.getWinChances();
         const maxRedWinNumber = Math.round(winChances.red * NUMBERS);
@@ -159,7 +188,7 @@ class Game {
 
     private endGame() {
         setTimeout(() => {
-            this.callbacks.beforeReset?.(this.getGameData());
+            this.callbacks.beforeReset?.(this.getRawGameData());
             this.isGameStarted = false;
             this.resetGame();
             this.callbacks.gameEnd?.(this.getGameData());
