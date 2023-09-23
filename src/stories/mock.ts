@@ -9,4 +9,6 @@ export const user = {
     balance: 10000,
     provider: 'facebook',
     providerAccountId: '123',
+    chatTimeout: 0,
+    isBanned: false,
 } satisfies IUser;

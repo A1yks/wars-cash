@@ -22,4 +22,10 @@ declare global {
     }
 }
 
+declare module 'yup' {
+    interface StringSchema {
+        integer(): StringSchema;
+    }
+}
+
 export {};

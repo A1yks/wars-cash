@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
-import setAuthHeaders from './helpers/setAuthHeaders';
 import baseQueryWithReauth from './helpers/baseQueryWithReauth';
 
 export const api = createApi({
@@ -11,7 +10,11 @@ export const api = createApi({
             return action.payload[reducerPath];
         }
     },
-    endpoints: (build) => ({}),
+    endpoints: (build) => ({
+        getSiteConfig: build.query({
+            query: () => '/site-config',
+        }),
+    }),
 });
 
 export const { getRunningQueriesThunk } = api.util;

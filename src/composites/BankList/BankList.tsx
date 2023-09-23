@@ -19,7 +19,7 @@ function BankList(props: BankListProps) {
             <BankHeader {...bankHeaderProps} />
             <UserList>
                 {bets.map(({ bettor, amount }, i) => (
-                    <UserListItem key={i} user={bettor}>
+                    <UserListItem key={i} user={bettor} variant="default">
                         <span className={styles.betAmount}>{amount.toFixed(2)}</span>
                     </UserListItem>
                 ))}

@@ -26,7 +26,7 @@ namespace SocketService {
     }
 
     export function broadcastOnline() {
-        io.to(Rooms.Chat).emit('onlineChanged', { online: getChatOnline() });
+        io.emit('onlineChanged', { online: getChatOnline() });
     }
 
     export function broadcastMessage(data: MessageData) {
@@ -49,18 +49,23 @@ namespace SocketService {
         io.to(Rooms.Game).emit('gameEnd', gameData);
     }
 
-    export function updateUserBalance() {}
-
     export function broadcastData<EventName extends keyof ServerToClientEvents>(
         room: Rooms,
         event: EventName,
         data: Parameters<ServerToClientEvents[EventName]>[0]
     ) {
-        // @ts-ignore - type bug
-        io.to(room).emit(event, data);
+        if (room === Rooms.All) {
+            // @ts-ignore - type bug
+            io.emit(event, data);
+        } else {
+            // @ts-ignore - type bug
+            io.to(room).emit(event, data);
+        }
     }
 
     function setEventListeners(socket: BackendSocket) {
+        console.log('SOCKET CONNECTED');
+
         socket.on('connected', () => {
             connectionHandler(socket);
         });
@@ -79,9 +84,9 @@ namespace SocketService {
     function connectionHandler(socket: BackendSocket) {
         if (socket.data.userId !== undefined) {
             sockets.set(socket.data.userId.toString(), socket);
+            socket.join(Rooms.Chat);
         }
 
-        socket.join(Rooms.Chat);
         socket.join(Rooms.Game);
 
         broadcastGame(gameInstance.getGameData());

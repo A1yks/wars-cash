@@ -7,17 +7,18 @@ const userSchema = new Schema<IUser>(
         avatar: { type: String, default: 'avatar.jpg' },
         provider: { type: String, required: true, enum: ['facebook'] },
         providerAccountId: { type: String, required: true },
-        name: { type: String, required: true },
+        name: { type: String, required: true, trim: true },
         balance: {
             type: Number,
             default: 1000000,
         },
         role: { type: String, default: Roles.User, enum: Object.values(Roles) },
+        chatTimeout: { type: Number, default: 0 },
+        isBanned: { type: Boolean, default: false },
     },
     {
         collection: 'users',
         toJSON: {
-            getters: true,
             transform(doc, ret, options) {
                 ret.balance = formatNumber(ret.balance / 100);
             },

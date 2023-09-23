@@ -21,7 +21,9 @@ function Avatar(props: AvatarProps) {
             <div className={styles.imgWrapper}>
                 <Image src={getImageSrc(props.src, 'users')} alt="User avatar" width={size} height={size} priority={props.priority} />
             </div>
-            {role !== Roles.User && <div className={c(styles.status, styles[role], 'flex', 'center')}>{role}</div>}
+            {role !== Roles.User && (
+                <div className={c(styles.status, styles[role], 'flex', 'center')}>{role === Roles.MainAdmin ? Roles.Admin : role}</div>
+            )}
         </div>
     );
 }

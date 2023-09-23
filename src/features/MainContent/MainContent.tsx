@@ -20,6 +20,7 @@ import GameSpinnerContainer from 'containers/GameSpinnerContainer';
 import RedBankListContainer from 'containers/RedBankListContainer';
 import BlueBankListContainer from 'containers/BlueBankListContainer';
 import LastGamesContainer from 'containers/LastGamesContainer';
+import ChatContainer from 'containers/ChatContainer';
 
 function MainContent() {
     const user = useAppSelector((state) => state.user);
@@ -36,7 +37,7 @@ function MainContent() {
                     <GameSpinnerContainer />
                 </div>
                 <div className={styles.rightSide}>
-                    <Chat inChat={257} isLoggedIn={user !== null} messages={meta.args.messages} />
+                    <ChatContainer />
                 </div>
             </Container>
             <Container className={styles.bankLists}>

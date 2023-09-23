@@ -21,18 +21,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default = {
-    args: {
-        user,
-        children: 'Mollit in id consectetur enim do ullamco Lorem culpa reprehenderit aliquip in commodo est sint.',
-    },
+    args: {},
 } satisfies Story;
 
 export const WithRole: Story = {
-    args: {
-        user: {
-            ...Default.args.user,
-            role: Roles.Moderator,
-        },
-        children: 'Mollit in id consectetur enim do ullamco Lorem culpa reprehenderit aliquip in commodo est sint.',
-    },
+    args: {},
 };

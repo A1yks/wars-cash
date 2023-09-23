@@ -30,9 +30,9 @@ export const Default: Story = {
     },
 };
 
-export const Message: Story = {
+export const Custom: Story = {
     args: {
-        variant: 'message',
+        variant: 'custom',
         children: 'Sunt laborum aliqua incididunt eu nulla eiusmod irure magna elit.',
     },
 };

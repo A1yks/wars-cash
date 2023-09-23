@@ -5,6 +5,7 @@ import { HYDRATE, createWrapper } from 'next-redux-wrapper';
 import userSlice from './reducers/userSlice';
 import gameSlice from './reducers/gameSlice';
 import lastGamesSlice from './reducers/lastGamesSlice';
+import chatSlice from './reducers/chatSlice';
 
 export let store: ReturnType<typeof configStore>;
 
@@ -12,6 +13,7 @@ const combineReducer = combineReducers({
     auth: authSlice.reducer,
     user: userSlice.reducer,
     game: gameSlice.reducer,
+    chat: chatSlice.reducer,
     lastGames: lastGamesSlice.reducer,
     [api.reducerPath]: api.reducer,
 });

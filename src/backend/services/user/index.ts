@@ -1,4 +1,5 @@
 import { USER_AVATARS_FOLDER_PATH } from '@backend/constants/paths';
+import { ErrorTypes } from '@backend/enums/errors';
 import User from '@backend/models/User';
 import { IUser, PublicUserData } from '@backend/models/User/types';
 import downloadImage from '@backend/utils/downloadImage';
@@ -21,8 +22,14 @@ namespace UserService {
         return { user, isCreated: false };
     }
 
-    export async function getUser(id: Types.ObjectId) {
-        return await User.findById(id);
+    export async function getUser(id: Types.ObjectId | string) {
+        const user = await User.findById(id);
+
+        if (user === null) {
+            throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
+        }
+
+        return user;
     }
 
     export function getPublicUserData(user: IUser) {

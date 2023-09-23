@@ -27,7 +27,8 @@
         z-index: 1;
         font-weight: bold;
 
-        &.admin {
+        &.admin,
+        &.chiefAdmin {
             background: $purple;
         }
 

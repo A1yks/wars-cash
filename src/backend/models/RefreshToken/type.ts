@@ -1,4 +1,5 @@
 import { Types, Model, Document } from 'mongoose';
+import { IUser } from '../User/types';
 
 export interface IRefreshToken {
     _id: Types.ObjectId;
@@ -8,7 +9,7 @@ export interface IRefreshToken {
 }
 
 export interface IRefreshTokenModel extends Model<IRefreshToken> {
-    issueToken(userId: Types.ObjectId, oldTokenStr?: string): Promise<string>;
+    issueToken(userId: IUser['_id'], oldTokenStr?: string): Promise<string>;
 }
 
 export type RefreshTokenDoc = Document<unknown, {}, IRefreshToken> & IRefreshToken;

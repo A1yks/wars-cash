@@ -10,7 +10,7 @@ namespace PermissionsMiddleware {
             const userId = req.userId;
 
             if (userId === undefined) {
-                return res.status(401).json({ error: 'Provided access token is invalid' });
+                return res.status(401).json({ error: 'Токен доступа невалидный' });
             }
 
             try {
@@ -19,12 +19,12 @@ namespace PermissionsMiddleware {
                 if (result) {
                     next();
                 } else {
-                    res.status(403).json({ error: "You don't have permissions to perform this operation" });
+                    res.status(403).json({ error: 'У вас нет прав для выполнения данной операции' });
                 }
             } catch (err) {
                 errorsHandler(err, {
                     res,
-                    unexpectedErrMsg: 'An unexpected error occured while checking user permissions',
+                    unexpectedErrMsg: 'Произошла непредвиденная ошибка при проверке прав доступа',
                     expectedErrors: [
                         [ErrorTypes.NOT_FOUND, 404],
                         [ErrorTypes.NO_PERMISSIONS, 403],

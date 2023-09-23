@@ -6,10 +6,19 @@ import gameSlice from 'store/reducers/gameSlice';
 import useAppSelector from 'hooks/useAppSelector';
 import userSlice from 'store/reducers/userSlice';
 import lastGamesSlice from 'store/reducers/lastGamesSlice';
+import chatSlice from 'store/reducers/chatSlice';
+import { AppState } from 'store';
+import { createSelector } from '@reduxjs/toolkit';
 
-const { setBalance } = userSlice.actions;
+const { setBalance, restrictChatAccess } = userSlice.actions;
+const { setOnline, addMessage, deleteMessage, deleteUserMessages } = chatSlice.actions;
 const { addGameResult } = lastGamesSlice.actions;
 const { setGame, setWinner, setDegreesData, resetCustomFields } = gameSlice.actions;
+
+const tokenSelector = (state: AppState) => state.auth.token;
+const userIdSelector = (state: AppState) => state.user?._id;
+
+const tokenAndUserIdSelector = createSelector([tokenSelector, userIdSelector], (token, userId) => ({ token, userId }));
 
 type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -45,32 +54,24 @@ export function useSocket() {
 
 export function SocketContextProvider(props: Props.WithChildren) {
     const [socket, setSocket] = useState<ClientSocket | null>(null);
-    const accessToken = useAppSelector((state) => state.auth.token);
-    // console.log('token', accessToken);
-    // const socket = connectToSocket(accessToken);
+    const { token: accessToken, userId } = useAppSelector(tokenAndUserIdSelector);
     const dispatch = useAppDispatch();
 
     const reconnect = useCallback(() => {
-        console.log('rec inner', accessToken);
+        console.log('reconnect');
         socket?.disconnect();
         setSocket(connectToSocket(accessToken, true));
     }, [accessToken, socket]);
 
     useEffect(() => {
-        console.log(socket?.connected);
         if (socket?.connected) {
-            console.log('reconnect', accessToken);
             reconnect();
         }
     }, [accessToken, reconnect, socket]);
 
     useEffect(() => {
-        console.log('effect', accessToken);
-
         if (socket === null) {
             const connectedSocket = connectToSocket(accessToken);
-
-            console.log('set socket');
             setSocket(connectedSocket);
         }
     }, [accessToken, socket]);
@@ -85,8 +86,11 @@ export function SocketContextProvider(props: Props.WithChildren) {
         });
 
         socket.on('onlineChanged', ({ online }) => {
-            // TODO
-            console.log(online);
+            dispatch(setOnline(online));
+        });
+
+        socket.on('message', (message) => {
+            dispatch(addMessage(message));
         });
 
         socket.on('bet', (gameData) => {
@@ -118,6 +122,22 @@ export function SocketContextProvider(props: Props.WithChildren) {
             dispatch(addGameResult(gameResult));
         });
 
+        socket.on('messageDeleted', (data) => {
+            dispatch(deleteMessage(data));
+        });
+
+        socket.on('restrictChatAccess', (data) => {
+            if (data.userId === userId) {
+                dispatch(restrictChatAccess(data));
+            }
+
+            dispatch(deleteUserMessages(data));
+        });
+
+        socket.on('disconnect', (e) => {
+            console.log('disconnect', e);
+        });
+
         return () => {
             socket.off('onlineChanged');
             socket.off('bet');
@@ -127,8 +147,11 @@ export function SocketContextProvider(props: Props.WithChildren) {
             socket.off('updateBalance');
             socket.off('gameCancelled');
             socket.off('gameResult');
+            socket.off('message');
+            socket.off('messageDeleted');
+            socket.off('restrictChatAccess');
         };
-    }, [dispatch, socket]);
+    }, [dispatch, socket, userId]);
 
     return <SocketContext.Provider value={socket}>{props.children}</SocketContext.Provider>;
 }

@@ -24,6 +24,7 @@ body {
 .snackbar-content {
     #notistack-snackbar {
         font-size: 1.4rem;
+        font-family: OpenSans;
     }
 }
 
@@ -43,6 +44,26 @@ ul {
 .center {
     justify-content: center;
     align-items: center;
+}
+
+.bolder {
+    font-weight: 500;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.color-red {
+    color: $red;
+}
+
+.color-blue {
+    color: $blue;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .content {

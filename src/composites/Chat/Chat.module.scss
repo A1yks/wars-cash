@@ -17,13 +17,57 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #c4e5ea;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .onlineLoadingSpinner {
+            width: auto;
         }
     }
 
+    .buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
     .iconBtn {
-        width: 2.6em;
-        height: 2.6em;
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #fff;
+        position: relative;
         cursor: pointer;
+        background: transparent;
+
+        svg {
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &.iconActive {
+            $active-color: #abc1ff;
+
+            border-color: $active-color;
+
+            svg {
+                color: $active-color;
+            }
+        }
+    }
+
+    .submitSpinner svg {
+        position: static;
+    }
+
+    .sendIconBtn {
+        border-radius: 0;
+        border: none;
     }
 
     .messages,
@@ -56,6 +100,15 @@
                     opacity: 0.4;
                     transition: opacity 0.2s;
                 }
+            }
+
+            .simplebar-content-wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .simplebar-content {
+                flex: 1;
             }
         }
     }
@@ -90,10 +143,49 @@
             background: transparent;
             font-size: 1.6rem;
             color: #fff;
+            box-shadow: none;
+            text-align: initial;
+            padding: 0;
+            border-radius: 0;
 
             &::placeholder {
                 color: rgba(255, 255, 255, 0.9);
             }
+        }
+
+        .msgErrLabel {
+            text-align: initial;
+            color: $light-red;
+        }
+
+        .submitBtn {
+            border: none;
+            background: transparent;
+            border-radius: 0;
+            cursor: pointer;
+        }
+    }
+
+    .infoText {
+        font-size: 2.4rem;
+        font-weight: 500;
+        text-align: center;
+        padding: 1rem;
+    }
+}
+
+@media screen and (max-width: $xs) {
+    .chat {
+        .sendMsg {
+            height: 7.5rem;
+
+            .msgErrLabel {
+                font-size: 1.1rem;
+            }
+        }
+
+        .infoText {
+            font-size: 2rem;
         }
     }
 }

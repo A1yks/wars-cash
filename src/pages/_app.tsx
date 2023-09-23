@@ -18,6 +18,12 @@ import { getRunningQueriesThunk } from 'store/api';
 import App from 'next/app';
 import { SocketContextProvider } from 'context/SocketContext';
 import { loadLastGamesHelper } from 'initialPropsHelpers/loadLastGames';
+import { loadChatMessagesHelper } from 'initialPropsHelpers/loadChatMessages';
+import * as yup from 'yup';
+
+yup.addMethod(yup.string, 'integer', function () {
+    return this.matches(/^\d+$/, 'Значние должно быть числом');
+});
 
 type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
 
@@ -67,7 +73,7 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext)
                 }
             }
 
-            await loadLastGamesHelper(store);
+            await Promise.all([loadChatMessagesHelper(store), loadLastGamesHelper(store)]);
             await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
             const componentProps = await App.getInitialProps(appContext);
