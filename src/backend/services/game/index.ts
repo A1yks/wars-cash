@@ -209,6 +209,7 @@ class Game {
         this.hasOtherBettors = false;
         this.isCancelled = false;
         this.firstBettorId = null;
+        this.winner = null;
     }
 
     private getWinChances() {
