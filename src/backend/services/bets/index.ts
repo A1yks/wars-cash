@@ -58,7 +58,7 @@ namespace BetsService {
 
     export async function getLastGames() {
         const docAmount = await GameResult.countDocuments();
-        const lastGames = await GameResult.find().skip(docAmount - 8);
+        const lastGames = await GameResult.find().skip(Math.max(docAmount - 8, 0));
 
         return lastGames;
     }
