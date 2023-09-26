@@ -16,12 +16,9 @@ import {
     useModerateMutation,
     useSaveMessageMutation,
 } from 'store/api/chat';
+import { chatDataSelector, userSelector, authDataSelector } from 'store/selectors';
 import { extractError } from 'utils/extractError';
 import getTimeLeft from 'utils/getTimeLeft';
-
-const chatDataSelector = (state: AppState) => state.chat;
-const userSelector = (state: AppState) => state.user;
-const authDataSelector = (state: AppState) => state.auth;
 
 const selector = createSelector([chatDataSelector, userSelector, authDataSelector], (chat, user, auth) => ({
     ...chat,

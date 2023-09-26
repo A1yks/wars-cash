@@ -4,6 +4,9 @@ import User from '@backend/models/User';
 import { IUser, PublicUserData } from '@backend/models/User/types';
 import downloadImage from '@backend/utils/downloadImage';
 import { Types } from 'mongoose';
+import FileUploaderService from '../fileUploader';
+import path from 'path';
+import BonusService from '../bonus';
 
 namespace UserService {
     export async function findOrCreate(userData: Partial<IUser>) {
@@ -14,7 +17,7 @@ namespace UserService {
                 userData.avatar = await downloadImage(userData.avatar, USER_AVATARS_FOLDER_PATH);
             }
 
-            const newUser = await User.create(userData);
+            const newUser = await createUser(userData);
 
             return { user: newUser, isCreated: true };
         }
@@ -32,6 +35,31 @@ namespace UserService {
         return user;
     }
 
+    export async function changeUserData(userId: IUser['_id'], userData: Partial<Omit<IUser, '_id'>>) {
+        const updatedUser = await User.findOneAndUpdate({ _id: userId }, userData, { new: true });
+
+        if (updatedUser === null) {
+            throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
+        }
+
+        return updatedUser;
+    }
+
+    export async function changeAvatar(userId: IUser['_id'], fileName: string) {
+        const user = await getUser(userId);
+        const oldAvatar = user.avatar;
+
+        user.avatar = fileName;
+
+        await user.save();
+
+        if (oldAvatar !== null) {
+            FileUploaderService.deleteFileFromDisk(path.join(USER_AVATARS_FOLDER_PATH, oldAvatar));
+        }
+
+        return user.avatar;
+    }
+
     export function getPublicUserData(user: IUser) {
         return {
             _id: user._id,
@@ -39,6 +67,14 @@ namespace UserService {
             avatar: user.avatar,
             role: user.role,
         } as PublicUserData;
+    }
+
+    async function createUser(userData: Partial<IUser>) {
+        const user = await User.create(userData);
+
+        await BonusService.createBonusInfo(user._id);
+
+        return user;
     }
 }
 

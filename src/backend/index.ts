@@ -15,6 +15,9 @@ import authRouter from './routes/auth';
 import betsRouter from './routes/bets';
 import tokensRouter from './routes/tokens';
 import chatRouter from './routes/chat';
+import userRouter from './routes/user';
+import paymentsRouter from './routes/payments';
+import bonusRouter from './routes/bonus';
 import '@backend/services/game/setup';
 
 const exec = util.promisify(execDefault);
@@ -48,6 +51,9 @@ const port = process.env.PORT || 3000;
             app.use('/api/bets', betsRouter);
             app.use('/api/tokens', tokensRouter);
             app.use('/api/chat', chatRouter);
+            app.use('/api/user', userRouter);
+            app.use('/api/payments', paymentsRouter);
+            app.use('/api/bonus', bonusRouter);
 
             app.all('*', (req, res) => {
                 return handle(req, res);

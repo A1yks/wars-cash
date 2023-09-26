@@ -25,16 +25,13 @@ function EditableContent(props: EditableContentProps) {
                 <>
                     <div>{props.editModeContent}</div>
                     <div className={c(styles.buttons, props.buttonsWrapperClassName)}>
-                        <div>
-                            <Button type="submit" loading={props.isSaving} disabled={props.isSaving} className={styles.button}>
-                                {submitBtnText}
-                            </Button>
-                        </div>
-                        <div>
-                            <Button color="red" onClick={props.onCancel} disabled={props.isSaving} className={styles.button}>
-                                {cancelBtnText}
-                            </Button>
-                        </div>
+                        <Button type="submit" loading={props.isSaving} disabled={props.isSaving} className={styles.button}>
+                            {submitBtnText}
+                        </Button>
+
+                        <Button color="red" onClick={props.onCancel} disabled={props.isSaving} className={styles.button}>
+                            {cancelBtnText}
+                        </Button>
                     </div>
                 </>
             ) : (

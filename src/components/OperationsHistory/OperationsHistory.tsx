@@ -2,17 +2,19 @@ import c from 'clsx';
 import styles from './OperationsHistory.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHistory } from '@fortawesome/free-solid-svg-icons';
+import Spinner from 'components/Spinner/Spinner';
 
 type Titles = Record<string, string>;
 
 export type OperationsHistoryProps<T extends Titles> = {
     titles: T;
     data: {
-        [key in keyof T]: string;
+        [key in keyof T]: string | number | Date;
     }[];
     name?: string;
     className?: string;
     tableWrapperClassName?: string;
+    isLoading?: boolean;
 };
 
 function OperationsHistory<T extends Titles>(props: OperationsHistoryProps<T>) {
@@ -24,7 +26,9 @@ function OperationsHistory<T extends Titles>(props: OperationsHistoryProps<T>) {
                 <FontAwesomeIcon icon={faHistory} />
                 <span>{name}</span>
             </h6>
-            {props.data.length === 0 ? (
+            {props.isLoading ? (
+                <Spinner />
+            ) : props.data.length === 0 ? (
                 <div className={c(styles.empty, 'flex', 'center')}>История пуста</div>
             ) : (
                 <div className={props.tableWrapperClassName}>
@@ -39,8 +43,8 @@ function OperationsHistory<T extends Titles>(props: OperationsHistoryProps<T>) {
                         <tbody>
                             {props.data.map((item, i) => (
                                 <tr key={i}>
-                                    {Object.values(item).map((value, i) => (
-                                        <td key={i}>{value}</td>
+                                    {Object.keys(props.titles).map((key, i) => (
+                                        <td key={i}>{item[key].toString()}</td>
                                     ))}
                                 </tr>
                             ))}

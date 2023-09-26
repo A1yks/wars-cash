@@ -5,10 +5,16 @@ import { ReactNode } from 'react';
 
 export type SelectProps = {
     children: ReactNode;
-};
+} & React.ComponentPropsWithoutRef<'select'>;
 
 function Select(props: SelectProps) {
-    return <select className={c(styles.select, inputStyles.input)}>{props.children}</select>;
+    const { className, children, ...selectProps } = props;
+
+    return (
+        <select className={c(styles.select, inputStyles.input, className)} {...selectProps}>
+            {children}
+        </select>
+    );
 }
 
 export default Select;

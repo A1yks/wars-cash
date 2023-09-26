@@ -1,5 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import useEvent from './useEvent';
+import formatNumber from '@backend/utils/formatNumber';
 
 type Config = {
     initialValue?: number;
@@ -13,7 +14,7 @@ function useInputNumber(config?: Config) {
 
     function changeValue(value: string) {
         setInpValue(value);
-        setValue(Number(value));
+        setValue(Number(value) || 0);
     }
 
     const inpChangeHandler = useEvent((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +26,12 @@ function useInputNumber(config?: Config) {
     });
 
     const inpBlurHandler = useEvent((e: React.FocusEvent<HTMLInputElement>) => {
-        const value = Number(e.target.value);
+        const value = formatNumber(Number(e.target.value));
 
         if (maxValue !== undefined && value > maxValue) {
             changeValue(maxValue.toString());
         } else {
-            changeValue(e.target.value);
+            changeValue(value.toString());
         }
     });
 
@@ -39,6 +40,7 @@ function useInputNumber(config?: Config) {
         inpValue,
         inpChangeHandler,
         inpBlurHandler,
+        changeValue,
     };
 }
 

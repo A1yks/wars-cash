@@ -5,11 +5,9 @@ import useBrowserLayoutEffect from 'hooks/useBrowserLayoutEffect';
 import { useRouter } from 'next/router';
 import { AppState } from 'store';
 import { createSelector } from '@reduxjs/toolkit';
+import { authDataSelector, userSelector } from 'store/selectors';
 
-const authSelector = (state: AppState) => state.auth;
-const userSelector = (state: AppState) => state.user;
-
-const selectAuthAndUser = createSelector([authSelector, userSelector], (auth, user) => ({ ...auth, user }));
+const selectAuthAndUser = createSelector([authDataSelector, userSelector], (auth, user) => ({ ...auth, user }));
 
 function AuthChecker(props: AuthCheckerProps) {
     const { user, isLoading, isLoginCompleted } = useAppSelector(selectAuthAndUser);

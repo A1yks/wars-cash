@@ -52,6 +52,39 @@ const defaultConfig: Partial<Configuration> = {
     log: true,
 };
 
+function overrideErrors(defaultErrors: NonNullable<Configuration['expectedErrors']>, providedErrors: NonNullable<Configuration['expectedErrors']>) {
+    const errorsArr: NonNullable<Configuration['expectedErrors']> = [...defaultErrors];
+
+    for (const providedErr of providedErrors) {
+        const [errType] = providedErr;
+        const err = errorsArr.find(([type]) => type === errType);
+
+        if (err === undefined) {
+            errorsArr.push(providedErr);
+        } else {
+            err[1] = providedErr[1];
+            err[2] = providedErr[2];
+        }
+    }
+
+    // defaultErrors.map((err) => {
+    //     const [type] = err;
+
+    //     providedErrors.forEach((providedErr) => {
+    //         const [errType] = providedErr;
+
+    //         if (errType === type) {
+    //             err[1] = providedErr[1];
+    //             err[2] = providedErr[2];
+    //         }
+    //     });
+
+    //     return err;
+    // });
+
+    return errorsArr;
+}
+
 /**
  * Handles errors
  * @param err Error to handle
@@ -60,20 +93,7 @@ const defaultConfig: Partial<Configuration> = {
 function errorsHandler(err: unknown, configuration: Configuration) {
     const config = { ...defaultConfig, ...configuration } as Required<Configuration>;
 
-    config.expectedErrors = defaultConfig.expectedErrors!.map((err) => {
-        const [type] = err;
-
-        configuration.expectedErrors?.forEach((providedErr) => {
-            const [errType] = providedErr;
-
-            if (errType === type) {
-                err[1] = providedErr[1];
-                err[2] = providedErr[2];
-            }
-        });
-
-        return err;
-    });
+    config.expectedErrors = overrideErrors(defaultConfig.expectedErrors!, configuration.expectedErrors || []);
 
     if (config.log) {
         logger.error(err);

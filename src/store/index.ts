@@ -6,6 +6,8 @@ import userSlice from './reducers/userSlice';
 import gameSlice from './reducers/gameSlice';
 import lastGamesSlice from './reducers/lastGamesSlice';
 import chatSlice from './reducers/chatSlice';
+import paymentsSlice from './reducers/paymentsSlice';
+import bonusSlice from './reducers/bonusSlice';
 
 export let store: ReturnType<typeof configStore>;
 
@@ -15,6 +17,8 @@ const combineReducer = combineReducers({
     game: gameSlice.reducer,
     chat: chatSlice.reducer,
     lastGames: lastGamesSlice.reducer,
+    payments: paymentsSlice.reducer,
+    bonus: bonusSlice.reducer,
     [api.reducerPath]: api.reducer,
 });
 

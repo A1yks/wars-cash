@@ -14,7 +14,7 @@ type EventCallback<FormValues extends BaseFormValues> = (formControls: FormContr
 
 export type EditableFormProps<FormValues extends BaseFormValues> = Omit<
     EditableContentProps,
-    'edit' | 'editModeContent' | 'onSave' | 'onCancel' | 'normalContent'
+    'edit' | 'editModeContent' | 'onSave' | 'onCancel' | 'normalContent' | 'buttonsWrapperClassName'
 > & {
     validationSchema: ObjectSchema<FormValues>;
     defaultValidationValues?: DefaultValues<FormValues>;
