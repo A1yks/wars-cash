@@ -112,3 +112,48 @@ table {
         }
     }
 }
+
+.pagination {
+    width: 100%;
+    margin-top: auto;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    border-top: 1px solid #ccc;
+    height: 6.2rem;
+    padding: 1rem 1.8rem;
+}
+
+.pagination-page {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid $blue;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.pagination-page-active {
+    border: none;
+}
+
+.pagination-page-link {
+    color: $blue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-page-active-link {
+    background: $blue;
+    color: #fff;
+}
+
+.pagination-page-disabled {
+    background: #000;
+    border-color: $light-gray;
+}

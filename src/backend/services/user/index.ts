@@ -7,6 +7,10 @@ import { Types } from 'mongoose';
 import FileUploaderService from '../fileUploader';
 import path from 'path';
 import BonusService from '../bonus';
+import formatNumber from '@backend/utils/formatNumber';
+import PaymentsService from '../payments';
+import { UserAdminInfo } from './types';
+import { PaymentStatus } from '@backend/models/Payment/types';
 
 namespace UserService {
     export async function findOrCreate(userData: Partial<IUser>) {
@@ -33,6 +37,21 @@ namespace UserService {
         }
 
         return user;
+    }
+
+    export async function getUsers(limit: number, offset: number, name?: string) {
+        const usersInfoQuery = User.find();
+        const countQuery = User.countDocuments();
+
+        if (name !== undefined) {
+            usersInfoQuery.where('name').regex(new RegExp(name, 'i'));
+            countQuery.where('name').regex(new RegExp(name, 'i'));
+        }
+
+        const [users, total] = await Promise.all([usersInfoQuery.skip(offset).limit(limit), countQuery.countDocuments()]);
+        const modifiedUsers = await Promise.all(users.map(modifyUser));
+
+        return { users: modifiedUsers, total };
     }
 
     export async function changeUserData(userId: IUser['_id'], userData: Partial<Omit<IUser, '_id'>>) {
@@ -67,6 +86,39 @@ namespace UserService {
             avatar: user.avatar,
             role: user.role,
         } as PublicUserData;
+    }
+
+    export async function restrictAccess(userId: IUser['_id'], isRestricted: boolean) {
+        const user = await getUser(userId);
+
+        user.isBanned = isRestricted;
+
+        await user.save();
+    }
+
+    export async function addBalance(userId: IUser['_id'], sum: number) {
+        const user = await getUser(userId);
+
+        user.balance += sum;
+
+        await user.save();
+
+        return formatNumber(user.balance / 100);
+    }
+
+    // TODO add deposits
+    async function modifyUser(user: IUser): Promise<UserAdminInfo> {
+        const withdrawn = await PaymentsService.getUserWithdrawnAmount(user._id);
+
+        return {
+            _id: user._id,
+            name: user.name,
+            avatarSrc: user.avatar,
+            balance: formatNumber(user.balance / 100),
+            deposited: formatNumber(0 / 100),
+            isBanned: user.isBanned,
+            withdrawn,
+        };
     }
 
     async function createUser(userData: Partial<IUser>) {

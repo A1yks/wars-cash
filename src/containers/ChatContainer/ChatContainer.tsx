@@ -38,8 +38,10 @@ function ChatContainer() {
     const totalBlockedUsers = bannedUsersResponse?.data.total || 0;
 
     useEffect(() => {
-        triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
-    }, [triggerGetBannedUsers]);
+        if (user?.role !== undefined && moderRoles.includes(user.role)) {
+            triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
+        }
+    }, [triggerGetBannedUsers, user?.role]);
 
     const saveMessage = useCallback(
         async (message: string) => {

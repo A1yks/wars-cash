@@ -1,5 +1,5 @@
 import { errorsHandler, handleServerErrors } from '@backend/utils/errorsHandler';
-import { ChangeNameReq } from './types';
+import { ChangeBalanceReq, ChangeNameReq, GetUsersReq, RestrictAccessReq } from './types';
 import UserService from '@backend/services/user';
 import FileUploaderService from '@backend/services/fileUploader';
 import isValidMimeType from '@backend/utils/isValidMimeType';
@@ -10,6 +10,7 @@ import path from 'path';
 import logger from '@backend/utils/logger';
 import { MAX_AVATAR_SIZE } from '@backend/constants';
 import formatBytes from '@backend/utils/formatBytes';
+import formatNumber from '@backend/utils/formatNumber';
 
 namespace UserController {
     const upload = FileUploaderService.createUploader({
@@ -61,6 +62,30 @@ namespace UserController {
                 });
             }
         });
+    });
+
+    export const restrictAccess = handleServerErrors<RestrictAccessReq>(async (req, res) => {
+        const { userId, isRestricted } = req.body;
+
+        await UserService.restrictAccess(userId, isRestricted);
+
+        res.status(204).send();
+    });
+
+    export const getUsers = handleServerErrors<void, void, GetUsersReq>(async (req, res) => {
+        const { limit = 20, offset = 0, name } = req.query;
+
+        const data = await UserService.getUsers(limit, offset, name);
+
+        res.status(200).json({ data });
+    });
+
+    export const changeBalance = handleServerErrors<ChangeBalanceReq>(async (req, res) => {
+        const { userId, newBalance } = req.body;
+
+        const updatedUser = await UserService.changeUserData(userId, { balance: newBalance * 100 });
+
+        res.status(200).json({ data: formatNumber(updatedUser.balance / 100) });
     });
 }
 

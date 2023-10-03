@@ -1,4 +1,5 @@
-import { IPayment } from '@backend/models/Payment/types';
+import { Pagination } from '@backend/common/types';
+import { IPayment, PaymentStatus } from '@backend/models/Payment/types';
 
 export type CreatePaymentReq = Omit<IPayment, '_id' | 'date' | 'user' | 'status'>;
 
@@ -7,7 +8,11 @@ export type ChangePaymentStatusReq = {
     status: IPayment['status'];
 };
 
-export type GetPaymentsReq = {
+export type GetPaymentsFilter = {
+    [key in keyof Omit<IPayment, '_id' | 'user' | 'status'>]?: 1 | -1;
+} & { status?: PaymentStatus | '*' };
+
+export type GetPaymentsReq = Pagination & {
     userId?: IPayment['user'];
-    allPayments?: boolean;
+    filter?: string;
 };

@@ -19,7 +19,7 @@ export const paymentSystems = Object.values(PaymentSystem);
 export enum PaymentStatus {
     Pending = 'В обработке',
     Success = 'Выполнено',
-    Failed = 'Отклонено',
+    Rejected = 'Отклонено',
 }
 
 export const paymentStatuses = Object.values(PaymentStatus);

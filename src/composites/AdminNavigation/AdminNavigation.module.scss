@@ -1,0 +1,23 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.menuItem {
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    a {
+        color: $blue;
+
+        &.active {
+            color: $red;
+        }
+    }
+}

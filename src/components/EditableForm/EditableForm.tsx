@@ -11,8 +11,8 @@ function EditableForm<FormValues extends BaseFormValues>(props: EditableFormProp
 
     return (
         <div className={c(styles.editableForm, props.className)}>
-            <div className={styles.content}>
-                <div className={styles.titleWrapper}>
+            <div className={c(styles.content, props.contentClassName)}>
+                <div className={c(styles.titleWrapper, props.titleWrapperClassName)}>
                     {props.title && (!props.hidenTitleInEditMode || !isInEditMode) && <h6 className={styles.title}>{props.title}</h6>}
                     {!isInEditMode && (
                         <div className={styles.editIconWrapper} title={props.tooltip || 'Редактировать'}>

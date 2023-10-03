@@ -1,5 +1,7 @@
 import { PublicUserData } from '@backend/models/User/types';
 import { api } from '.';
+import { ChangeBalanceReq, GetUsersReq } from '@backend/controllers/user/types';
+import { GetUsersRes } from './types';
 
 export const userApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -17,7 +19,20 @@ export const userApi = api.injectEndpoints({
                 body: data,
             }),
         }),
+        getUsers: build.query<API.Response<GetUsersRes>, GetUsersReq>({
+            query: (data) => ({
+                url: '/user',
+                params: data,
+            }),
+        }),
+        changeBalance: build.mutation<API.Response<number>, ChangeBalanceReq>({
+            query: (data) => ({
+                url: '/user/change/balance',
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useChangeNameMutation, useChangeAvatarMutation } = userApi;
+export const { useChangeNameMutation, useChangeAvatarMutation, useGetUsersQuery, useChangeBalanceMutation } = userApi;

@@ -1,6 +1,7 @@
 import { handleServerErrors } from '@backend/utils/errorsHandler';
-import { ChangePaymentStatusReq, CreatePaymentReq, GetPaymentsReq } from './types';
+import { ChangePaymentStatusReq, CreatePaymentReq, GetPaymentsFilter, GetPaymentsReq } from './types';
 import PaymentsService from '@backend/services/payments';
+import { filterSchema } from './validation';
 
 namespace PaymentsController {
     export const createPaymentOrder = handleServerErrors<CreatePaymentReq>(async (req, res) => {
@@ -18,12 +19,17 @@ namespace PaymentsController {
     });
 
     export const getPayments = handleServerErrors<void, void, GetPaymentsReq>(async (req, res) => {
-        const { allPayments } = req.query;
+        const { filter: encodedFilter, limit = 20, offset = 0 } = req.query;
         const userId = req.query.userId || req.userId;
+        let filter: GetPaymentsFilter = { date: -1 };
 
-        const payments = await PaymentsService.getPayments(allPayments ? undefined : userId);
+        if (encodedFilter !== undefined) {
+            filter = await filterSchema.validate(JSON.parse(decodeURIComponent(encodedFilter)));
+        }
 
-        res.status(200).json({ data: payments });
+        const data = await PaymentsService.getPayments(limit, offset, filter, userId);
+
+        res.status(200).json({ data });
     });
 }
 

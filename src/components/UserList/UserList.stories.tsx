@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import UserList from '.';
 import UserListItem from 'components/UserListItem';
-import { user } from 'stories/mock';
 import ChatMessage from 'components/ChatMessage';
+import { user } from '../../../.storybook/mock';
 
 const meta: Meta<typeof UserList> = {
     title: 'Components/UserList',

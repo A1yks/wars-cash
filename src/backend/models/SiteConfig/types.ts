@@ -6,6 +6,7 @@ export interface ISiteConfig {
     chatMessagesToSave: number;
     spinDuration: number;
     minWithdrawalAmount: number;
+    randomOrgApiKey: string;
     bonuses: {
         [Roles.User]: number;
         [Roles.Vip]: number;

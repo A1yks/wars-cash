@@ -1,6 +1,7 @@
 import formatNumber from '@backend/utils/formatNumber';
 import { BetData, BetTypes, GameData, GameEventCallback, GameEventCallbacks, GameEvents } from './types';
 import { NUMBERS, GAME_TIME, SPINNING_TIME } from './config';
+import RandomOrgService from '../randomOrg';
 
 class Game {
     blueTeamSum = 0;
@@ -16,6 +17,7 @@ class Game {
     isSpinning = false;
     isCancelled = false;
     hasOtherBettors = false;
+    private winnerNumPromise: Promise<number> | null = null;
     private firstBettorId: string | null = null;
     private startSpinningTime: number | null = null;
     private eventListenersSet = false;
@@ -44,6 +46,7 @@ class Game {
 
         this.startTime = Date.now();
         this.isGameStarted = true;
+        this.winnerNumPromise = RandomOrgService.getRandomInt(1, NUMBERS).catch(() => this.generateRandomNumber());
     }
 
     get betsAmount() {
@@ -156,10 +159,10 @@ class Game {
         this.endGame();
     }
 
-    private startSpinning() {
+    private async startSpinning() {
         this.isAcceptingBets = false;
 
-        const { rotation, winner } = this.getWinnerData();
+        const { rotation, winner } = await this.getWinnerData();
 
         this.callbacks.winnerDegrees?.({ degrees: rotation, progress: this.spinningProgress });
 
@@ -210,6 +213,7 @@ class Game {
         this.isCancelled = false;
         this.firstBettorId = null;
         this.winner = null;
+        this.winnerNumPromise = null;
     }
 
     private getWinChances() {
@@ -223,13 +227,19 @@ class Game {
         };
     }
 
-    private getWinnerData() {
-        const winnerNumber = this.generateRandomNumber();
+    private async getWinnerData() {
+        if (this.winnerNumPromise === null) {
+            this.winnerNumPromise = Promise.resolve(this.generateRandomNumber());
+        }
+
+        const winnerNumber = await this.winnerNumPromise;
         const winner = this.getWinner(winnerNumber);
         const degree = (360 / NUMBERS) * winnerNumber;
         const rotation = degree;
 
         this.rotation = rotation;
+
+        console.log(winnerNumber);
 
         return { rotation, winner };
     }

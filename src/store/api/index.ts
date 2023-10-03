@@ -15,6 +15,7 @@ export const api = createApi({
             query: () => '/site-config',
         }),
     }),
+    tagTypes: ['PaymentRequests'],
 });
 
 export const { getRunningQueriesThunk } = api.util;

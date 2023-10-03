@@ -1,14 +1,11 @@
 import ProfileContent from 'features/ProfileContent';
 import withAuthCheck from 'hoc/withAuthCheck';
-import MainLayout from 'layouts/MainLayout';
-import { ReactNode } from 'react';
+import { getDefaultLayout } from 'layouts/getters';
 
 function Profile() {
     return <ProfileContent />;
 }
 
-Profile.getLayout = function getLayout(page: ReactNode) {
-    return <MainLayout title="Профиль">{page}</MainLayout>;
-};
+Profile.getLayout = getDefaultLayout;
 
 export default withAuthCheck(Profile);

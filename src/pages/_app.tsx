@@ -20,9 +20,20 @@ import { SocketContextProvider } from 'context/SocketContext';
 import { loadLastGamesHelper } from 'initialPropsHelpers/loadLastGames';
 import { loadChatMessagesHelper } from 'initialPropsHelpers/loadChatMessages';
 import * as yup from 'yup';
+import { loadSiteConfigHelper } from 'initialPropsHelpers/loadSiteConfig';
 
 yup.addMethod(yup.string, 'integer', function () {
     return this.matches(/^\d+$/, 'Значние должно быть числом');
+});
+
+yup.addMethod(yup.object, 'atLeastOneOf', function (list: any[]) {
+    return this.test({
+        name: 'atLeastOneOf',
+        message: 'Должен быть передан один из следующих параметров: ${keys}',
+        exclusive: true,
+        params: { keys: list.join(', ') },
+        test: (value) => value == null || list.some((f) => value[f] != null),
+    });
 });
 
 type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
@@ -73,7 +84,7 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext)
                 }
             }
 
-            await Promise.all([loadChatMessagesHelper(store), loadLastGamesHelper(store)]);
+            await Promise.all([loadChatMessagesHelper(store), loadLastGamesHelper(store), loadSiteConfigHelper(store)]);
             await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
             const componentProps = await App.getInitialProps(appContext);

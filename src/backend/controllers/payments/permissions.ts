@@ -3,7 +3,7 @@ import { ChangePaymentStatusReq, GetPaymentsReq } from './types';
 import { isAdmin } from '@backend/models/User/types';
 
 export async function canGetPayments(req: Server.Request<GetPaymentsReq>) {
-    if (req.body.userId === undefined && req.body.allPayments === undefined) {
+    if (req.body.userId === undefined) {
         return true;
     }
 

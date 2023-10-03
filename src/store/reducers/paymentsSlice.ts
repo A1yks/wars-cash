@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { paymentsApi } from 'store/api/payments';
 
 export type PaymentsState = {
-    payments: IPayment[];
+    requests: IPayment[];
+    total: number;
 };
 
 const initialState: PaymentsState = {
-    payments: [],
+    requests: [],
+    total: 0,
 };
 
 const paymentsSlice = createSlice({
@@ -17,10 +19,10 @@ const paymentsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addMatcher(paymentsApi.endpoints.getPayments.matchFulfilled, (state, action) => {
-                state.payments = action.payload.data;
+                return action.payload.data;
             })
             .addMatcher(paymentsApi.endpoints.createPaymentOrder.matchFulfilled, (state, action) => {
-                state.payments.push(action.payload.data.payment);
+                state.requests.push(action.payload.data.payment);
             });
     },
 });

@@ -13,7 +13,7 @@ import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
 import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
-import { IUser } from '@backend/models/User/types';
+import { IUser, Roles, adminRoles } from '@backend/models/User/types';
 import Spinner from 'components/Spinner/Spinner';
 
 export type NavigationProps = {
@@ -30,6 +30,13 @@ function Navigation(props: NavigationProps) {
     const menuJsx = useMemo(
         () => (
             <>
+                {adminRoles.includes(user?.role || Roles.User) && (
+                    <li className={styles.menuItem}>
+                        <Link href="/admin" onClick={closeMenu}>
+                            Админка
+                        </Link>
+                    </li>
+                )}
                 <li className={styles.menuItem}>
                     <Link href="/" onClick={closeMenu}>
                         Главная
@@ -91,7 +98,7 @@ function Navigation(props: NavigationProps) {
                 </li>
             </>
         ),
-        [closeMenu, logoutHandler]
+        [closeMenu, logoutHandler, user?.role]
     );
 
     const authBtnJsx = isLoggingIn ? (

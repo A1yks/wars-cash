@@ -24,8 +24,8 @@ export function isModer(role: Roles) {
     return moderRoles.includes(role);
 }
 
-export function compareRoles(moderRole: Roles, userRole: Roles) {
-    switch (moderRole) {
+export function compareRoles(adminRole: Roles, userRole: Roles) {
+    switch (adminRole) {
         case Roles.Moderator: {
             return userRole !== Roles.MainAdmin && userRole !== Roles.Admin && userRole !== Roles.Moderator;
         }

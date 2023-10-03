@@ -2,8 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import BankList from '.';
 import { BlueTeam, RedTeam } from 'components/BankHeader/BankHeader.stories';
 import { Types } from 'mongoose';
-import { Roles } from '@backend/models/User/types';
-import { user } from 'stories/mock';
+import { user } from '../../../.storybook/mock';
 
 const meta = {
     title: 'Composites/BankList',
