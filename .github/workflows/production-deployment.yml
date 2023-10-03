@@ -1,4 +1,4 @@
-name: Deployment
+name: Production Deployment
 on:
     workflow_dispatch:
     push:
@@ -21,6 +21,10 @@ jobs:
               run: npm ci
             - name: Build
               run: npm run build
+            - name: Create env file
+              run: echo "$ENV_PROD" > .env.production
+              env:
+                  ENV_PROD: ${{ secrets.ENV_PROD }}
             - name: Setup SSH
               uses: shimataro/ssh-key-action@v2
               with:
@@ -28,4 +32,5 @@ jobs:
                   known_hosts: ${{ secrets.KNOWN_HOSTS }}
             - name: Deploy on server
               run: |
-                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin master && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash"
+                  rsync -avz ./.env.development ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/apps/wars-cash
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ~/apps/wars-cash && git pull origin master && npm ci && rm -rf .next && npm run build && pm2 restart wars-cash --update-env"

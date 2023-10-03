@@ -2,13 +2,58 @@
     display: flex;
     align-items: flex-start;
     gap: 1.6rem;
+    width: 100%;
+
+    .content {
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
     .info {
         font-size: 1.6rem;
         font-weight: bold;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .text {
         font-size: 1.5rem;
+        white-space: break-spaces;
+    }
+
+    .controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: auto;
+        flex-shrink: 0;
+
+        .icon {
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .editableForm {
+            max-width: 13rem;
+            font-size: 0;
+        }
+
+        .timeoutInput {
+            font-size: 1.2rem;
+            padding: 0.8rem 1rem;
+        }
+
+        .buttonsWrapper {
+            & > div {
+                width: 50%;
+
+                button {
+                    padding: 0;
+                    height: 2.5rem;
+                    width: 100%;
+                    font-size: 1.1rem;
+                    font-weight: 400;
+                }
+            }
+        }
     }
 }

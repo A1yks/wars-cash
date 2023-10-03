@@ -7,43 +7,46 @@ import Chat from 'composites/Chat';
 import meta from 'composites/Chat/Chat.stories';
 import BettingForm from 'composites/BettingForm';
 import WinProbabilities from 'composites/WinProbabilities';
-import { BetTypes } from 'types/global';
+import { BetTypes } from '@backend/services/game/types';
 import LastGames from 'composites/LastGames';
 import Container from 'components/Container';
 import BankList from 'composites/BankList';
 // TODO delete
 import bankListMeta, { BlueBankList, RedBankList } from 'composites/BankList/BankList.stories';
 import useAppSelector from 'hooks/useAppSelector';
+import BettingFormContainer from 'containers/BettingFormContainer/BettingFormContainer';
+import WinProbabilitiesContainer from 'containers/WinProbabilitiesContainer';
+import GameSpinnerContainer from 'containers/GameSpinnerContainer';
+import RedBankListContainer from 'containers/RedBankListContainer';
+import BlueBankListContainer from 'containers/BlueBankListContainer';
+import LastGamesContainer from 'containers/LastGamesContainer';
+import ChatContainer from 'containers/ChatContainer';
 
-export type MainContentProps = {};
-
-function MainContent(props: MainContentProps) {
-    const user = useAppSelector((state) => state.auth.user);
+function MainContent() {
+    const user = useAppSelector((state) => state.user);
 
     return (
         <div className={styles.mainWrapper}>
             <Container className={styles.mainContainer}>
                 <div className={styles.leftSide}>
-                    <BettingForm balance={100} onBlueTeamBet={() => {}} onRedTeamBet={() => {}} />
-                    <WinProbabilities
-                        percentageValue={1000}
-                        redTeamInfo={{ minValue: 1, maxValue: 532 }}
-                        blueTeamInfo={{ minValue: 533, maxValue: 1000 }}
-                    />
-                    <LastGames
-                        data={[BetTypes.Blue, BetTypes.Red, BetTypes.Red, BetTypes.Blue, BetTypes.Red, BetTypes.Blue, BetTypes.Blue, BetTypes.Red]}
-                    />
+                    <BettingFormContainer />
+                    <WinProbabilitiesContainer />
+                    <LastGamesContainer />
                 </div>
                 <div className={c(styles.gameSpinner, 'flex', 'center')}>
-                    <GameSpinner blueColorPercent={47} text="57" />
+                    <GameSpinnerContainer />
                 </div>
                 <div className={styles.rightSide}>
-                    <Chat inChat={257} isLoggedIn={user !== null} messages={meta.args.messages} />
+                    <ChatContainer />
                 </div>
             </Container>
             <Container className={styles.bankLists}>
-                <BankList bets={bankListMeta.args.bets} {...RedBankList.args} className={styles.bankList} />
-                <BankList bets={bankListMeta.args.bets} {...BlueBankList.args} className={styles.bankList} />
+                <div className={styles.bankList}>
+                    <RedBankListContainer />
+                </div>
+                <div className={styles.bankList}>
+                    <BlueBankListContainer />
+                </div>
             </Container>
         </div>
     );

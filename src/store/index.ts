@@ -1,14 +1,20 @@
 import { AnyAction, Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
-import testSlice from './reducers/testSlide';
 import { api } from './api';
 import authSlice from './reducers/authSlice';
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
+import userSlice from './reducers/userSlice';
+import gameSlice from './reducers/gameSlice';
+import lastGamesSlice from './reducers/lastGamesSlice';
+import chatSlice from './reducers/chatSlice';
 
 export let store: ReturnType<typeof configStore>;
 
 const combineReducer = combineReducers({
-    test: testSlice.reducer,
     auth: authSlice.reducer,
+    user: userSlice.reducer,
+    game: gameSlice.reducer,
+    chat: chatSlice.reducer,
+    lastGames: lastGamesSlice.reducer,
     [api.reducerPath]: api.reducer,
 });
 

@@ -1,6 +1,5 @@
 import c from 'clsx';
 import styles from './Navigation.module.scss';
-import { User } from 'types/global';
 import Link from 'components/Link/Link';
 import UserCard from 'components/UserCard';
 import { Modal, ModalOpener } from 'components/Modal';
@@ -9,22 +8,24 @@ import DepositContent from 'features/DepositContent';
 import WithdrawalContent from 'features/WithdrawalContent';
 import BonusContent from 'features/BonusContent';
 import FaqContent from 'features/FaqContent';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
 import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
+import { IUser } from '@backend/models/User/types';
+import Spinner from 'components/Spinner/Spinner';
 
 export type NavigationProps = {
-    user: User | null;
+    user: IUser | null;
     className?: string;
-    onLogin: () => void;
-    onLogout: () => void;
+    onLogin: () => MaybePromise<void>;
+    onLogout: () => MaybePromise<void>;
 };
 
 function Navigation(props: NavigationProps) {
     const { user, className } = props;
-    const { isLoggedIn, isMenuOpened, openMenu, closeMenu, toggleMenu, loginHandler, logoutHandler } = useNavigation(props);
+    const { isLoggedIn, isLoggingIn, isMenuOpened, openMenu, closeMenu, toggleMenu, loginHandler, logoutHandler } = useNavigation(props);
 
     const menuJsx = useMemo(
         () => (
@@ -93,6 +94,14 @@ function Navigation(props: NavigationProps) {
         [closeMenu, logoutHandler]
     );
 
+    const authBtnJsx = isLoggingIn ? (
+        <Spinner />
+    ) : (
+        <Link href="#" className={styles.login} onClick={loginHandler}>
+            Авторизация
+        </Link>
+    );
+
     return (
         <nav className={c(styles.nav, className)}>
             {isLoggedIn && <UserCard name={user!.name} avatarSrc={user!.avatar} profileUrl="/user/profile" className={styles.desktopUserCard} />}
@@ -106,30 +115,17 @@ function Navigation(props: NavigationProps) {
                             profileUrl="/user/profile"
                             className={styles.mobileUserCard}
                             onClick={closeMenu}
+                            avatarPriority
                         />
                         <ul className={c(styles.menu, styles.burgerMenu)}>{menuJsx}</ul>
                     </Menu>
                 </>
             ) : (
                 <ul className={c(styles.menu, styles.mobileMenu)}>
-                    <li>
-                        <Link href="#" className={styles.login} onClick={loginHandler}>
-                            Авторизация
-                        </Link>
-                    </li>
+                    <li>{authBtnJsx}</li>
                 </ul>
             )}
-            <ul className={c(styles.menu, styles.desktopMenu)}>
-                {isLoggedIn ? (
-                    menuJsx
-                ) : (
-                    <li>
-                        <Link href="#" className={styles.login} onClick={loginHandler}>
-                            Авторизация
-                        </Link>
-                    </li>
-                )}
-            </ul>
+            <ul className={c(styles.menu, styles.desktopMenu)}>{isLoggedIn ? menuJsx : <li>{authBtnJsx}</li>}</ul>
         </nav>
     );
 }

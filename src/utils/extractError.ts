@@ -10,6 +10,10 @@ export function isApiError(error: unknown): error is API.ErrorResponse {
     return typeof err === 'string';
 }
 
+export function hasMessage(error: unknown): error is { message: string } {
+    return error !== null && typeof error === 'object' && Object.hasOwn(error, 'message');
+}
+
 export function extractError(err: unknown) {
     if (isFetchBaseQueryError(err)) {
         const data = err.data;
@@ -23,7 +27,7 @@ export function extractError(err: unknown) {
         return err.error;
     }
 
-    if (err instanceof Error) {
+    if (hasMessage(err) || err instanceof Error) {
         return err.message;
     }
 

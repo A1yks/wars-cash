@@ -11,6 +11,7 @@ export type EditableContentProps = {
     submitBtnText?: string;
     cancelBtnText?: string;
     className?: string;
+    buttonsWrapperClassName?: string;
     onSave: () => MaybePromise<void>;
     onCancel?: () => MaybePromise<void>;
 };
@@ -23,7 +24,7 @@ function EditableContent(props: EditableContentProps) {
             {props.edit ? (
                 <>
                     <div>{props.editModeContent}</div>
-                    <div className={styles.buttons}>
+                    <div className={c(styles.buttons, props.buttonsWrapperClassName)}>
                         <div>
                             <Button type="submit" loading={props.isSaving} disabled={props.isSaving} className={styles.button}>
                                 {submitBtnText}

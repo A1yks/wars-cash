@@ -1,4 +1,4 @@
-import { ErrorTypes } from 'backend/enums/errors';
+import { ErrorTypes } from '@backend/enums/errors';
 import logger from '../logger';
 
 type ErrorConstructor = Partial<typeof Error> & {
@@ -47,6 +47,7 @@ const defaultConfig: Partial<Configuration> = {
         [ErrorTypes.BAD_DATA, 400],
         [ErrorTypes.ALREADY_EXISTS, 409],
         [ErrorTypes.NO_PERMISSIONS, 403],
+        [ErrorTypes.INVALID_TOKEN, 401],
     ],
     log: true,
 };

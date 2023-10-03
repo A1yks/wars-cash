@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Avatar from '.';
-import { Roles } from 'types/global';
+import { Roles } from '@backend/models/User/types';
 
 const meta: Meta<typeof Avatar> = {
     title: 'Components/Avatar',

@@ -12,7 +12,7 @@ function Logo(props: LogoProps) {
 
     return (
         <Link href="/" className={styles.logo}>
-            <Image src={src} fill alt="" sizes="212px" />
+            <Image src={src} fill alt="" sizes="212px" priority loading="eager" />
         </Link>
     );
 }

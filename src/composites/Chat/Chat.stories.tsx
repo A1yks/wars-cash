@@ -2,13 +2,14 @@ import { Meta, StoryObj } from '@storybook/react';
 import Chat from '.';
 import { Types } from 'mongoose';
 import { user } from 'stories/mock';
+import { Roles } from '@backend/models/User/types';
 
 const meta = {
     title: 'Composites/Chat',
     component: Chat,
     tags: ['autodocs'],
     args: {
-        inChat: 532,
+        online: 532,
         messages: [
             {
                 _id: '1' as unknown as Types.ObjectId,
@@ -103,9 +104,23 @@ type Story = StoryObj<typeof meta>;
 export const LoggedIn: Story = {
     args: {
         isLoggedIn: true,
+        chatTimeout: 0,
+        userRole: Roles.User,
+        blockedUsers: [],
+        blockedUsersLoading: false,
+        blockedUsersPerformingAction: false,
+        totalBlockedUsers: 0,
     },
 };
 
 export const LoggetOut: Story = {
-    args: { isLoggedIn: false },
+    args: {
+        isLoggedIn: false,
+        chatTimeout: 0,
+        userRole: Roles.User,
+        blockedUsers: [],
+        blockedUsersLoading: false,
+        blockedUsersPerformingAction: false,
+        totalBlockedUsers: 0,
+    },
 };

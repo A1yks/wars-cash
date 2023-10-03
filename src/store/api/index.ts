@@ -1,22 +1,20 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
+import baseQueryWithReauth from './helpers/baseQueryWithReauth';
 
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api' }),
+    baseQuery: baseQueryWithReauth,
     extractRehydrationInfo(action, { reducerPath }) {
         if (action.type === HYDRATE) {
             return action.payload[reducerPath];
         }
     },
     endpoints: (build) => ({
-        test: build.query<{ value: number }, void>({
-            query: () => ({
-                url: '/test',
-            }),
+        getSiteConfig: build.query({
+            query: () => '/site-config',
         }),
     }),
 });
 
 export const { getRunningQueriesThunk } = api.util;
-export const { useTestQuery } = api;

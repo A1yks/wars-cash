@@ -1,10 +1,6 @@
-import express from 'express';
-import { Types } from 'mongoose';
 import { ReactNode } from 'react';
 
 declare global {
-    type MaybePromise<T> = T | Promise<T>;
-
     namespace API {
         type Response<T = unknown> = {
             data: T;
@@ -23,6 +19,12 @@ declare global {
 
     interface Window {
         lastHref?: string;
+    }
+}
+
+declare module 'yup' {
+    interface StringSchema {
+        integer(): StringSchema;
     }
 }
 

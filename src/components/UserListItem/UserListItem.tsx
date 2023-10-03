@@ -1,26 +1,29 @@
 import UserCard from 'components/UserCard';
-import { UserCardProps } from 'components/UserCard/UserCard';
 import { ReactNode } from 'react';
 import styles from './UserListItem.module.scss';
 import c from 'clsx';
 import ChatMessage from 'components/ChatMessage';
-import { User } from 'types/global';
+import { PublicUserData } from '@backend/models/User/types';
+import { MessageData, ModerationData } from '@backend/services/socket/types';
 
-export type UserListItemProps = (
-    | {
-          variant?: 'default';
-          children?: ReactNode;
-          profileUrl?: string;
-      }
-    | {
-          variant?: 'message';
-          children: string & {};
-          profileUrl?: never;
-      }
-) & { className?: string; user: User };
+export type UserListItemCardProps = {
+    variant: 'default';
+    children?: ReactNode;
+    profileUrl?: string;
+    user: PublicUserData;
+};
+
+export type UserListItemCustomProps = {
+    variant: 'custom';
+    children?: ReactNode;
+    profileUrl?: never;
+    user?: never;
+};
+
+export type UserListItemProps = (UserListItemCardProps | UserListItemCustomProps) & { className?: string };
 
 function UserListItem(props: UserListItemProps) {
-    const { className, children, variant = 'default', user, profileUrl } = props;
+    const { className, children, variant, user, profileUrl } = props;
 
     return (
         <li className={c(styles.listItem, className)}>
@@ -30,7 +33,7 @@ function UserListItem(props: UserListItemProps) {
                     {children !== undefined && <div className={styles.rightContent}>{children}</div>}
                 </>
             ) : (
-                <ChatMessage user={user}>{children as string}</ChatMessage>
+                props.children
             )}
         </li>
     );

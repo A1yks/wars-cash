@@ -1,0 +1,106 @@
+.blockedUsers {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .search {
+        padding: 1rem;
+    }
+
+    .listItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .userInfo {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+
+        .userInfoText {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .info {
+        font-size: 1.6rem;
+    }
+
+    .actionBtn {
+        font-size: 1.2rem;
+        padding: 0.8rem 1rem;
+    }
+}
+
+.scrollbar {
+    height: 54.6rem !important;
+
+    &.hasPages {
+        height: 48.4rem !important;
+    }
+
+    &.noPages {
+        height: 61rem !important;
+    }
+}
+
+.noBlockedUsers {
+    height: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    max-width: 75%;
+    margin: auto;
+}
+
+.pagination {
+    width: 100%;
+    margin-top: auto;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    border-top: 1px solid $light-gray;
+    height: 6.2rem;
+    padding: 1rem 1.8rem;
+}
+
+.paginationPage {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid $blue;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.paginationPageActive {
+    border: none;
+}
+
+.paginationPageLink {
+    color: $blue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paginationPageActiveLink {
+    background: $blue;
+    color: #fff;
+}
+
+.paginationPageDisabled {
+    background: #000;
+    border-color: $light-gray;
+}

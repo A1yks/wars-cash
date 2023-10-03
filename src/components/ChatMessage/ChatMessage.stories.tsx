@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import ChatMessage from '.';
-import { Roles } from 'types/global';
-import { Types } from 'mongoose';
+import { Roles } from '@backend/models/User/types';
+import { user } from 'stories/mock';
 
 const meta: Meta<typeof ChatMessage> = {
     title: 'Components/ChatMessage',
@@ -21,23 +21,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default = {
-    args: {
-        user: {
-            id: '1' as unknown as Types.ObjectId,
-            avatar: '/images/avatar.jpg',
-            name: 'Степан Иванов',
-            role: Roles.User,
-        },
-        children: 'Mollit in id consectetur enim do ullamco Lorem culpa reprehenderit aliquip in commodo est sint.',
-    },
+    args: {},
 } satisfies Story;
 
 export const WithRole: Story = {
-    args: {
-        user: {
-            ...Default.args.user,
-            role: Roles.Moderator,
-        },
-        children: 'Mollit in id consectetur enim do ullamco Lorem culpa reprehenderit aliquip in commodo est sint.',
-    },
+    args: {},
 };

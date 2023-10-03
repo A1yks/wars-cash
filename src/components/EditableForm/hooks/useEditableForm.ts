@@ -16,6 +16,7 @@ function useEditableForm<FormValues extends BaseFormValues>(props: EditableFormP
 
             if (!props.persistEditModeOnSave) {
                 exitEditMode();
+                props.onNormalMode?.();
             }
         },
         {
@@ -24,13 +25,19 @@ function useEditableForm<FormValues extends BaseFormValues>(props: EditableFormP
     );
 
     async function cancelHandler() {
+        props.onNormalMode?.();
         await props.onCancel?.(formControls);
         exitEditMode();
     }
 
+    function enterEditModeHandler() {
+        props.onEdit?.();
+        enterEditMode();
+    }
+
     const renderEditModeContent = () => props.renderEditModeContent({ control });
 
-    return { control, isInEditMode, renderEditModeContent, enterEditMode, saveHandler, cancelHandler };
+    return { control, isInEditMode, renderEditModeContent, enterEditMode: enterEditModeHandler, saveHandler, cancelHandler };
 }
 
 export default useEditableForm;

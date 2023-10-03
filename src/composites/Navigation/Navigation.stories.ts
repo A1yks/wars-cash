@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Navigation from '.';
-import { Roles } from 'types/global';
-import { Types } from 'mongoose';
+import { user } from 'stories/mock';
 
 const meta: Meta<typeof Navigation> = {
     title: 'Composites/Navigation',
@@ -15,12 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
     args: {
-        user: {
-            id: '1' as unknown as Types.ObjectId,
-            avatar: '/images/avatar.jpg',
-            name: 'Степан Иванов',
-            role: Roles.User,
-        },
+        user,
     },
 };
 

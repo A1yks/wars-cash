@@ -17,6 +17,17 @@ body {
     font-family: OpenSans, sans-serif;
 }
 
+#__next {
+    height: 100%;
+}
+
+.snackbar-content {
+    #notistack-snackbar {
+        font-size: 1.4rem;
+        font-family: OpenSans;
+    }
+}
+
 a {
     text-decoration: none;
     color: $black;
@@ -33,6 +44,26 @@ ul {
 .center {
     justify-content: center;
     align-items: center;
+}
+
+.bolder {
+    font-weight: 500;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.color-red {
+    color: $red;
+}
+
+.color-blue {
+    color: $blue;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .content {

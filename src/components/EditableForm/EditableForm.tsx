@@ -13,10 +13,14 @@ function EditableForm<FormValues extends BaseFormValues>(props: EditableFormProp
         <div className={c(styles.editableForm, props.className)}>
             <div className={styles.content}>
                 <div className={styles.titleWrapper}>
-                    {(!props.hidenTitleInEditMode || !isInEditMode) && <h6 className={styles.title}>{props.title}</h6>}
+                    {props.title && (!props.hidenTitleInEditMode || !isInEditMode) && <h6 className={styles.title}>{props.title}</h6>}
                     {!isInEditMode && (
                         <div className={styles.editIconWrapper} title={props.tooltip || 'Редактировать'}>
-                            <FontAwesomeIcon icon={faEdit} onClick={enterEditMode} className={styles.editIcon} />
+                            {props.editIcon ? (
+                                <span onClick={enterEditMode}>{props.editIcon}</span>
+                            ) : (
+                                <FontAwesomeIcon icon={faEdit} className={styles.editIcon} onClick={enterEditMode} />
+                            )}
                         </div>
                     )}
                 </div>
@@ -30,6 +34,7 @@ function EditableForm<FormValues extends BaseFormValues>(props: EditableFormProp
                     submitBtnText={props.submitBtnText}
                     cancelBtnText={props.cancelBtnText}
                     className={props.editableContentClassName}
+                    buttonsWrapperClassName={props.editableContentButtonsWrapperClassName}
                 />
             </div>
         </div>

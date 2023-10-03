@@ -1,14 +1,16 @@
 import React from 'react';
+import c from 'clsx';
 import useControlledElement from 'hooks/useControlledElement';
 import { FieldValues } from 'react-hook-form';
 import { ControllerConfig } from 'hooks/useControlledElement';
 import Input, { InputProps } from 'components/Input';
 import styles from './ControlledInput.module.scss';
 
-export type ControlledInputProps<T extends FieldValues = FieldValues> = Omit<InputProps, 'name'> & ControllerConfig<T>;
+export type ControlledInputProps<T extends FieldValues = FieldValues> = Omit<InputProps, 'name'> &
+    ControllerConfig<T> & { errLabelClassName?: string };
 
 function ControlledInput<T extends FieldValues = FieldValues>(props: ControlledInputProps<T>, ref: React.ForwardedRef<HTMLInputElement>) {
-    const { control, name, rules, defaultValue, value, shouldUnregister, validationValue, onBlur, onChange, ...restProps } = props;
+    const { control, name, rules, defaultValue, value, shouldUnregister, validationValue, onBlur, onChange, errLabelClassName, ...restProps } = props;
     const { error, field, invalid, changeHandler, blurHandler } = useControlledElement({
         control,
         name,
@@ -26,7 +28,7 @@ function ControlledInput<T extends FieldValues = FieldValues>(props: ControlledI
     return (
         <div className={styles.input} ref={ref}>
             <Input {...restProps} ref={field.ref} onChange={changeHandler} onBlur={blurHandler} value={value} name={field.name} />
-            {isError && <div className={styles.errText}>{errText}</div>}
+            {isError && <div className={c(styles.errText, errLabelClassName)}>{errText}</div>}
         </div>
     );
 }

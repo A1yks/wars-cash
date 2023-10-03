@@ -18,15 +18,19 @@ export type EditableFormProps<FormValues extends BaseFormValues> = Omit<
 > & {
     validationSchema: ObjectSchema<FormValues>;
     defaultValidationValues?: DefaultValues<FormValues>;
-    title: string;
+    title?: string;
     normalContent?: ReactNode;
+    editIcon?: JSX.Element;
     renderEditModeContent: (args: EditModeRenderArgs<FormValues>) => ReactNode;
     tooltip?: string;
     editMode?: boolean;
     hidenTitleInEditMode?: boolean;
     persistEditModeOnSave?: boolean;
     editableContentClassName?: string;
+    editableContentButtonsWrapperClassName?: string;
     className?: string;
+    onEdit?: () => void;
+    onNormalMode?: () => void;
     onSave: EventCallback<FormValues>;
     onCancel?: EventCallback<FormValues>;
 };

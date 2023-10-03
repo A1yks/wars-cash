@@ -7,10 +7,11 @@ export type TeamChanceProps = {
     maxValue: number;
     percentageValue: number;
     teamType: 'red' | 'blue';
+    percent: number;
 };
 
 function TeamChance(props: TeamChanceProps) {
-    const percent = ((props.maxValue - props.minValue) / props.percentageValue) * 100;
+    // const percent = ((props.maxValue - props.minValue) / props.percentageValue) * 100;
     const teamImgSrc = props.teamType === 'red' ? '/images/like.png' : '/images/dislike.png';
 
     return (
@@ -18,7 +19,7 @@ function TeamChance(props: TeamChanceProps) {
             <div className={c('flex', 'center', styles.like, styles[props.teamType])}>
                 <Image src={teamImgSrc} width={33} height={28} alt="" />
             </div>
-            <span className={styles.percent}>{percent.toFixed(0)}%</span>
+            <span className={styles.percent}>{props.percent.toFixed(0)}%</span>
             <div className={c('flex', 'center', styles.numbers)}>
                 {props.minValue} - {props.maxValue}
             </div>
