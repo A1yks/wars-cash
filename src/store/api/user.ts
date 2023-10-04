@@ -1,6 +1,6 @@
-import { PublicUserData } from '@backend/models/User/types';
+import { PublicUserData, Roles } from '@backend/models/User/types';
 import { api } from '.';
-import { ChangeBalanceReq, GetUsersReq } from '@backend/controllers/user/types';
+import { ChangeBalanceReq, ChangeRoleReq, GetUsersReq, RestrictAccessReq } from '@backend/controllers/user/types';
 import { GetUsersRes } from './types';
 
 export const userApi = api.injectEndpoints({
@@ -32,7 +32,29 @@ export const userApi = api.injectEndpoints({
                 body: data,
             }),
         }),
+        restrictAccess: build.mutation<API.Response<void>, RestrictAccessReq>({
+            query: (data) => ({
+                url: '/user/restrict',
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
+        changeRole: build.mutation<API.Response<Roles>, ChangeRoleReq>({
+            query: (data) => ({
+                url: '/user/change/role',
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useChangeNameMutation, useChangeAvatarMutation, useGetUsersQuery, useChangeBalanceMutation } = userApi;
+export const {
+    useChangeNameMutation,
+    useChangeAvatarMutation,
+    useGetUsersQuery,
+    useChangeBalanceMutation,
+    useRestrictAccessMutation,
+    useLazyGetUsersQuery,
+    useChangeRoleMutation,
+} = userApi;

@@ -1,5 +1,5 @@
 import { errorsHandler, handleServerErrors } from '@backend/utils/errorsHandler';
-import { ChangeBalanceReq, ChangeNameReq, GetUsersReq, RestrictAccessReq } from './types';
+import { ChangeBalanceReq, ChangeNameReq, ChangeRoleReq, GetUsersReq, RestrictAccessReq } from './types';
 import UserService from '@backend/services/user';
 import FileUploaderService from '@backend/services/fileUploader';
 import isValidMimeType from '@backend/utils/isValidMimeType';
@@ -86,6 +86,14 @@ namespace UserController {
         const updatedUser = await UserService.changeUserData(userId, { balance: newBalance * 100 });
 
         res.status(200).json({ data: formatNumber(updatedUser.balance / 100) });
+    });
+
+    export const changeRole = handleServerErrors<ChangeRoleReq>(async (req, res) => {
+        const { userId, newRole } = req.body;
+
+        const updatedUser = await UserService.changeUserData(userId, { role: newRole });
+
+        res.status(200).json({ data: updatedUser.role });
     });
 }
 

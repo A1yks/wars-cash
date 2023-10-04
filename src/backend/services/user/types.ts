@@ -1,4 +1,4 @@
-import { IUser } from '@backend/models/User/types';
+import { IUser, Roles } from '@backend/models/User/types';
 
 export type UserAdminInfo = {
     _id: IUser['_id'];
@@ -8,4 +8,5 @@ export type UserAdminInfo = {
     withdrawn: number;
     deposited: number;
     isBanned: boolean;
+    role: Roles;
 };

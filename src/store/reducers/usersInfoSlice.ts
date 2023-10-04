@@ -25,6 +25,16 @@ const usersInfoSlice = createSlice({
                 state.users = state.users.map((user) =>
                     user._id === action.meta.arg.originalArgs.userId ? { ...user, balance: action.payload.data } : user
                 );
+            })
+            .addMatcher(userApi.endpoints.restrictAccess.matchFulfilled, (state, action) => {
+                state.users = state.users.map((user) =>
+                    user._id === action.meta.arg.originalArgs.userId ? { ...user, isBanned: action.meta.arg.originalArgs.isRestricted } : user
+                );
+            })
+            .addMatcher(userApi.endpoints.changeRole.matchFulfilled, (state, action) => {
+                state.users = state.users.map((user) =>
+                    user._id === action.meta.arg.originalArgs.userId ? { ...user, role: action.meta.arg.originalArgs.newRole } : user
+                );
             });
     },
 });

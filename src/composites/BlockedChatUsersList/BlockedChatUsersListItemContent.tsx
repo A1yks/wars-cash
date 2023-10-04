@@ -4,8 +4,6 @@ import UserCard from 'components/UserCard';
 import dayjs from 'dayjs';
 import chatMessageStyles from 'components/ChatMessage/ChatMessage.module.scss';
 import { ClientChatBanData } from '@backend/models/ChatBan/types';
-import { IUser } from '@backend/models/User/types';
-import { ModerationData } from '@backend/services/socket/types';
 import useErrorsHandler from 'hooks/useErrorsHandler';
 import { useState } from 'react';
 

@@ -42,10 +42,11 @@ namespace UserService {
     export async function getUsers(limit: number, offset: number, name?: string) {
         const usersInfoQuery = User.find();
         const countQuery = User.countDocuments();
+        const formattedName = name?.trim()?.replace(/[её]/gi, '[её]');
 
-        if (name !== undefined) {
-            usersInfoQuery.where('name').regex(new RegExp(name, 'i'));
-            countQuery.where('name').regex(new RegExp(name, 'i'));
+        if (formattedName !== undefined) {
+            usersInfoQuery.where('name').regex(new RegExp('^' + formattedName, 'i'));
+            countQuery.where('name').regex(new RegExp('^' + formattedName, 'i'));
         }
 
         const [users, total] = await Promise.all([usersInfoQuery.skip(offset).limit(limit), countQuery.countDocuments()]);
@@ -114,6 +115,7 @@ namespace UserService {
             _id: user._id,
             name: user.name,
             avatarSrc: user.avatar,
+            role: user.role,
             balance: formatNumber(user.balance / 100),
             deposited: formatNumber(0 / 100),
             isBanned: user.isBanned,

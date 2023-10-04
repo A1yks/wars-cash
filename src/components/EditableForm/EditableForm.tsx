@@ -35,6 +35,7 @@ function EditableForm<FormValues extends BaseFormValues>(props: EditableFormProp
                     cancelBtnText={props.cancelBtnText}
                     className={props.editableContentClassName}
                     buttonsWrapperClassName={props.editableContentButtonsWrapperClassName}
+                    editModeContentClassName={props.editModeContentClassName}
                 />
             </div>
         </div>

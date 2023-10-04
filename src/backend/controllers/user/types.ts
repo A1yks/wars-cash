@@ -18,3 +18,8 @@ export type ChangeBalanceReq = {
     userId: IUser['_id'];
     newBalance: number;
 };
+
+export type ChangeRoleReq = {
+    userId: IUser['_id'];
+    newRole: IUser['role'];
+};

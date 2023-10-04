@@ -1,6 +1,7 @@
-import { ObjectSchema, bool, number, object, string } from 'yup';
-import { ChangeBalanceReq, ChangeNameReq, GetUsersReq, RestrictAccessReq } from './types';
+import { ObjectSchema, bool, mixed, number, object, string } from 'yup';
+import { ChangeBalanceReq, ChangeNameReq, ChangeRoleReq, GetUsersReq, RestrictAccessReq } from './types';
 import { idSchema, paginationSchema } from '@backend/common/validation';
+import { Roles, roleValues } from '@backend/models/User/types';
 
 export const newBalanceField = number()
     .typeError('Баланс должен быть числом')
@@ -26,4 +27,9 @@ export const getUsersSchema: ObjectSchema<GetUsersReq> = paginationSchema.shape(
 export const changeBalanceSchema: ObjectSchema<ChangeBalanceReq> = object({
     userId: idSchema,
     newBalance: newBalanceField,
+});
+
+export const changeRoleSchema: ObjectSchema<ChangeRoleReq> = object({
+    userId: idSchema,
+    newRole: mixed<Roles>().oneOf(roleValues, 'Указана несуществующая роль').required('Роль является обязательной'),
 });

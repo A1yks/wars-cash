@@ -1,6 +1,19 @@
+.content {
+    flex: 1;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 2rem;
+}
+
 .userInfoList {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.noUsers {
+    font-size: 1.6rem;
 }

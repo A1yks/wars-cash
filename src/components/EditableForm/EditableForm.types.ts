@@ -16,7 +16,7 @@ export type EditableFormProps<FormValues extends BaseFormValues> = Omit<
     EditableContentProps,
     'edit' | 'editModeContent' | 'onSave' | 'onCancel' | 'normalContent' | 'buttonsWrapperClassName'
 > & {
-    validationSchema: ObjectSchema<FormValues>;
+    validationSchema?: ObjectSchema<FormValues>;
     defaultValidationValues?: DefaultValues<FormValues>;
     title?: string;
     normalContent?: ReactNode;
@@ -28,6 +28,7 @@ export type EditableFormProps<FormValues extends BaseFormValues> = Omit<
     persistEditModeOnSave?: boolean;
     editableContentClassName?: string;
     editableContentButtonsWrapperClassName?: string;
+    editModeContentClassName?: string;
     className?: string;
     contentClassName?: string;
     titleWrapperClassName?: string;

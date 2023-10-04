@@ -1,7 +1,7 @@
 import { canPerformAdminActions } from '@backend/common/permissions';
 import UserController from '@backend/controllers/user';
-import { canRestrictUserAccess } from '@backend/controllers/user/permissions';
-import { changeBalanceSchema, changeNameSchema, getUsersSchema, restrictAccessSchema } from '@backend/controllers/user/validation';
+import { canChangeRole, canRestrictUserAccess } from '@backend/controllers/user/permissions';
+import { changeBalanceSchema, changeNameSchema, changeRoleSchema, getUsersSchema, restrictAccessSchema } from '@backend/controllers/user/validation';
 import PermissionsMiddleware from '@backend/middleware/permissions';
 import TokensMiddleware from '@backend/middleware/tokens';
 import ValidationMiddleware from '@backend/middleware/validation';
@@ -35,6 +35,14 @@ router.patch(
     ValidationMiddleware.validate(changeBalanceSchema),
     PermissionsMiddleware.check(canPerformAdminActions),
     UserController.changeBalance
+);
+
+router.patch(
+    '/change/role',
+    TokensMiddleware.verifyAcessToken,
+    ValidationMiddleware.validate(changeRoleSchema),
+    PermissionsMiddleware.check(canChangeRole),
+    UserController.changeRole
 );
 
 export default router;
