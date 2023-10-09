@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { IUser, Roles } from './types';
 import formatNumber from '@backend/utils/formatNumber';
+import { dev } from '@backend/config';
 
 const userSchema = new Schema<IUser>(
     {
@@ -10,7 +11,7 @@ const userSchema = new Schema<IUser>(
         name: { type: String, required: true, trim: true },
         balance: {
             type: Number,
-            default: 1000000,
+            default: dev ? 1000000 : 0,
         },
         role: { type: String, default: Roles.User, enum: Object.values(Roles) },
         chatTimeout: { type: Number, default: 0 },
