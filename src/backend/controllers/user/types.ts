@@ -23,3 +23,7 @@ export type ChangeRoleReq = {
     userId: IUser['_id'];
     newRole: IUser['role'];
 };
+
+export type RemoveFbInfoReq = {
+    signed_request: string;
+};

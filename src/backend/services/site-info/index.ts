@@ -1,9 +1,13 @@
 import SiteInfo from '@backend/models/SiteInfo';
-import { ISiteInfo } from '@backend/models/SiteInfo/types';
+import { ISiteInfo, siteInfoTypes } from '@backend/models/SiteInfo/types';
 
 namespace SiteInfoService {
     export async function getPagesInfo() {
         const pages = await SiteInfo.find();
+
+        if (pages.length === 0) {
+            await Promise.all(siteInfoTypes.map((type, i) => createPage({ type, title: `Новая страница ${i + 1}`, content: '' })));
+        }
 
         return pages;
     }

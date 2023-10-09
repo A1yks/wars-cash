@@ -21,6 +21,7 @@ import depositsRouter from './routes/deposits';
 import bonusRouter from './routes/bonus';
 import siteConfigRouter from './routes/site-config';
 import siteInfoRouter from './routes/site-info';
+import facebookRouter from './routes/facebook';
 import '@backend/services/game/setup';
 import RandomOrgService from './services/randomOrg';
 import gameInstance from '@backend/services/game/setup';
@@ -64,6 +65,7 @@ const port = process.env.PORT || 3000;
             app.use('/api/bonus', bonusRouter);
             app.use('/api/config', siteConfigRouter);
             app.use('/api/info', siteInfoRouter);
+            app.use('/api/facebook', facebookRouter);
 
             app.all('*', (req, res) => {
                 return handle(req, res);
