@@ -6,6 +6,7 @@ declare global {
             FACEBOOK_APP_SECRET: string;
             TOKEN_SECRET: string;
             PORT?: string;
+            RANDOM_ORG_API_KEY?: string;
         }
     }
 }

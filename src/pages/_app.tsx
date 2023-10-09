@@ -8,6 +8,7 @@ import Script from 'next/script';
 import 'react-circular-progressbar/dist/styles.css';
 import 'simplebar-react/dist/simplebar.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'react-quill/dist/quill.snow.css';
 import 'styles/global.scss';
 import 'facebook/init';
 import { NextComponentType } from 'next';
@@ -20,18 +21,25 @@ import { SocketContextProvider } from 'context/SocketContext';
 import { loadLastGamesHelper } from 'initialPropsHelpers/loadLastGames';
 import { loadChatMessagesHelper } from 'initialPropsHelpers/loadChatMessages';
 import * as yup from 'yup';
+import { loadSiteConfigHelper } from 'initialPropsHelpers/loadSiteConfig';
+import { loadCustomPagesInfoHelper } from 'initialPropsHelpers/loadCustomPages';
 
 yup.addMethod(yup.string, 'integer', function () {
     return this.matches(/^\d+$/, 'Значние должно быть числом');
 });
 
-type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
+yup.addMethod(yup.object, 'atLeastOneOf', function (list: any[]) {
+    return this.test({
+        name: 'atLeastOneOf',
+        message: 'Должен быть передан один из следующих параметров: ${keys}',
+        exclusive: true,
+        params: { keys: list.join(', ') },
+        test: (value) => value == null || list.some((f) => value[f] != null),
+    });
+});
 
 function MyApp({ Component, ...rest }: AppProps) {
-    const {
-        store,
-        props: { pageProps },
-    } = wrapper.useWrappedStore(rest) as WrapperResult;
+    const { store, props } = wrapper.useWrappedStore(rest);
 
     const getLayout =
         (Component as typeof Component & { getLayout: (page: ReactElement) => AuthCheckerProps['children'] }).getLayout ||
@@ -42,9 +50,10 @@ function MyApp({ Component, ...rest }: AppProps) {
             <SnackbarProvider maxSnack={3} classes={{ root: 'snackbar-content', containerRoot: 'snackbar-content' }}>
                 <Head>
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
+                    <link rel="shortcut icon" href="/favicon.ico" />
                 </Head>
                 <SocketContextProvider>
-                    <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
+                    <AuthChecker>{getLayout(<Component {...props.pageProps} />)}</AuthChecker>
                 </SocketContextProvider>
             </SnackbarProvider>
             <Script src="https://connect.facebook.net/en_US/sdk.js" async />
@@ -73,7 +82,12 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext)
                 }
             }
 
-            await Promise.all([loadChatMessagesHelper(store), loadLastGamesHelper(store)]);
+            await Promise.all([
+                loadChatMessagesHelper(store),
+                loadLastGamesHelper(store),
+                loadSiteConfigHelper(store),
+                loadCustomPagesInfoHelper(store),
+            ]);
             await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
             const componentProps = await App.getInitialProps(appContext);

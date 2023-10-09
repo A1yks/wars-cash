@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Chat from '.';
 import { Types } from 'mongoose';
-import { user } from 'stories/mock';
 import { Roles } from '@backend/models/User/types';
+import { user } from '../../../.storybook/mock';
 
 const meta = {
     title: 'Composites/Chat',

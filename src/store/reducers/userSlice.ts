@@ -3,6 +3,9 @@ import { ModerationData } from '@backend/services/socket/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'store/api/auth';
 import { betsApi } from 'store/api/bet';
+import { bonusApi } from 'store/api/bonus';
+import { paymentsApi } from 'store/api/payments';
+import { userApi } from 'store/api/user';
 
 export type UserState = ClientUser | null;
 
@@ -21,7 +24,6 @@ const userSlice = createSlice({
             }
         },
         restrictChatAccess(state, action: PayloadAction<ModerationData>) {
-            console.log(action.payload);
             if (state !== null && action.payload.period !== undefined) {
                 state.chatTimeout = action.payload.period;
             }
@@ -47,6 +49,30 @@ const userSlice = createSlice({
                 betsApi.endpoints.placeBet.matchFulfilled,
                 checkUser((state, action) => {
                     state.balance = action.payload.data;
+                })
+            )
+            .addMatcher(
+                userApi.endpoints.changeName.matchFulfilled,
+                checkUser((state, action) => {
+                    state.name = action.payload.data.name;
+                })
+            )
+            .addMatcher(
+                userApi.endpoints.changeAvatar.matchFulfilled,
+                checkUser((state, action) => {
+                    state.avatar = action.payload.data;
+                })
+            )
+            .addMatcher(
+                paymentsApi.endpoints.createPaymentOrder.matchFulfilled,
+                checkUser((state, action) => {
+                    state.balance = action.payload.data.balance;
+                })
+            )
+            .addMatcher(
+                bonusApi.endpoints.claimBonus.matchFulfilled,
+                checkUser((state, action) => {
+                    state.balance = action.payload.data.balance;
                 })
             );
     },

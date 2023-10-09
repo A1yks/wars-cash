@@ -1,0 +1,9 @@
+.info {
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-transform: lowercase;
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}

@@ -1,6 +1,7 @@
 import useBooleanState from 'hooks/useBooleanState';
 import useFormValidation from 'hooks/useFormValidation';
 import { BaseFormValues, EditableFormProps } from '../EditableForm.types';
+import { ObjectSchema, object } from 'yup';
 
 function useEditableForm<FormValues extends BaseFormValues>(props: EditableFormProps<FormValues>) {
     const [isInEditMode, enterEditMode, exitEditMode] = useBooleanState(props.editMode);
@@ -10,7 +11,7 @@ function useEditableForm<FormValues extends BaseFormValues>(props: EditableFormP
         submitHandler: saveHandler,
         ...formControls
     } = useFormValidation<FormValues>(
-        props.validationSchema,
+        props.validationSchema || (object({}) as ObjectSchema<FormValues>),
         async () => {
             await props.onSave(formControls);
 

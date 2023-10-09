@@ -12,14 +12,20 @@ export enum Roles {
 
 export const roleValues = Object.values(Roles);
 
-export const moderRoles = [Roles.MainAdmin, Roles.Admin, Roles.Moderator];
+export const adminRoles = [Roles.MainAdmin, Roles.Admin];
+
+export const moderRoles = [...adminRoles, Roles.Moderator];
+
+export function isAdmin(role: Roles) {
+    return adminRoles.includes(role);
+}
 
 export function isModer(role: Roles) {
     return moderRoles.includes(role);
 }
 
-export function compareRoles(moderRole: Roles, userRole: Roles) {
-    switch (moderRole) {
+export function compareRoles(adminRole: Roles, userRole: Roles) {
+    switch (adminRole) {
         case Roles.Moderator: {
             return userRole !== Roles.MainAdmin && userRole !== Roles.Admin && userRole !== Roles.Moderator;
         }

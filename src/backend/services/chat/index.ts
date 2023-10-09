@@ -3,7 +3,7 @@ import SiteConfigService from '../site-config';
 import { BannedUserData, SaveMessageData } from './types';
 import { IChatMessage, PopulatedMessage } from '@backend/models/ChatMessage/types';
 import { FilterQuery, Types, get } from 'mongoose';
-import { IUser } from '@backend/models/User/types';
+import { IUser, PublicUserData } from '@backend/models/User/types';
 import UserService from '../user';
 import User from '@backend/models/User';
 import SocketService from '../socket';
@@ -34,7 +34,13 @@ namespace ChatService {
     }
 
     export async function getMessages() {
-        return await ChatMessage.find().sort({ date: 1 }).populate('sender');
+        const messages = await ChatMessage.find().sort({ date: 1 }).populate<{ sender: IUser | PublicUserData }>('sender').lean();
+
+        messages.forEach((msg) => {
+            msg.sender = UserService.getPublicUserData(msg.sender as IUser);
+        });
+
+        return messages;
     }
 
     export async function getMessage(messageId: Types.ObjectId | string) {

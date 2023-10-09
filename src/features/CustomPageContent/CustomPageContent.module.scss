@@ -1,0 +1,19 @@
+.content {
+    font-size: 1.6rem;
+    padding: 1rem 0 2rem 0;
+
+    ul,
+    ol {
+        padding-left: 4rem;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+}
+
+.error {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.8rem;
+}

@@ -14,11 +14,11 @@ function useAuth() {
     const [logoutMutation] = useLogoutMutation();
 
     const loginHandler = useErrorsHandler(async () => {
-        const isLoggedIn = await checkAuth();
+        const isLoggedIn = await dispatch(checkAuth()).unwrap();
 
         if (!isLoggedIn) {
             await loginToFB();
-            await checkAuth();
+            await dispatch(checkAuth()).unwrap();
         }
     });
 

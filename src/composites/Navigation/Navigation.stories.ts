@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Navigation from '.';
-import { user } from 'stories/mock';
+import { user } from '../../../.storybook/mock';
 
 const meta: Meta<typeof Navigation> = {
     title: 'Composites/Navigation',

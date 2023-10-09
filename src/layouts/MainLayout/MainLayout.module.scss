@@ -1,12 +1,13 @@
 .mainContent {
     width: 100%;
-    height: 100%;
+    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: column;
 
     .main {
-        height: 100%;
+        height: 0;
+        flex: 1;
         width: 100%;
         display: flex;
         justify-content: center;

@@ -2,10 +2,16 @@ import ChatMessage from '@backend/models/ChatMessage';
 import User from '@backend/models/User';
 import { IUser, PublicUserData } from '@backend/models/User/types';
 import express from 'express';
-import { Types } from 'mongoose';
+import { AnyObject, Types } from 'mongoose';
+import { Maybe, Flags } from 'yup';
 
 declare global {
     type MaybePromise<T> = T | Promise<T>;
+
+    type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+        {
+            [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+        }[Keys];
 
     namespace Express {
         interface Request {
@@ -36,6 +42,10 @@ declare module 'yup' {
     type ObjectShape<T> = {
         [key in keyof T]: T[key];
     };
+
+    interface ObjectSchema<TIn extends Maybe<AnyObject>, TContext = AnyObject, TDefault = any, TFlags extends Flags = ''> {
+        atLeastOneOf(list: (keyof TIn)[]): this;
+    }
 }
 
 export {};

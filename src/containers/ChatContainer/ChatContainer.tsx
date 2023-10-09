@@ -6,22 +6,17 @@ import { BLOCKED_USERS_PER_PAGE } from 'composites/BlockedChatUsersList/BlockedC
 import Chat from 'composites/Chat';
 import useAppSelector from 'hooks/useAppSelector';
 import useErrorsHandler from 'hooks/useErrorsHandler';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState } from 'store';
+import { useCallback, useEffect, useRef } from 'react';
 import {
     useDeleteMessageMutation,
-    useGetBannedUsersQuery,
     useGetMessagesQuery,
     useLazyGetBannedUsersQuery,
     useModerateMutation,
     useSaveMessageMutation,
 } from 'store/api/chat';
+import { chatDataSelector, userSelector, authDataSelector } from 'store/selectors';
 import { extractError } from 'utils/extractError';
 import getTimeLeft from 'utils/getTimeLeft';
-
-const chatDataSelector = (state: AppState) => state.chat;
-const userSelector = (state: AppState) => state.user;
-const authDataSelector = (state: AppState) => state.auth;
 
 const selector = createSelector([chatDataSelector, userSelector, authDataSelector], (chat, user, auth) => ({
     ...chat,
@@ -40,9 +35,11 @@ function ChatContainer() {
     const blockedUsersSearchValueRef = useRef<string | undefined>(undefined);
     const totalBlockedUsers = bannedUsersResponse?.data.total || 0;
 
-    useEffect(() => {
-        triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
-    }, [triggerGetBannedUsers]);
+    // useEffect(() => {
+    //     if (user?.role !== undefined && moderRoles.includes(user.role)) {
+    //         triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
+    //     }
+    // }, [triggerGetBannedUsers, user?.role]);
 
     const saveMessage = useCallback(
         async (message: string) => {

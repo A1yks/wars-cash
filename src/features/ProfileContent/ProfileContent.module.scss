@@ -6,6 +6,19 @@
         height: 4rem;
     }
 
+    .userName {
+        word-break: break-all;
+    }
+
+    .changeNameButtonsWrapper {
+        justify-content: center;
+        flex-wrap: wrap;
+
+        button {
+            flex: 1 !important;
+        }
+    }
+
     .history {
         display: flex;
         flex-direction: column;
@@ -27,5 +40,13 @@
         table {
             min-width: 80rem;
         }
+    }
+
+    .table {
+        position: static;
+    }
+
+    .paymentsTable {
+        border-top: 1px solid #ccc;
     }
 }

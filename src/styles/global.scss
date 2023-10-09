@@ -13,12 +13,13 @@ html {
 }
 
 body {
-    height: 100%;
     font-family: OpenSans, sans-serif;
 }
 
 #__next {
-    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .snackbar-content {
@@ -110,5 +111,102 @@ table {
                 background-color: #f7fcfd;
             }
         }
+    }
+}
+
+.pagination {
+    width: 100%;
+    margin-top: auto;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    border-top: 1px solid #ccc;
+    height: 6.2rem;
+    padding: 1rem 1.8rem;
+}
+
+.pagination-page {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid $blue;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.pagination-page-active {
+    border: none;
+}
+
+.pagination-page-link {
+    color: $blue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-page-active-link {
+    background: $blue;
+    color: #fff;
+}
+
+.pagination-page-disabled {
+    background: #000;
+    border-color: $light-gray;
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item,
+.ql-snow .ql-picker.ql-header .ql-picker-label,
+.ql-snow .ql-picker.ql-header .ql-picker-item {
+    &::before {
+        content: 'Обычный';
+    }
+
+    &[data-value='1'] {
+        &::before {
+            content: 'Заголовок 1';
+        }
+    }
+
+    &[data-value='2'] {
+        &::before {
+            content: 'Заголовок 2';
+        }
+    }
+
+    &[data-value='3'] {
+        &::before {
+            content: 'Заголовок 3';
+        }
+    }
+}
+
+.ql-snow .ql-tooltip[data-mode='link']::before {
+    content: 'Ссылка:';
+}
+
+.ql-snow .ql-picker.ql-header {
+    width: 106px;
+}
+
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    content: 'Сохранить';
+}
+
+.ql-indent {
+    &-1 {
+        margin-left: 2rem;
+    }
+
+    &-2 {
+        margin-left: 4rem;
+    }
+
+    &-3 {
+        margin-left: 6rem;
     }
 }

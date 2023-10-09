@@ -35,7 +35,11 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode
+/dist
 /logs
 
 .env*
-/images
+/images/*
+!/images/users
+/images/users/*
+!/images/users/default.jpg

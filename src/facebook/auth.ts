@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { store } from 'store';
 import { authApi } from 'store/api/auth';
 import authSlice from 'store/reducers/authSlice';
@@ -57,21 +58,22 @@ export async function logout() {
     store.dispatch(userSlice.actions.setUser(userSlice.getInitialState()));
 }
 
-export async function checkAuth() {
-    store.dispatch(authSlice.actions.setIsLoading(true));
-    store.dispatch(authSlice.actions.setIsLoginCompleted(false));
+export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { dispatch }) => {
+    dispatch(authSlice.actions.setIsLoading(true));
+    dispatch(authSlice.actions.setIsLoginCompleted(false));
 
     return await checkLoginStatus().then(async (response) => {
         if (response.status === 'connected') {
             const fbLoginData = await getUserInfo();
 
             if (isFacebookLoginError(fbLoginData)) {
-                store.dispatch(authSlice.actions.setIsLoading(false));
-                store.dispatch(authSlice.actions.setIsLoginCompleted(true));
+                console.log(666);
+                dispatch(authSlice.actions.setIsLoading(false));
+                dispatch(authSlice.actions.setIsLoginCompleted(true));
                 throw new Error('Произошла ошибка при авторизации через facebook');
             }
 
-            await store.dispatch(
+            await dispatch(
                 authApi.endpoints.auth.initiate({
                     provider: 'facebook',
                     providerAccountId: fbLoginData.id,
@@ -79,14 +81,15 @@ export async function checkAuth() {
                     avatar: fbLoginData.picture.data.url,
                     token: response.authResponse.accessToken,
                 })
-            );
-            // store.dispatch(authSlice.actions.setToken(response.authResponse.accessToken));
+            ).unwrap();
 
             return true;
         }
 
-        store.dispatch(authSlice.actions.setIsLoading(false));
-        store.dispatch(authSlice.actions.setIsLoginCompleted(true));
+        dispatch(authSlice.actions.setIsLoading(false));
+        // if call these two actions simultaneously for some reason HYDRATE action will be firing indefinitely, so this hack should not be deleted
+        setTimeout(() => dispatch(authSlice.actions.setIsLoginCompleted(true)), 0);
+
         return false;
     });
-}
+});

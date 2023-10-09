@@ -14,7 +14,14 @@ import { faArrowDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ClientChatBanData } from '@backend/models/ChatBan/types';
 import { BlockedChatUsersListProps } from 'composites/BlockedChatUsersList/BlockedChatUsersList';
 
-const BlockedChatUsersList = dynamic(() => import('composites/BlockedChatUsersList'), { ssr: false });
+const BlockedChatUsersList = dynamic(() => import('composites/BlockedChatUsersList'), {
+    ssr: false,
+    loading: () => (
+        <div className={c(styles.scrollbar)}>
+            <Spinner />
+        </div>
+    ),
+});
 const ChatFooter = dynamic(() => import('./ChatFooter'), { ssr: false });
 
 export type ChatProps = {
