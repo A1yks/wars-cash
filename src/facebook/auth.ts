@@ -62,7 +62,7 @@ export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { dispatch
     dispatch(authSlice.actions.setIsLoading(true));
     dispatch(authSlice.actions.setIsLoginCompleted(false));
 
-    const r = await checkLoginStatus().then(async (response) => {
+    return await checkLoginStatus().then(async (response) => {
         if (response.status === 'connected') {
             const fbLoginData = await getUserInfo();
 
@@ -92,8 +92,4 @@ export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { dispatch
 
         return false;
     });
-
-    console.log(r);
-
-    return r;
 });
