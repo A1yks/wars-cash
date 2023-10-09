@@ -11,6 +11,7 @@ import formatNumber from '@backend/utils/formatNumber';
 import PaymentsService from '../payments';
 import { UserAdminInfo } from './types';
 import DepositsService from '../deposit';
+import FacebookService from '../facebook';
 
 namespace UserService {
     export async function findOrCreate(userData: Partial<IUser>) {
@@ -129,8 +130,10 @@ namespace UserService {
 
         await user.save();
 
-        const confirmationCode = user._id;
-        const statusUrl = `https://${process.env.NEXT_PUBLIC_URL}/facebook/deletion?=${confirmationCode}`;
+        const confirmationCode = user._id.toString();
+        const statusUrl = `${process.env.NEXT_PUBLIC_URL}/facebook/deletion?code=${confirmationCode}`;
+
+        await FacebookService.createDeletionInfo(confirmationCode);
 
         return { statusUrl, confirmationCode };
     }

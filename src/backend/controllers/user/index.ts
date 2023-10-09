@@ -99,7 +99,6 @@ namespace UserController {
     });
 
     export const removeFacebookInfo = handleServerErrors<RemoveFbInfoReq>(async (req, res: Response) => {
-        console.log(req.body);
         const { signed_request } = req.body;
 
         const data = parseSignedFacebookRequest(signed_request);
