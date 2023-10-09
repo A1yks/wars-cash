@@ -1,3 +1,4 @@
+import { RemoveFbInfoReq } from '@backend/controllers/user/types';
 import { IUser, Roles } from '@backend/models/User/types';
 
 export type UserAdminInfo = {
@@ -10,3 +11,5 @@ export type UserAdminInfo = {
     isBanned: boolean;
     role: Roles;
 };
+
+export type RemoveFbInfoData = RemoveFbInfoReq;

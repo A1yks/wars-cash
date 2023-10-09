@@ -38,4 +38,7 @@ next-env.d.ts
 /logs
 
 .env*
-/images
+/images/*
+!/images/users
+/images/users/*
+!/images/users/default.jpg

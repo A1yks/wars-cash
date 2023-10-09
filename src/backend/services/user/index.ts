@@ -10,7 +10,6 @@ import BonusService from '../bonus';
 import formatNumber from '@backend/utils/formatNumber';
 import PaymentsService from '../payments';
 import { UserAdminInfo } from './types';
-import { PaymentStatus } from '@backend/models/Payment/types';
 import DepositsService from '../deposit';
 
 namespace UserService {
@@ -118,13 +117,22 @@ namespace UserService {
         return user.isBanned;
     }
 
-    export async function removeFacebookInfo(userId: IUser['_id']) {
-        const user = await getUser(userId);
+    export async function removeFacebookInfo(fbUserId: string) {
+        const user = await User.findOne({ providerAccountId: fbUserId });
+
+        if (user === null) {
+            throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
+        }
 
         user.avatar = 'default.jpg';
-        user.name = user._id.toString();
+        user.name = `User${user._id}`;
 
         await user.save();
+
+        const confirmationCode = user._id;
+        const statusUrl = `https://${process.env.NEXT_PUBLIC_URL}/facebook/deletion?=${confirmationCode}`;
+
+        return { statusUrl, confirmationCode };
     }
 
     async function modifyUser(user: IUser): Promise<UserAdminInfo> {

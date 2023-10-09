@@ -1,5 +1,5 @@
 import { errorsHandler, handleServerErrors } from '@backend/utils/errorsHandler';
-import { ChangeBalanceReq, ChangeNameReq, ChangeRoleReq, GetUsersReq, RestrictAccessReq } from './types';
+import { ChangeBalanceReq, ChangeNameReq, ChangeRoleReq, GetUsersReq, RemoveFbInfoReq, RestrictAccessReq } from './types';
 import UserService from '@backend/services/user';
 import FileUploaderService from '@backend/services/fileUploader';
 import isValidMimeType from '@backend/utils/isValidMimeType';
@@ -11,6 +11,8 @@ import logger from '@backend/utils/logger';
 import { MAX_AVATAR_SIZE } from '@backend/constants';
 import formatBytes from '@backend/utils/formatBytes';
 import formatNumber from '@backend/utils/formatNumber';
+import { parseSignedFacebookRequest } from '@backend/utils/parseSignedFacebookRequest';
+import { Response } from 'express';
 
 namespace UserController {
     const upload = FileUploaderService.createUploader({
@@ -96,11 +98,13 @@ namespace UserController {
         res.status(200).json({ data: updatedUser.role });
     });
 
-    export const removeFacebookInfo = handleServerErrors(async (req, res) => {
-        // const updatedUser = await UserService.removeFacebookInfo(req.userId);
+    export const removeFacebookInfo = handleServerErrors<RemoveFbInfoReq>(async (req, res: Response) => {
+        const { signed_request } = req.body;
 
-        // res.status(200).json({ data: updatedUser });
-        res.status(200).send();
+        const data = parseSignedFacebookRequest(signed_request);
+        const { statusUrl, confirmationCode } = await UserService.removeFacebookInfo(data.user_id);
+
+        res.status(200).json({ url: statusUrl, confirmation_code: confirmationCode });
     });
 }
 
