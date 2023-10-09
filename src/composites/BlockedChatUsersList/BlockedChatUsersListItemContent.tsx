@@ -1,11 +1,10 @@
+import c from 'clsx';
 import styles from './BlockedChatUsersList.module.scss';
 import Button from 'components/Button';
 import UserCard from 'components/UserCard';
 import dayjs from 'dayjs';
 import chatMessageStyles from 'components/ChatMessage/ChatMessage.module.scss';
 import { ClientChatBanData } from '@backend/models/ChatBan/types';
-import { IUser } from '@backend/models/User/types';
-import { ModerationData } from '@backend/services/socket/types';
 import useErrorsHandler from 'hooks/useErrorsHandler';
 import { useState } from 'react';
 
@@ -40,7 +39,7 @@ function BlockedChatUsersListItemContent(props: BlockedChatUsersListItemContentP
                     infoClassName={styles.userInfoText}
                     showNameTooltip
                 />
-                <div className={chatMessageStyles.controls}>
+                <div className={c(chatMessageStyles.controls, styles.controls)}>
                     {isUnbanned ? (
                         <Button color="red" className={styles.actionBtn} onClick={cancelHandler} loading={props.isLoading}>
                             Отменить

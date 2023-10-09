@@ -30,7 +30,7 @@ namespace SocketService {
     }
 
     export function broadcastMessage(data: MessageData) {
-        io.to(Rooms.Chat).emit('message', data);
+        io.emit('message', data);
     }
 
     export function broadcastGame(data: GameData) {
@@ -64,8 +64,6 @@ namespace SocketService {
     }
 
     function setEventListeners(socket: BackendSocket) {
-        console.log('SOCKET CONNECTED');
-
         socket.on('connected', () => {
             connectionHandler(socket);
         });
@@ -110,7 +108,6 @@ namespace SocketService {
         next: (err?: ExtendedError | undefined) => void
     ) {
         const { token } = socket.handshake.auth as HandshakeAuth;
-        console.log('handshake', token);
 
         if (!token) {
             next();

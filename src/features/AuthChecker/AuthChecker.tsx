@@ -5,11 +5,11 @@ import useBrowserLayoutEffect from 'hooks/useBrowserLayoutEffect';
 import { useRouter } from 'next/router';
 import { AppState } from 'store';
 import { createSelector } from '@reduxjs/toolkit';
+import { authDataSelector, userSelector } from 'store/selectors';
+import BlockedUserContent from 'features/BlockedUserContent';
+import { SiteInfoTypes, siteInfoTypes } from '@backend/models/SiteInfo/types';
 
-const authSelector = (state: AppState) => state.auth;
-const userSelector = (state: AppState) => state.user;
-
-const selectAuthAndUser = createSelector([authSelector, userSelector], (auth, user) => ({ ...auth, user }));
+const selectAuthAndUser = createSelector([authDataSelector, userSelector], (auth, user) => ({ ...auth, user }));
 
 function AuthChecker(props: AuthCheckerProps) {
     const { user, isLoading, isLoginCompleted } = useAppSelector(selectAuthAndUser);
@@ -22,7 +22,7 @@ function AuthChecker(props: AuthCheckerProps) {
         if (user === null && !isLoading && isLoginCompleted) {
             router.push('/');
         }
-    }, [user, isLoading]);
+    }, [user, isLoading, router]);
 
     if (isProtectedRoute && isLoading) {
         if (getLayout !== undefined) {
@@ -30,6 +30,10 @@ function AuthChecker(props: AuthCheckerProps) {
         }
 
         return <PageLoader />;
+    }
+
+    if (user?.isBanned && !siteInfoTypes.includes(router.query.type as SiteInfoTypes)) {
+        return getLayout(<BlockedUserContent />);
     }
 
     return <>{props.children}</>;

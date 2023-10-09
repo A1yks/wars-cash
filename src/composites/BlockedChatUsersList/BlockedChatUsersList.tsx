@@ -13,7 +13,6 @@ import SimpleBar from 'simplebar-react';
 import chatStyles from 'composites/Chat/Chat.module.scss';
 import Spinner from 'components/Spinner/Spinner';
 import { useDebouncedValue, usePreviousRef } from '@lilib/hooks';
-import useErrorsHandler from 'hooks/useErrorsHandler';
 
 export type BlockedChatUsersListProps = {
     blockedUsers: ClientChatBanData[];
@@ -97,11 +96,11 @@ function BlockedChatUsersList(props: BlockedChatUsersListProps) {
                     marginPagesDisplayed={1}
                     pageCount={pagesCount}
                     previousLabel={<FontAwesomeIcon icon={faAngleLeft} fontSize="1.6rem" className="pointer" />}
-                    className={styles.pagination}
-                    pageClassName={styles.paginationPage}
-                    activeClassName={styles.paginationPageActive}
-                    pageLinkClassName={c(styles.paginationPageLink, 'bolder')}
-                    activeLinkClassName={styles.paginationPageActiveLink}
+                    className="pagination"
+                    pageClassName="pagination-page"
+                    activeClassName="pagination-page-active"
+                    pageLinkClassName="pagination-page-link bolder"
+                    activeLinkClassName="pagination-page-active-link"
                 />
             )}
         </div>

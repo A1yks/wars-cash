@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import UserListItem from '.';
 import {} from '../UserList/UserList.stories';
-import { user } from 'stories/mock';
+import { user } from '../../../.storybook/mock';
 
 const meta: Meta<typeof UserListItem> = {
     title: 'Components/UserListItem',

@@ -15,7 +15,15 @@ import authRouter from './routes/auth';
 import betsRouter from './routes/bets';
 import tokensRouter from './routes/tokens';
 import chatRouter from './routes/chat';
+import userRouter from './routes/user';
+import paymentsRouter from './routes/payments';
+import depositsRouter from './routes/deposits';
+import bonusRouter from './routes/bonus';
+import siteConfigRouter from './routes/site-config';
+import siteInfoRouter from './routes/site-info';
 import '@backend/services/game/setup';
+import RandomOrgService from './services/randomOrg';
+import gameInstance from '@backend/services/game/setup';
 
 const exec = util.promisify(execDefault);
 
@@ -29,6 +37,8 @@ const port = process.env.PORT || 3000;
         await connect()
             .then(() => logger.log('Successfully connected to the database'))
             .catch(logger.error);
+
+        await Promise.all([RandomOrgService.setupClient(), gameInstance.setupGame()]);
 
         const nextApp = next({ dev });
         const handle = nextApp.getRequestHandler();
@@ -48,6 +58,12 @@ const port = process.env.PORT || 3000;
             app.use('/api/bets', betsRouter);
             app.use('/api/tokens', tokensRouter);
             app.use('/api/chat', chatRouter);
+            app.use('/api/user', userRouter);
+            app.use('/api/payments', paymentsRouter);
+            app.use('/api/deposits', depositsRouter);
+            app.use('/api/bonus', bonusRouter);
+            app.use('/api/config', siteConfigRouter);
+            app.use('/api/info', siteInfoRouter);
 
             app.all('*', (req, res) => {
                 return handle(req, res);

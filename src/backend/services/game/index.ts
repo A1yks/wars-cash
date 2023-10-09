@@ -1,6 +1,9 @@
 import formatNumber from '@backend/utils/formatNumber';
 import { BetData, BetTypes, GameData, GameEventCallback, GameEventCallbacks, GameEvents } from './types';
 import { NUMBERS, GAME_TIME, SPINNING_TIME } from './config';
+import RandomOrgService from '../randomOrg';
+import SiteConfigService from '../site-config';
+import { ISiteConfig } from '@backend/models/SiteConfig/types';
 
 class Game {
     blueTeamSum = 0;
@@ -16,6 +19,9 @@ class Game {
     isSpinning = false;
     isCancelled = false;
     hasOtherBettors = false;
+    gameTime = GAME_TIME;
+    spinningTime = SPINNING_TIME;
+    private winnerNumPromise: Promise<number> | null = null;
     private firstBettorId: string | null = null;
     private startSpinningTime: number | null = null;
     private eventListenersSet = false;
@@ -44,6 +50,24 @@ class Game {
 
         this.startTime = Date.now();
         this.isGameStarted = true;
+        this.winnerNumPromise = RandomOrgService.getRandomInt(1, NUMBERS).catch(() => this.generateRandomNumber());
+    }
+
+    async setupGame() {
+        const config = await SiteConfigService.getConfig();
+
+        this.gameTime = config.betsTime;
+        this.spinningTime = config.spinDuration;
+    }
+
+    setupWithConfig(config: Partial<ISiteConfig>) {
+        if (config.betsTime !== undefined) {
+            this.gameTime = config.betsTime;
+        }
+
+        if (config.spinDuration !== undefined) {
+            this.spinningTime = config.spinDuration;
+        }
     }
 
     get betsAmount() {
@@ -156,10 +180,10 @@ class Game {
         this.endGame();
     }
 
-    private startSpinning() {
+    private async startSpinning() {
         this.isAcceptingBets = false;
 
-        const { rotation, winner } = this.getWinnerData();
+        const { rotation, winner } = await this.getWinnerData();
 
         this.callbacks.winnerDegrees?.({ degrees: rotation, progress: this.spinningProgress });
 
@@ -169,7 +193,7 @@ class Game {
         this.spinningTimer = setInterval(() => {
             const now = Date.now();
             const time = now - this.startSpinningTime!;
-            const progress = formatNumber(time / 1000 / SPINNING_TIME);
+            const progress = formatNumber(time / 1000 / this.spinningTime);
 
             this.spinningProgress = progress;
 
@@ -210,6 +234,7 @@ class Game {
         this.isCancelled = false;
         this.firstBettorId = null;
         this.winner = null;
+        this.winnerNumPromise = null;
     }
 
     private getWinChances() {
@@ -223,13 +248,19 @@ class Game {
         };
     }
 
-    private getWinnerData() {
-        const winnerNumber = this.generateRandomNumber();
+    private async getWinnerData() {
+        if (this.winnerNumPromise === null) {
+            this.winnerNumPromise = Promise.resolve(this.generateRandomNumber());
+        }
+
+        const winnerNumber = await this.winnerNumPromise;
         const winner = this.getWinner(winnerNumber);
         const degree = (360 / NUMBERS) * winnerNumber;
         const rotation = degree;
 
         this.rotation = rotation;
+
+        console.log(winnerNumber);
 
         return { rotation, winner };
     }
@@ -240,11 +271,11 @@ class Game {
 
     private getRemainingTime() {
         if (this.startTime === null) {
-            return GAME_TIME;
+            return this.gameTime;
         }
 
         const now = Date.now();
-        const time = GAME_TIME - Math.floor((now - this.startTime) / 1000);
+        const time = this.gameTime - Math.floor((now - this.startTime) / 1000);
 
         return time;
     }

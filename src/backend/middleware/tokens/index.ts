@@ -14,6 +14,7 @@ import logger from '@backend/utils/logger';
 import TokensService from '@backend/services/tokens';
 import { TokenExpiredError, JsonWebTokenError } from 'jsonwebtoken';
 import setRefreshTokenCookie from '@backend/utils/setRefreshTokenCookie';
+import UserService from '@backend/services/user';
 
 let facebookAccessToken = `${process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}|${process.env.FACEBOOK_APP_SECRET}`;
 
@@ -65,6 +66,12 @@ namespace TokensMiddleware {
 
             if (payload === null) {
                 return;
+            }
+
+            const user = await UserService.getUser(payload.userId);
+
+            if (user.isBanned) {
+                throw new Error('У вас нет прав для выполнения данной операции', { cause: ErrorTypes.NO_PERMISSIONS });
             }
 
             req.userId = payload.userId;

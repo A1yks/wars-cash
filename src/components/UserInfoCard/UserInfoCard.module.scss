@@ -1,0 +1,109 @@
+.card {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.6rem;
+    padding: 2rem 3rem;
+    border-radius: 0.5rem;
+    border: 1px solid $light-gray;
+    box-shadow: 1px 1px 7px 0px rgba(0, 0, 0, 0.1);
+
+    .stats {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .statsEditableForm {
+        display: inline-flex;
+        width: auto;
+
+        .statsEditableFormEditModeContent {
+            margin-top: 1rem;
+        }
+
+        .statsEditableFormContent {
+            font-size: 1.6rem;
+            flex-direction: row-reverse;
+
+            .statsEditableFormTitleWrapper {
+                width: auto;
+            }
+        }
+
+        .statsEditableFormButtonsWrapper {
+            margin-bottom: 1rem;
+
+            button {
+                padding: 0;
+                height: 3rem;
+                width: 50%;
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        button {
+            font-size: 1.2rem;
+            width: 20rem;
+            height: 3.5rem;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.editableInp {
+    font-size: 1.4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 20.1rem;
+}
+
+select.editableInp {
+    text-align: left;
+    text-align-last: center;
+}
+
+body {
+    .paymentsModalBody {
+        max-width: 1200px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .paymentsModalBodyContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .paymentsTable {
+        height: 100%;
+        margin-top: -2rem;
+    }
+
+    .table {
+        position: static !important;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .card {
+        flex-direction: column;
+    }
+}

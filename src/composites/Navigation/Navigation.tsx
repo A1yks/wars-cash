@@ -13,7 +13,7 @@ import Burger from 'components/Burger/Burger';
 import Menu from 'components/Menu';
 import useNavigation from './hooks/useNavigation';
 import ConfirmationDialog from 'components/ConfirmationDialog/ConfirmationDIalog';
-import { IUser } from '@backend/models/User/types';
+import { IUser, Roles, adminRoles } from '@backend/models/User/types';
 import Spinner from 'components/Spinner/Spinner';
 
 export type NavigationProps = {
@@ -30,46 +30,57 @@ function Navigation(props: NavigationProps) {
     const menuJsx = useMemo(
         () => (
             <>
-                <li className={styles.menuItem}>
-                    <Link href="/" onClick={closeMenu}>
-                        Главная
-                    </Link>
-                </li>
-                <li className={styles.menuItem}>
-                    <Link href="/user/profile" onClick={closeMenu}>
-                        Профиль
-                    </Link>
-                </li>
-                <li className={styles.menuItem}>
-                    <Modal>
-                        <AppModalBody title="Пополнение">
-                            <DepositContent />
-                        </AppModalBody>
-                        <ModalOpener>
-                            <Link href="#">Пополнение</Link>
-                        </ModalOpener>
-                    </Modal>
-                </li>
-                <li className={styles.menuItem}>
-                    <Modal>
-                        <AppModalBody title="Вывод">
-                            <WithdrawalContent />
-                        </AppModalBody>
-                        <ModalOpener>
-                            <Link href="#">Вывод</Link>
-                        </ModalOpener>
-                    </Modal>
-                </li>
-                <li className={styles.menuItem}>
-                    <Modal>
-                        <AppModalBody title="Бонус">
-                            <BonusContent />
-                        </AppModalBody>
-                        <ModalOpener>
-                            <Link href="#">Бонус</Link>
-                        </ModalOpener>
-                    </Modal>
-                </li>
+                {adminRoles.includes(user?.role || Roles.User) && !user?.isBanned && (
+                    <li className={styles.menuItem}>
+                        <Link href="/admin" onClick={closeMenu}>
+                            Админка
+                        </Link>
+                    </li>
+                )}
+                {!user?.isBanned && (
+                    <>
+                        <li className={styles.menuItem}>
+                            <Link href="/" onClick={closeMenu}>
+                                Главная
+                            </Link>
+                        </li>
+                        <li className={styles.menuItem}>
+                            <Link href="/user/profile" onClick={closeMenu}>
+                                Профиль
+                            </Link>
+                        </li>
+                        <li className={styles.menuItem}>
+                            <Modal>
+                                <AppModalBody title="Пополнение">
+                                    <DepositContent />
+                                </AppModalBody>
+                                <ModalOpener>
+                                    <Link href="#">Пополнение</Link>
+                                </ModalOpener>
+                            </Modal>
+                        </li>
+                        <li className={styles.menuItem}>
+                            <Modal>
+                                <AppModalBody title="Вывод">
+                                    <WithdrawalContent />
+                                </AppModalBody>
+                                <ModalOpener>
+                                    <Link href="#">Вывод</Link>
+                                </ModalOpener>
+                            </Modal>
+                        </li>
+                        <li className={styles.menuItem}>
+                            <Modal>
+                                <AppModalBody title="Бонус">
+                                    <BonusContent />
+                                </AppModalBody>
+                                <ModalOpener>
+                                    <Link href="#">Бонус</Link>
+                                </ModalOpener>
+                            </Modal>
+                        </li>
+                    </>
+                )}
                 <li className={styles.menuItem}>
                     <Modal>
                         <AppModalBody title="FAQ">
@@ -91,7 +102,7 @@ function Navigation(props: NavigationProps) {
                 </li>
             </>
         ),
-        [closeMenu, logoutHandler]
+        [closeMenu, logoutHandler, user?.isBanned, user?.role]
     );
 
     const authBtnJsx = isLoggingIn ? (
@@ -104,7 +115,14 @@ function Navigation(props: NavigationProps) {
 
     return (
         <nav className={c(styles.nav, className)}>
-            {isLoggedIn && <UserCard name={user!.name} avatarSrc={user!.avatar} profileUrl="/user/profile" className={styles.desktopUserCard} />}
+            {isLoggedIn && (
+                <UserCard
+                    name={user!.name}
+                    avatarSrc={user!.avatar}
+                    profileUrl={user?.isBanned ? undefined : '/user/profile'}
+                    className={styles.desktopUserCard}
+                />
+            )}
             {isLoggedIn ? (
                 <>
                     <Burger isOpened={isMenuOpened} className={styles.burger} onClick={toggleMenu} />

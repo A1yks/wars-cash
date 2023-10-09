@@ -26,16 +26,17 @@ export type GameSpinnerProps = {
     className?: string;
 };
 
-const easingFunction = (percent: number) => -(Math.cos(Math.PI * percent) - 1) / 2;
+const easingFunction = (percent: number) => Math.sin((percent * Math.PI) / 2);
 
 function GameSpinner(props: GameSpinnerProps) {
     const { blueColorPercent, isSpinning, text, isWaiting, isCancelled, className, rotation, spinningPercent, spinDuration, winner, onStopSpinning } =
         props;
-    const fakeDegrees = 360 * 5;
+    const fakeDegrees = 360 * Math.floor(spinDuration / 1.2);
     const fullDegrees = fakeDegrees + rotation;
     const spinnerRef = useRef<HTMLDivElement>(null);
     const winnerText = winner === null ? '' : winner === BetTypes.Blue ? 'Синяя' : 'Красная';
     const isWaitingPrevRef = usePreviousRef(isWaiting);
+    const duration = spinDuration * 1000 * (1 - spinningPercent);
 
     const [startSpinning, stopSpinning] = useAnimation(
         (percent) => {
@@ -46,9 +47,9 @@ function GameSpinner(props: GameSpinnerProps) {
             }
         },
         {
-            duration: spinDuration * 1000 * (1 - spinningPercent),
+            duration,
             algorithm(percent) {
-                return easingFunction(Math.min(percent + spinningPercent, 1));
+                return easingFunction(1 - (duration * (1 - percent)) / (spinDuration * 1000));
             },
         }
     );

@@ -8,19 +8,21 @@ import { ReactNode } from 'react';
 export type AppModalBodyProps = {
     title: string;
     children: ReactNode;
+    className?: string;
+    contentClassName?: string;
 };
 
 function AppModalBody(props: AppModalBodyProps) {
     const { close } = useModal();
 
     return (
-        <ModalBody className={styles.modalBody}>
+        <ModalBody className={c(styles.modalBody, props.className)}>
             <BlockHeader
                 title={props.title}
                 className={styles.modalHeader}
                 rightContent={<Icon src="/images/plus.png" className={styles.closeBtn} onClick={close} />}
             />
-            <div className={styles.content}>{props.children}</div>
+            <div className={c(styles.content, props.contentClassName)}>{props.children}</div>
         </ModalBody>
     );
 }
