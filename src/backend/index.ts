@@ -53,6 +53,7 @@ const port = process.env.PORT || 3000;
             app.use('/static/images/users', express.static(USER_AVATARS_FOLDER_PATH));
 
             app.use(express.json());
+            app.use(express.urlencoded());
             app.use(cookieParser());
 
             app.use('/api/auth', authRouter);

@@ -14,6 +14,7 @@ const nextConfig = {
     images: {
         domains: ['localhost', '127.0.0.1', '116.202.113.54', 'wars.cash'],
     },
+    distDir: 'dist/.next',
 };
 
 module.exports = withPlugins([bundleAnalyzer], nextConfig);
