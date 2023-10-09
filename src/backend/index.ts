@@ -56,8 +56,10 @@ const port = process.env.PORT || 3000;
             app.use(express.urlencoded());
             app.use(cookieParser());
 
+            app.enable('trust proxy');
+
             app.use((req, res, next) => {
-                if (process.env.NODE_ENV != 'development' && !req.secure) {
+                if (process.env.NODE_ENV !== 'development' && !req.secure) {
                     return res.redirect('https://' + req.headers.host + req.url);
                 }
 
