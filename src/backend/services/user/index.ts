@@ -11,6 +11,7 @@ import formatNumber from '@backend/utils/formatNumber';
 import PaymentsService from '../payments';
 import { UserAdminInfo } from './types';
 import DepositsService from '../deposit';
+import FacebookService from '../facebook';
 
 namespace UserService {
     export async function findOrCreate(userData: Partial<IUser>) {
@@ -73,7 +74,7 @@ namespace UserService {
 
         await user.save();
 
-        if (oldAvatar !== null) {
+        if (oldAvatar !== null && oldAvatar !== 'default.jpg') {
             FileUploaderService.deleteFileFromDisk(path.join(USER_AVATARS_FOLDER_PATH, oldAvatar));
         }
 
@@ -124,13 +125,21 @@ namespace UserService {
             throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
         }
 
+        const oldAvatar = user.avatar;
+
         user.avatar = 'default.jpg';
         user.name = `User${user._id}`;
 
         await user.save();
 
-        const confirmationCode = user._id;
-        const statusUrl = `https://${process.env.NEXT_PUBLIC_URL}/facebook/deletion?=${confirmationCode}`;
+        if (oldAvatar !== null && oldAvatar !== 'default.jpg') {
+            await FileUploaderService.deleteFileFromDisk(path.join(USER_AVATARS_FOLDER_PATH, oldAvatar));
+        }
+
+        const confirmationCode = user._id.toString();
+        const statusUrl = `${process.env.NEXT_PUBLIC_URL}/facebook/deletion?code=${confirmationCode}`;
+
+        await FacebookService.createDeletionInfo(confirmationCode);
 
         return { statusUrl, confirmationCode };
     }

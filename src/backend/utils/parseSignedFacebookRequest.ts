@@ -10,13 +10,11 @@ type Data = {
 export const parseSignedFacebookRequest = (signed_request: string) => {
     const [encoded_sig, payload] = signed_request.split('.');
 
-    const secret = 'appsecret'; // Use your app secret here
+    const secret = process.env.FACEBOOK_APP_SECRET;
 
-    // decode the data
     const sig = base64Decode(encoded_sig);
     const data = JSON.parse(base64Decode(payload)) as Data;
 
-    // confirm the signature
     const expected_sig = crypto.createHmac('sha256', secret).update(payload).digest('binary');
 
     if (sig !== expected_sig) {

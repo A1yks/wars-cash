@@ -38,7 +38,6 @@ function BlockedChatUsersList(props: BlockedChatUsersListProps) {
     const prevDebouncedSearchValueRef = usePreviousRef(debouncedSearchValue);
 
     useEffect(() => {
-        console.log('debouncedSearchValue', debouncedSearchValue, prevDebouncedSearchValueRef.current);
         if (!prevDebouncedSearchValueRef.current && !debouncedSearchValue) {
             return;
         }

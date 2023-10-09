@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "lib": ["ESNext", "dom"],
-        "outDir": "../../.next/production-server/",
+        "outDir": "../../dist/server",
         "noEmit": false,
         "module": "CommonJS",
         "allowJs": true,

@@ -1,5 +1,6 @@
 import { changePageContentDataSchema } from '@backend/controllers/site-info/validation';
 import { ISiteInfo } from '@backend/models/SiteInfo/types';
+import useBrowserLayoutEffect from 'hooks/useBrowserLayoutEffect';
 import useFormValidation from 'hooks/useFormValidation';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -35,7 +36,7 @@ function useEditor(page: ISiteInfo) {
         }
     );
 
-    useEffect(() => {
+    useBrowserLayoutEffect(() => {
         setTitle(page.title);
         setContent(page.content);
     }, [page]);

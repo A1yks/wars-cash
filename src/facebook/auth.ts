@@ -67,6 +67,7 @@ export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { dispatch
             const fbLoginData = await getUserInfo();
 
             if (isFacebookLoginError(fbLoginData)) {
+                console.log(666);
                 dispatch(authSlice.actions.setIsLoading(false));
                 dispatch(authSlice.actions.setIsLoginCompleted(true));
                 throw new Error('Произошла ошибка при авторизации через facebook');
@@ -80,13 +81,14 @@ export const checkAuth = createAsyncThunk('user/checkAuth', async (_, { dispatch
                     avatar: fbLoginData.picture.data.url,
                     token: response.authResponse.accessToken,
                 })
-            );
+            ).unwrap();
 
             return true;
         }
 
         dispatch(authSlice.actions.setIsLoading(false));
-        dispatch(authSlice.actions.setIsLoginCompleted(true));
+        // if call these two actions simultaneously for some reason HYDRATE action will be firing indefinitely, so this hack should not be deleted
+        setTimeout(() => dispatch(authSlice.actions.setIsLoginCompleted(true)), 0);
 
         return false;
     });
