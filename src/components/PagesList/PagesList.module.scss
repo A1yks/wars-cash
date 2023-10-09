@@ -1,0 +1,39 @@
+.listContent {
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.listWrapper {
+    overflow: auto;
+    width: 100%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6rem;
+    width: 100%;
+
+    .item {
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid #ccc;
+        }
+
+        &.active {
+            background: $light-blue;
+            color: #fff;
+        }
+
+        .pageLink {
+            display: block;
+            padding: 1rem 1.2rem;
+            color: inherit;
+        }
+    }
+}

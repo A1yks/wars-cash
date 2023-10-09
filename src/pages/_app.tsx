@@ -8,6 +8,7 @@ import Script from 'next/script';
 import 'react-circular-progressbar/dist/styles.css';
 import 'simplebar-react/dist/simplebar.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'react-quill/dist/quill.snow.css';
 import 'styles/global.scss';
 import 'facebook/init';
 import { NextComponentType } from 'next';
@@ -21,6 +22,7 @@ import { loadLastGamesHelper } from 'initialPropsHelpers/loadLastGames';
 import { loadChatMessagesHelper } from 'initialPropsHelpers/loadChatMessages';
 import * as yup from 'yup';
 import { loadSiteConfigHelper } from 'initialPropsHelpers/loadSiteConfig';
+import { loadCustomPagesInfoHelper } from 'initialPropsHelpers/loadCustomPages';
 
 yup.addMethod(yup.string, 'integer', function () {
     return this.matches(/^\d+$/, 'Значние должно быть числом');
@@ -53,6 +55,7 @@ function MyApp({ Component, ...rest }: AppProps) {
             <SnackbarProvider maxSnack={3} classes={{ root: 'snackbar-content', containerRoot: 'snackbar-content' }}>
                 <Head>
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
+                    <link rel="shortcut icon" href="/favicon.ico" />
                 </Head>
                 <SocketContextProvider>
                     <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
@@ -84,7 +87,12 @@ MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async (appContext)
                 }
             }
 
-            await Promise.all([loadChatMessagesHelper(store), loadLastGamesHelper(store), loadSiteConfigHelper(store)]);
+            await Promise.all([
+                loadChatMessagesHelper(store),
+                loadLastGamesHelper(store),
+                loadSiteConfigHelper(store),
+                loadCustomPagesInfoHelper(store),
+            ]);
             await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
             const componentProps = await App.getInitialProps(appContext);

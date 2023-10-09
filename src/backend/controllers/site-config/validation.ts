@@ -4,6 +4,7 @@ import { string } from 'yup';
 import { Roles } from '@backend/models/User/types';
 
 export const spinDurationField = number().typeError('Длительность спина должна быть числом');
+export const betsTimeField = number().typeError('Время приема ставок должно быть числом');
 export const randomOrgApiKeyField = string().typeError('Ключ API random.org должен быть строкой');
 export const chatMessagesToSaveField = number().typeError('Количество сообщений в чате должно быть числом');
 export const minWithdrawalAmountField = number().typeError('Минимальная сумма вывода должна быть числом');
@@ -13,6 +14,7 @@ export const userBonusField = number().typeError('Бонус для обычны
 
 export const changeSiteConfigSchema: ObjectSchema<ChangeSiteConfigReq> = object({
     spinDuration: spinDurationField,
+    betsTime: betsTimeField,
     randomOrgApiKey: randomOrgApiKeyField,
     chatMessagesToSave: chatMessagesToSaveField,
     minWithdrawalAmount: minWithdrawalAmountField,

@@ -14,7 +14,6 @@ const routes = [
     },
     {
         href: '/admin/requests',
-        query: { status: 'pending' },
         title: 'Просмотр заявок на вывод',
     },
     {
@@ -32,15 +31,9 @@ function AdminNavigation(props: AdminNavigationProps) {
 
     return (
         <ul className={c(styles.navigation, props.className)}>
-            {routes.map(({ href, title, query }, i) => (
+            {routes.map(({ href, title }, i) => (
                 <li key={i} className={styles.menuItem}>
-                    <Link
-                        href={{
-                            pathname: href,
-                            query,
-                        }}
-                        className={c({ [styles.active]: router.pathname === href })}
-                    >
+                    <Link href={href} className={c({ [styles.active]: router.pathname === href })}>
                         {title}
                     </Link>
                 </li>

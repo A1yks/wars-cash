@@ -4,6 +4,7 @@ import EditableForm from 'components/EditableForm';
 import ControlledInput from 'components/ControlledInput';
 import { object } from 'yup';
 import {
+    betsTimeField,
     chatMessagesToSaveField,
     minWithdrawalAmountField,
     premiumBonusField,
@@ -19,6 +20,7 @@ import { Roles } from '@backend/models/User/types';
 const randomOrgApiKeySchema = object({ randomOrgApiKey: randomOrgApiKeyField });
 const minWithdrawalAmountSchema = object({ minWithdrawalAmount: minWithdrawalAmountField });
 const spinDurationSchema = object({ spinDuration: spinDurationField });
+const betsTimeSchema = object({ betsTime: betsTimeField });
 const chatMessagesToSaveSchema = object({ chatMessagesToSave: chatMessagesToSaveField });
 const userBonusSchema = object({ userBonus: userBonusField });
 const vipBonusSchema = object({ vipBonus: vipBonusField });
@@ -99,6 +101,28 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ spinDuration: config.spinDuration }}
                 onSave={saveHandler('spinDuration')}
+            />
+            <EditableForm
+                className={styles.editableForm}
+                contentClassName={styles.editableFormContent}
+                titleWrapperClassName={styles.editableFormTitleWrapper}
+                isSaving={isUpdatingConfig}
+                validationSchema={betsTimeSchema}
+                title="Время для размещения ставок"
+                normalContent={<p>{formState.betsTime}</p>}
+                renderEditModeContent={({ control }) => (
+                    <ControlledInput
+                        name="betsTime"
+                        control={control}
+                        placeholder="Время"
+                        value={formState.betsTime}
+                        onChange={changeHandler('betsTime')}
+                        autoFocus
+                        autoComplete="off"
+                    />
+                )}
+                defaultValidationValues={{ betsTime: config.betsTime }}
+                onSave={saveHandler('betsTime')}
             />
             <EditableForm
                 className={styles.editableForm}

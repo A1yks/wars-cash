@@ -3,6 +3,12 @@ import { handleServerErrors } from '@backend/utils/errorsHandler';
 import { ChangePageContentReq, GetPageContentReq } from './types';
 
 namespace SiteInfoController {
+    export const getPagesInfo = handleServerErrors(async (req, res) => {
+        const pages = await SiteInfoService.getPagesInfo();
+
+        res.status(200).json({ data: pages });
+    });
+
     export const getPageContent = handleServerErrors<void, GetPageContentReq>(async (req, res) => {
         const { type } = req.params;
 
@@ -12,9 +18,9 @@ namespace SiteInfoController {
     });
 
     export const changePageContent = handleServerErrors<ChangePageContentReq>(async (req, res) => {
-        const { type, content } = req.body;
+        const { type, data } = req.body;
 
-        const updatedPage = await SiteInfoService.updatePage(type, content);
+        const updatedPage = await SiteInfoService.updatePage(type, data);
 
         res.status(200).json({ data: updatedPage });
     });

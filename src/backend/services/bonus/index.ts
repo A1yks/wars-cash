@@ -17,7 +17,13 @@ namespace BonusService {
     }
 
     export async function claimBonus(userId: IUser['_id']) {
-        const [bonusInfo, siteConfig, user] = await Promise.all([getBonusInfo(userId), SiteConfigService.getConfig(), UserService.getUser(userId)]);
+        const bonusInfo = await getBonusInfo(userId);
+
+        if (bonusInfo.availabilityTime > Date.now()) {
+            throw new Error('Бонус в настоящий момент недоступен', { cause: ErrorTypes.NO_PERMISSIONS });
+        }
+
+        const [siteConfig, user] = await Promise.all([SiteConfigService.getConfig(), UserService.getUser(userId)]);
 
         let role = user.role;
 

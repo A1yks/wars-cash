@@ -4,6 +4,7 @@ import { BetData, BetTypes, GameData, GameEventPayload } from '../game/types';
 import { Types } from 'mongoose';
 import { IGameResult } from '@backend/models/GameResult/types';
 import { IChatMessage } from '@backend/models/ChatMessage/types';
+import { ISiteConfig } from '@backend/models/SiteConfig/types';
 
 export enum Rooms {
     Chat = 'chat',
@@ -52,6 +53,7 @@ export type ServerToClientEvents = {
     updateBalance: (data: BalanceData) => void;
     messageDeleted: (data: DeleteMessageData) => void;
     restrictChatAccess: (data: ModerationData) => void;
+    configUpdated: (data: Partial<Omit<ISiteConfig, '_id'>>) => void;
 };
 
 export type InterServerEvents = Record<string, never>;

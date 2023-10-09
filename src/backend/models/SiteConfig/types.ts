@@ -5,6 +5,7 @@ export interface ISiteConfig {
     _id: Types.ObjectId;
     chatMessagesToSave: number;
     spinDuration: number;
+    betsTime: number;
     minWithdrawalAmount: number;
     randomOrgApiKey: string;
     bonuses: {

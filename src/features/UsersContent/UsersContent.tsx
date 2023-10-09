@@ -14,12 +14,16 @@ function UsersContent() {
     }
 
     return (
-        <div className={styles.content}>
+        <div className={c(styles.content, { [styles.hasPages]: pagesCount > 1 })}>
             <Input placeholder="Поиск" value={searchValue} onChange={changeSearchValueHandler} />
             {usersInfo.length === 0 ? (
                 <p className={c(styles.noUsers, 'flex', 'center', 'bold')}>Пользователи не найдены</p>
             ) : (
-                <PaginationContainer pagesCount={pagesCount} onPageChange={pageChangeHandler}>
+                <PaginationContainer
+                    pagesCount={pagesCount}
+                    onPageChange={pageChangeHandler}
+                    contentWrapperClassName={styles.paginationContentWrapper}
+                >
                     <UsersContentList usersInfo={usersInfo} />
                 </PaginationContainer>
             )}

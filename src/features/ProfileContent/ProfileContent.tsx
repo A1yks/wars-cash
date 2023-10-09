@@ -11,6 +11,8 @@ import Container from 'components/Container';
 import { changeNameSchema } from '@backend/controllers/user/validation';
 import { IPayment } from '@backend/models/Payment/types';
 import dayjs from 'dayjs';
+import DepositsTable from 'features/DepositsTable/DepositsTable';
+import PaymentRequestsTable from 'features/PaymentRequestsTable/PaymentRequestsTable';
 
 type PaymentData = Omit<IPayment, '_id' | 'user' | 'date'> & { date: string };
 
@@ -28,8 +30,7 @@ const withdrawalTitles: Record<keyof PaymentData, string> = {
 };
 
 function ProfileContent() {
-    const { user, payments, formState, isUpdatingName, isUpdatingAvatar, isLoadingPayments, changeHandler, changeName, selectPhotoHandler } =
-        useProfileContent();
+    const { user, formState, isUpdatingName, isUpdatingAvatar, changeHandler, changeName, selectPhotoHandler } = useProfileContent();
 
     if (user === null) {
         return null;
@@ -58,8 +59,10 @@ function ProfileContent() {
                     onSave={changeName}
                 />
                 <div className="content">
-                    <OperationsHistory name="История пополнений" titles={depositTitles} {...WithOperations.args} className={styles.depositHistory} />
-                    <OperationsHistory
+                    <DepositsTable tableClassName={styles.table} />
+                    <PaymentRequestsTable staticStatus className={styles.paymentsTable} tableClassName={styles.table} />
+                    {/* <OperationsHistory name="История пополнений" titles={depositTitles} {...WithOperations.args} className={styles.depositHistory} /> */}
+                    {/* <OperationsHistory
                         name="История вывода средств"
                         titles={withdrawalTitles}
                         data={payments.map((payment) => {
@@ -72,7 +75,7 @@ function ProfileContent() {
                         className={styles.withdrawalHistory}
                         tableWrapperClassName={styles.withdrawalHistoryTableWrapper}
                         isLoading={isLoadingPayments}
-                    />
+                    /> */}
                 </div>
             </div>
         </Container>

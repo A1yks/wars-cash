@@ -1,27 +1,33 @@
+import { createSelector } from '@reduxjs/toolkit';
 import GameSpinner from 'components/GameSpinner';
 import useAppDispatch from 'hooks/useAppDispatch';
 import useAppSelector from 'hooks/useAppSelector';
 import { memo, useCallback } from 'react';
 import gameSlice from 'store/reducers/gameSlice';
+import { configSelector, gameSelector } from 'store/selectors';
 
-const { resetGame, setWinner } = gameSlice.actions;
+const { setWinner } = gameSlice.actions;
+
+const selector = createSelector([gameSelector, configSelector], (game, config) => ({ game, config }));
 
 function GameSpinnerContainer() {
     const {
-        blueTeam: { percent },
-        remainingTime,
-        isGameStarted,
-        winner,
-        rotation,
-        spinningPercent,
-        isSpinning,
-        isCancelled,
-    } = useAppSelector((state) => state.game);
+        game: {
+            blueTeam: { percent },
+            remainingTime,
+            isGameStarted,
+            winner,
+            rotation,
+            spinningPercent,
+            isSpinning,
+            isCancelled,
+        },
+        config,
+    } = useAppSelector(selector);
     const dispatch = useAppDispatch();
 
     const stopSpinningHandler = useCallback(() => {
         dispatch(setWinner(null));
-        // dispatch(resetGame());
     }, [dispatch]);
 
     return (
@@ -34,7 +40,7 @@ function GameSpinnerContainer() {
             winner={winner}
             rotation={rotation}
             spinningPercent={spinningPercent}
-            spinDuration={10}
+            spinDuration={config.spinDuration}
             onStopSpinning={stopSpinningHandler}
         />
     );

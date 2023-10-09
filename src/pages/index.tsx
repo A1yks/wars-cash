@@ -1,10 +1,8 @@
 import MainContent from 'features/MainContent';
-import MainLayout from 'layouts/MainLayout';
+import { getDefaultLayout } from 'layouts/getters';
 
 export default function Main() {
     return <MainContent />;
 }
 
-Main.getLayout = function getLayout(page: React.ReactNode) {
-    return <MainLayout>{page}</MainLayout>;
-};
+Main.getLayout = getDefaultLayout();

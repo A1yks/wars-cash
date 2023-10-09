@@ -9,11 +9,13 @@ import lastGamesSlice from 'store/reducers/lastGamesSlice';
 import chatSlice from 'store/reducers/chatSlice';
 import { AppState } from 'store';
 import { createSelector } from '@reduxjs/toolkit';
+import siteConfigSlice from 'store/reducers/siteConfigSlice';
 
 const { setBalance, restrictChatAccess } = userSlice.actions;
 const { setOnline, addMessage, deleteMessage, deleteUserMessages } = chatSlice.actions;
 const { addGameResult } = lastGamesSlice.actions;
 const { setGame, setWinner, setDegreesData, resetCustomFields } = gameSlice.actions;
+const { setConfig } = siteConfigSlice.actions;
 
 const tokenSelector = (state: AppState) => state.auth.token;
 const userIdSelector = (state: AppState) => state.user?._id;
@@ -32,6 +34,7 @@ function connectToSocket(accessToken: string | null, reconnect = false) {
         socket = io({
             autoConnect: false,
             auth: { token: accessToken },
+            transports: ['websocket', 'polling'],
         });
     }
 
@@ -58,7 +61,6 @@ export function SocketContextProvider(props: Props.WithChildren) {
     const dispatch = useAppDispatch();
 
     const reconnect = useCallback(() => {
-        console.log('reconnect');
         socket?.disconnect();
         setSocket(connectToSocket(accessToken, true));
     }, [accessToken, socket]);
@@ -134,6 +136,10 @@ export function SocketContextProvider(props: Props.WithChildren) {
             dispatch(deleteUserMessages(data));
         });
 
+        socket.on('configUpdated', (data) => {
+            dispatch(setConfig(data));
+        });
+
         socket.on('disconnect', (e) => {
             console.log('disconnect', e);
         });
@@ -150,6 +156,7 @@ export function SocketContextProvider(props: Props.WithChildren) {
             socket.off('message');
             socket.off('messageDeleted');
             socket.off('restrictChatAccess');
+            socket.off('configUpdated');
         };
     }, [dispatch, socket, userId]);
 

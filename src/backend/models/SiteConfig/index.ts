@@ -7,6 +7,7 @@ const siteConfigSchema = new Schema<ISiteConfig>(
     {
         chatMessagesToSave: { type: Number, default: 100 },
         spinDuration: { type: Number, default: 10 },
+        betsTime: { type: Number, default: 10 },
         minWithdrawalAmount: { type: Number, default: 100 },
         randomOrgApiKey: { type: String, required: true, default: dev ? process.env.RANDOM_ORG_API_KEY : '' },
         bonuses: {

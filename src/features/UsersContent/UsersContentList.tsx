@@ -1,6 +1,7 @@
 import { UserAdminInfo } from '@backend/services/user/types';
 import styles from './UsersContent.module.scss';
 import UserContentListItem from './UserContentListItem';
+import { memo } from 'react';
 
 export type UserContentListProps = {
     usersInfo: UserAdminInfo[];
@@ -16,4 +17,4 @@ function UsersContentList(props: UserContentListProps) {
     );
 }
 
-export default UsersContentList;
+export default memo(UsersContentList);

@@ -10,6 +10,7 @@ export type PaginationContainerProps = {
     onPageChange: (selectedItem: number) => void;
     children: ReactNode;
     className?: string;
+    contentWrapperClassName?: string;
 };
 
 function PaginationContainer(props: PaginationContainerProps) {
@@ -19,7 +20,7 @@ function PaginationContainer(props: PaginationContainerProps) {
 
     return (
         <div className={c(styles.container, props.className)}>
-            <div className={styles.contentWrapper}>{props.children}</div>
+            <div className={c(styles.contentWrapper, props.contentWrapperClassName)}>{props.children}</div>
             {props.pagesCount > 1 && (
                 <ReactPaginate
                     breakLabel="..."

@@ -7,13 +7,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import { paymentsSelector, userSelector } from 'store/selectors';
 import { PaymentStatus } from '@backend/models/Payment/types';
 
-const selector = createSelector([userSelector, paymentsSelector], (user, paymentsData) => ({ user, payments: paymentsData.requests }));
-
 function useProfileContent() {
-    const { user, payments } = useAppSelector(selector);
+    const user = useAppSelector(userSelector);
     const { selectPhotoHandler, isUpdatingAvatar } = useChangeAvatar();
     const [changeNameMutation, { isLoading: isUpdatingName }] = useChangeNameMutation();
-    const { isFetching: isLoadingPayments } = useGetPaymentsQuery({ filter: encodeURIComponent(JSON.stringify({ status: '*' })) });
     const { formState, changeHandler } = useFormState(() => ({
         name: user?.name,
     }));
@@ -24,7 +21,7 @@ function useProfileContent() {
         }
     }
 
-    return { user, payments, formState, isUpdatingName, isUpdatingAvatar, isLoadingPayments, changeHandler, changeName, selectPhotoHandler };
+    return { user, formState, isUpdatingName, isUpdatingAvatar, changeHandler, changeName, selectPhotoHandler };
 }
 
 export default useProfileContent;

@@ -11,6 +11,7 @@ import formatNumber from '@backend/utils/formatNumber';
 import PaymentsService from '../payments';
 import { UserAdminInfo } from './types';
 import { PaymentStatus } from '@backend/models/Payment/types';
+import DepositsService from '../deposit';
 
 namespace UserService {
     export async function findOrCreate(userData: Partial<IUser>) {
@@ -107,18 +108,39 @@ namespace UserService {
         return formatNumber(user.balance / 100);
     }
 
-    // TODO add deposits
+    export async function isBanned(userId: IUser['_id']) {
+        const user = await User.findById(userId).select('isBanned').lean();
+
+        if (user === null) {
+            throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
+        }
+
+        return user.isBanned;
+    }
+
+    export async function removeFacebookInfo(userId: IUser['_id']) {
+        const user = await getUser(userId);
+
+        user.avatar = 'default.jpg';
+        user.name = user._id.toString();
+
+        await user.save();
+    }
+
     async function modifyUser(user: IUser): Promise<UserAdminInfo> {
-        const withdrawn = await PaymentsService.getUserWithdrawnAmount(user._id);
+        const [withdrawn, deposited] = await Promise.all([
+            PaymentsService.getUserWithdrawnAmount(user._id),
+            DepositsService.getUserDepositAmount(user._id),
+        ]);
 
         return {
             _id: user._id,
             name: user.name,
             avatarSrc: user.avatar,
             role: user.role,
-            balance: formatNumber(user.balance / 100),
-            deposited: formatNumber(0 / 100),
             isBanned: user.isBanned,
+            balance: formatNumber(user.balance / 100),
+            deposited,
             withdrawn,
         };
     }

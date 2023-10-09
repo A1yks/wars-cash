@@ -12,7 +12,9 @@
 .menuItem {
     font-size: 1.6rem;
     font-weight: bold;
+    cursor: pointer;
 
+    &,
     a {
         color: $blue;
 

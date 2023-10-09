@@ -6,6 +6,6 @@ function Profile() {
     return <ProfileContent />;
 }
 
-Profile.getLayout = getDefaultLayout;
+Profile.getLayout = getDefaultLayout('Профиль');
 
 export default withAuthCheck(Profile);

@@ -1,5 +1,6 @@
 import { IBonus } from '@backend/models/Bonus/types';
 import { ClientChatBanData } from '@backend/models/ChatBan/types';
+import { IDeposit } from '@backend/models/Deposit/types';
 import { IPayment } from '@backend/models/Payment/types';
 import { ISiteConfig } from '@backend/models/SiteConfig/types';
 import { UserAdminInfo } from '@backend/services/user/types';
@@ -28,5 +29,10 @@ export type GetPaymentsRes = {
 
 export type GetUsersRes = {
     users: UserAdminInfo[];
+    total: number;
+};
+
+export type GetDepositsRes = {
+    deposits: IDeposit[];
     total: number;
 };

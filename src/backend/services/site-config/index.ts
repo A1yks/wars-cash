@@ -1,6 +1,9 @@
 import SiteConfig from '@backend/models/SiteConfig';
 import { UpdateConfigData } from './types';
 import { ISiteConfig } from '@backend/models/SiteConfig/types';
+import gameInstance from '../game/setup';
+import SocketService from '../socket';
+import { Rooms } from '../socket/types';
 
 namespace SiteConfigService {
     export async function getConfig() {
@@ -28,6 +31,8 @@ namespace SiteConfigService {
         currentConfig.set(config);
 
         await currentConfig.save();
+
+        gameInstance.setupWithConfig(currentConfig);
 
         return currentConfig;
     }

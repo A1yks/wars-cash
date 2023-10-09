@@ -45,4 +45,6 @@ router.patch(
     UserController.changeRole
 );
 
+router.post('/facebook/remove-data', UserController.removeFacebookInfo);
+
 export default router;

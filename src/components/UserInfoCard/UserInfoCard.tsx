@@ -12,6 +12,10 @@ import useInputNumber from 'hooks/useInputNumber';
 import formatNumber from '@backend/utils/formatNumber';
 import Select from 'components/Select';
 import { useState } from 'react';
+import { Modal, ModalOpener } from 'components/Modal';
+import AppModalBody from 'components/AppModalBody';
+import PaymentRequestsTable from 'features/PaymentRequestsTable/PaymentRequestsTable';
+import DepositsTable from 'features/DepositsTable/DepositsTable';
 
 export type UserInfoCardProps = Omit<UserAdminInfo, '_id'> & {
     userId: IUser['_id'];
@@ -139,8 +143,22 @@ function UserInfoCard(props: UserInfoCardProps) {
                         </Button>
                     )
                 ) : null}
-                <Button>История вывода</Button>
-                <Button>История пополнений</Button>
+                <Modal>
+                    <AppModalBody title="История вывода" className={styles.paymentsModalBody} contentClassName={styles.paymentsModalBodyContent}>
+                        <PaymentRequestsTable userId={props.userId} className={styles.paymentsTable} tableClassName={styles.table} />
+                    </AppModalBody>
+                    <ModalOpener>
+                        <Button>История вывода</Button>
+                    </ModalOpener>
+                </Modal>
+                <Modal>
+                    <AppModalBody title="История пополнений" className={styles.paymentsModalBody} contentClassName={styles.paymentsModalBodyContent}>
+                        <DepositsTable userId={props.userId} tableClassName={styles.table} />
+                    </AppModalBody>
+                    <ModalOpener>
+                        <Button>История пополнений</Button>
+                    </ModalOpener>
+                </Modal>
             </div>
         </div>
     );

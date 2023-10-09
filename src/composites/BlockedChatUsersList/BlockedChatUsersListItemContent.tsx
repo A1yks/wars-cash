@@ -1,3 +1,4 @@
+import c from 'clsx';
 import styles from './BlockedChatUsersList.module.scss';
 import Button from 'components/Button';
 import UserCard from 'components/UserCard';
@@ -38,7 +39,7 @@ function BlockedChatUsersListItemContent(props: BlockedChatUsersListItemContentP
                     infoClassName={styles.userInfoText}
                     showNameTooltip
                 />
-                <div className={chatMessageStyles.controls}>
+                <div className={c(chatMessageStyles.controls, styles.controls)}>
                     {isUnbanned ? (
                         <Button color="red" className={styles.actionBtn} onClick={cancelHandler} loading={props.isLoading}>
                             Отменить

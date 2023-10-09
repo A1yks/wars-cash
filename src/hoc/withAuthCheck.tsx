@@ -25,6 +25,12 @@ function withAuthCheck<T extends Record<string, unknown>>(
                 }).end();
             }
 
+            if (user?.isBanned) {
+                res?.writeHead(302, {
+                    Location: '/blocked',
+                }).end();
+            }
+
             const data = await Component.getInitialProps?.(ctx);
 
             return { ...data };

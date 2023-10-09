@@ -59,6 +59,10 @@ namespace PaymentsService {
             status: status === '*' ? { $in: paymentStatuses } : status,
         };
 
+        if (userId !== undefined) {
+            searchQuery['user'] = userId;
+        }
+
         const [requests, total] = await Promise.all([
             Payment.find(searchQuery).sort(sortFilter).skip(offset).limit(limit),
             Payment.countDocuments(searchQuery),

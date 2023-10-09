@@ -1,27 +1,35 @@
 import SiteInfo from '@backend/models/SiteInfo';
-import { SiteInfoTypes } from '@backend/models/SiteInfo/types';
+import { ISiteInfo } from '@backend/models/SiteInfo/types';
 
 namespace SiteInfoService {
-    export async function getPage(type: SiteInfoTypes) {
+    export async function getPagesInfo() {
+        const pages = await SiteInfo.find();
+
+        return pages;
+    }
+
+    export async function getPage(type: ISiteInfo['type']) {
         const page = await SiteInfo.findOne({ type });
 
         if (page === null) {
-            return await createPage(type);
+            return createPage({ type, title: 'Новая страница', content: '' });
         }
 
         return page;
     }
 
-    export async function updatePage(type: SiteInfoTypes, content: string) {
+    export async function updatePage(type: ISiteInfo['type'], data: Partial<Omit<ISiteInfo, '_id'>>) {
         const page = await getPage(type);
 
-        page.content = content;
+        page.set(data);
 
         await page.save();
+
+        return page;
     }
 
-    async function createPage(type: SiteInfoTypes) {
-        return await SiteInfo.create({ type });
+    async function createPage(pageData: Omit<ISiteInfo, '_id'>) {
+        return await SiteInfo.create(pageData);
     }
 }
 

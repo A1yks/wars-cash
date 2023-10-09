@@ -95,6 +95,13 @@ namespace UserController {
 
         res.status(200).json({ data: updatedUser.role });
     });
+
+    export const removeFacebookInfo = handleServerErrors(async (req, res) => {
+        // const updatedUser = await UserService.removeFacebookInfo(req.userId);
+
+        // res.status(200).json({ data: updatedUser });
+        res.status(200).send();
+    });
 }
 
 export default UserController;

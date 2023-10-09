@@ -1,9 +1,8 @@
 import { ObjectSchema, bool, date, mixed, number, object, string } from 'yup';
 import { ChangePaymentStatusReq, CreatePaymentReq, GetPaymentsFilter, GetPaymentsReq } from './types';
 import { PaymentStatus, PaymentSystem, paymentStatuses, paymentSystems } from '@backend/models/Payment/types';
-import { idSchema, paginationSchema } from '@backend/common/validation';
+import { idSchema, paginationSchema, sortField } from '@backend/common/validation';
 
-export const sortField = number().oneOf([1, -1], 'Указано неверное значение сортировки').optional();
 export const statusField = mixed<PaymentStatus | '*'>()
     .oneOf([...paymentStatuses, '*'], 'Указан несуществующий статус обработки заявки на вывод средств')
     .required('Статус обработки заявки на вывод средств является обязательным');

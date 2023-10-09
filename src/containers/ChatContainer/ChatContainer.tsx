@@ -6,11 +6,9 @@ import { BLOCKED_USERS_PER_PAGE } from 'composites/BlockedChatUsersList/BlockedC
 import Chat from 'composites/Chat';
 import useAppSelector from 'hooks/useAppSelector';
 import useErrorsHandler from 'hooks/useErrorsHandler';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState } from 'store';
+import { useCallback, useEffect, useRef } from 'react';
 import {
     useDeleteMessageMutation,
-    useGetBannedUsersQuery,
     useGetMessagesQuery,
     useLazyGetBannedUsersQuery,
     useModerateMutation,
