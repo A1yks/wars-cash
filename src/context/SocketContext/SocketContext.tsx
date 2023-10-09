@@ -29,7 +29,6 @@ let socket: ClientSocket;
 const SocketContext = React.createContext<typeof socket | null>(null);
 
 function connectToSocket(accessToken: string | null, reconnect = false) {
-    console.log('connect', accessToken);
     if (socket === undefined || reconnect) {
         socket = io({
             autoConnect: false,
@@ -138,10 +137,6 @@ export function SocketContextProvider(props: Props.WithChildren) {
 
         socket.on('configUpdated', (data) => {
             dispatch(setConfig(data));
-        });
-
-        socket.on('disconnect', (e) => {
-            console.log('disconnect', e);
         });
 
         return () => {

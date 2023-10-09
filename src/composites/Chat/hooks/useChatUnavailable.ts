@@ -22,7 +22,6 @@ function useChatUnavailable(chatTimeout: number) {
     }, [chatTimeout]);
 
     useEffect(() => {
-        console.log(timeToUnbanInitialStateRef.current, chatTimeout);
         if (timeToUnbanInitialStateRef.current === Infinity) {
             return;
         }
