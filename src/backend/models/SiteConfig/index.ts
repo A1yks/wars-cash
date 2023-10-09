@@ -16,7 +16,7 @@ const siteConfigSchema = new Schema<ISiteConfig>(
             [Roles.Premium]: { type: Number, default: 20 },
         },
     },
-    { collection: 'siteConfig', capped: { size: 1024 * 1024, max: 1 } }
+    { collection: 'siteConfig' }
 );
 
 export default model<ISiteConfig>('SiteConfig', siteConfigSchema);

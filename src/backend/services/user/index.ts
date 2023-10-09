@@ -74,7 +74,7 @@ namespace UserService {
 
         await user.save();
 
-        if (oldAvatar !== null) {
+        if (oldAvatar !== null && oldAvatar !== 'default.jpg') {
             FileUploaderService.deleteFileFromDisk(path.join(USER_AVATARS_FOLDER_PATH, oldAvatar));
         }
 
@@ -125,10 +125,16 @@ namespace UserService {
             throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
         }
 
+        const oldAvatar = user.avatar;
+
         user.avatar = 'default.jpg';
         user.name = `User${user._id}`;
 
         await user.save();
+
+        if (oldAvatar !== null && oldAvatar !== 'default.jpg') {
+            await FileUploaderService.deleteFileFromDisk(path.join(USER_AVATARS_FOLDER_PATH, oldAvatar));
+        }
 
         const confirmationCode = user._id.toString();
         const statusUrl = `${process.env.NEXT_PUBLIC_URL}/facebook/deletion?code=${confirmationCode}`;
