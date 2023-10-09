@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'store/api/auth';
 import userSlice from './userSlice';
+import { checkAuth } from 'facebook/auth';
 
 export type AuthState = {
     token: string | null;
