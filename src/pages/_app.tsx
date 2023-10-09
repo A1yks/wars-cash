@@ -38,13 +38,8 @@ yup.addMethod(yup.object, 'atLeastOneOf', function (list: any[]) {
     });
 });
 
-type WrapperResult = Omit<ReturnType<(typeof wrapper)['useWrappedStore']>, 'props'> & { props: AppProps };
-
 function MyApp({ Component, ...rest }: AppProps) {
-    const {
-        store,
-        props: { pageProps },
-    } = wrapper.useWrappedStore(rest) as WrapperResult;
+    const { store, props } = wrapper.useWrappedStore(rest);
 
     const getLayout =
         (Component as typeof Component & { getLayout: (page: ReactElement) => AuthCheckerProps['children'] }).getLayout ||
@@ -58,7 +53,7 @@ function MyApp({ Component, ...rest }: AppProps) {
                     <link rel="shortcut icon" href="/favicon.ico" />
                 </Head>
                 <SocketContextProvider>
-                    <AuthChecker>{getLayout(<Component {...pageProps} />)}</AuthChecker>
+                    <AuthChecker>{getLayout(<Component {...props.pageProps} />)}</AuthChecker>
                 </SocketContextProvider>
             </SnackbarProvider>
             <Script src="https://connect.facebook.net/en_US/sdk.js" async />
