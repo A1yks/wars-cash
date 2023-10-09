@@ -10,6 +10,7 @@ const siteConfigSchema = new Schema<ISiteConfig>(
         betsTime: { type: Number, default: 10 },
         minWithdrawalAmount: { type: Number, default: 100 },
         randomOrgApiKey: { type: String, default: dev ? process.env.RANDOM_ORG_API_KEY : '' },
+        sitePercent: { type: Number, default: 5, min: 0, max: 100 },
         bonuses: {
             [Roles.User]: { type: Number, default: 10 },
             [Roles.Vip]: { type: Number, default: 15 },

@@ -8,6 +8,7 @@ export interface ISiteConfig {
     betsTime: number;
     minWithdrawalAmount: number;
     randomOrgApiKey: string;
+    sitePercent: number;
     bonuses: {
         [Roles.User]: number;
         [Roles.Vip]: number;

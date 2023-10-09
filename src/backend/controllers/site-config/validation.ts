@@ -11,6 +11,10 @@ export const minWithdrawalAmountField = number().typeError('Минимальна
 export const premiumBonusField = number().typeError('Бонус для премиум-пользователей должен быть числом');
 export const vipBonusField = number().typeError('Бонус для VIP-пользователей должен быть числом');
 export const userBonusField = number().typeError('Бонус для обычных пользователей должен быть числом');
+export const sitePercentField = number()
+    .typeError('Процент выигрыша должен быть числом')
+    .min(0, 'Минимальный процент не может быть меньше 0')
+    .max(100, 'Максимальный процент не может быть выше 100');
 
 export const changeSiteConfigSchema: ObjectSchema<ChangeSiteConfigReq> = object({
     spinDuration: spinDurationField,
@@ -18,6 +22,7 @@ export const changeSiteConfigSchema: ObjectSchema<ChangeSiteConfigReq> = object(
     randomOrgApiKey: randomOrgApiKeyField,
     chatMessagesToSave: chatMessagesToSaveField,
     minWithdrawalAmount: minWithdrawalAmountField,
+    sitePercent: sitePercentField,
     bonuses: object({
         [Roles.Premium]: premiumBonusField,
         [Roles.Vip]: vipBonusField,

@@ -9,6 +9,7 @@ import {
     minWithdrawalAmountField,
     premiumBonusField,
     randomOrgApiKeyField,
+    sitePercentField,
     spinDurationField,
     userBonusField,
     vipBonusField,
@@ -25,6 +26,7 @@ const chatMessagesToSaveSchema = object({ chatMessagesToSave: chatMessagesToSave
 const userBonusSchema = object({ userBonus: userBonusField });
 const vipBonusSchema = object({ vipBonus: vipBonusField });
 const premiumBonusSchema = object({ premiumBonus: premiumBonusField });
+const sitePercentSchema = object({ sitePercent: sitePercentField });
 
 function ConfigContent() {
     const { isGettingConfig, isUpdatingConfig, config, formState, changeHandler, changeBonusHandler, saveHandler, saveBonusHandler } =
@@ -123,6 +125,28 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ betsTime: config.betsTime }}
                 onSave={saveHandler('betsTime')}
+            />
+            <EditableForm
+                className={styles.editableForm}
+                contentClassName={styles.editableFormContent}
+                titleWrapperClassName={styles.editableFormTitleWrapper}
+                isSaving={isUpdatingConfig}
+                validationSchema={sitePercentSchema}
+                title="Процент сайта"
+                normalContent={<p>{formState.sitePercent}</p>}
+                renderEditModeContent={({ control }) => (
+                    <ControlledInput
+                        name="sitePercent"
+                        control={control}
+                        placeholder="Число от 0 до 100"
+                        value={formState.sitePercent}
+                        onChange={changeHandler('sitePercent')}
+                        autoFocus
+                        autoComplete="off"
+                    />
+                )}
+                defaultValidationValues={{ sitePercent: config.sitePercent }}
+                onSave={saveHandler('sitePercent')}
             />
             <EditableForm
                 className={styles.editableForm}

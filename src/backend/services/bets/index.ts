@@ -5,6 +5,7 @@ import gameInstance from '../game/setup';
 import formatNumber from '@backend/utils/formatNumber';
 import GameResult from '@backend/models/GameResult';
 import { IGameResult } from '@backend/models/GameResult/types';
+import SiteConfigService from '../site-config';
 
 namespace BetsService {
     export async function placeBet(userId: IUser['_id'], betAmount: number) {
@@ -34,14 +35,15 @@ namespace BetsService {
         return user.toJSON();
     }
 
-    export async function cashOut(userId: IUser['_id'], winningAmount: number, coeff: number) {
-        const user = await UserService.getUser(userId);
+    export async function cashOut(userId: IUser['_id'], winningAmount: number, coeff: number, returnMoney: boolean) {
+        const [user, config] = await Promise.all([UserService.getUser(userId), SiteConfigService.getConfig()]);
+        const comission = returnMoney ? 1 : 1 - config.sitePercent / 100;
 
         if (user === null) {
             throw new Error('Пользователь не найден', { cause: ErrorTypes.NOT_FOUND });
         }
 
-        const winningValue = winningAmount * 100 * coeff;
+        const winningValue = winningAmount * 100 * coeff * comission;
 
         user.balance += winningValue;
 

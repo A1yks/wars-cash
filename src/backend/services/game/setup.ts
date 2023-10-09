@@ -2,9 +2,7 @@ import Game from '@backend/services/game';
 import SocketService from '@backend/services/socket';
 import BetsService from '../bets';
 import { BetTypes, GameData } from './types';
-import { BackendSocket, Rooms } from '../socket/types';
-import { Types } from 'mongoose';
-
+import { Rooms } from '../socket/types';
 const gameInstance = new Game();
 
 function getWinnerTeam(gameData: GameData, winner: Game['winner']) {
@@ -53,7 +51,7 @@ gameInstance.on('beforeReset', async (gameData) => {
     });
 
     winnersTable.forEach(async (betSum, userId) => {
-        const newBalance = await BetsService.cashOut(new Types.ObjectId(userId), betSum, winnerTeam.coeff);
+        const newBalance = await BetsService.cashOut(userId, betSum, winnerTeam.coeff, gameInstance.isCancelled);
 
         const socket = SocketService.sockets.get(userId);
 
