@@ -5,7 +5,7 @@ const siteInfoSchema = new Schema<ISiteInfo>(
     {
         type: { type: String, required: true, enum: siteInfoTypes, unique: true },
         title: { type: String, required: true },
-        content: { type: String, required: true },
+        content: { type: String, default: '' },
     },
     { collection: 'siteInfo' }
 );

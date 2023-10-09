@@ -35,11 +35,11 @@ function ChatContainer() {
     const blockedUsersSearchValueRef = useRef<string | undefined>(undefined);
     const totalBlockedUsers = bannedUsersResponse?.data.total || 0;
 
-    useEffect(() => {
-        if (user?.role !== undefined && moderRoles.includes(user.role)) {
-            triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
-        }
-    }, [triggerGetBannedUsers, user?.role]);
+    // useEffect(() => {
+    //     if (user?.role !== undefined && moderRoles.includes(user.role)) {
+    //         triggerGetBannedUsers({ limit: BLOCKED_USERS_PER_PAGE, offset: 0 }, false);
+    //     }
+    // }, [triggerGetBannedUsers, user?.role]);
 
     const saveMessage = useCallback(
         async (message: string) => {

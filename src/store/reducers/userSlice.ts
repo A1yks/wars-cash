@@ -24,7 +24,6 @@ const userSlice = createSlice({
             }
         },
         restrictChatAccess(state, action: PayloadAction<ModerationData>) {
-            console.log(action.payload);
             if (state !== null && action.payload.period !== undefined) {
                 state.chatTimeout = action.payload.period;
             }

@@ -260,8 +260,6 @@ class Game {
 
         this.rotation = rotation;
 
-        console.log(winnerNumber);
-
         return { rotation, winner };
     }
 
