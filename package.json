@@ -1,6 +1,6 @@
 {
     "name": "wars-cash",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
     "scripts": {
         "dev": "nodemon --exec ts-node --project ./src/backend/tsconfig.json src/backend/index.ts",
