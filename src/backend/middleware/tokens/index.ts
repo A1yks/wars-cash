@@ -68,10 +68,12 @@ namespace TokensMiddleware {
                 return;
             }
 
-            const user = await UserService.getUser(payload.userId);
+            if (!req.url.includes('logout')) {
+                const user = await UserService.getUser(payload.userId);
 
-            if (user.isBanned) {
-                throw new Error('У вас нет прав для выполнения данной операции', { cause: ErrorTypes.NO_PERMISSIONS });
+                if (user.isBanned) {
+                    throw new Error('У вас нет прав для выполнения данной операции', { cause: ErrorTypes.NO_PERMISSIONS });
+                }
             }
 
             req.userId = payload.userId;

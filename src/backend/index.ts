@@ -56,6 +56,14 @@ const port = process.env.PORT || 3000;
             app.use(express.urlencoded());
             app.use(cookieParser());
 
+            app.use((req, res, next) => {
+                if (process.env.NODE_ENV != 'development' && !req.secure) {
+                    return res.redirect('https://' + req.headers.host + req.url);
+                }
+
+                next();
+            });
+
             app.use('/api/auth', authRouter);
             app.use('/api/bets', betsRouter);
             app.use('/api/tokens', tokensRouter);
