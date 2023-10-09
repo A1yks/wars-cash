@@ -9,7 +9,7 @@ const siteConfigSchema = new Schema<ISiteConfig>(
         spinDuration: { type: Number, default: 10 },
         betsTime: { type: Number, default: 10 },
         minWithdrawalAmount: { type: Number, default: 100 },
-        randomOrgApiKey: { type: String, required: true, default: dev ? process.env.RANDOM_ORG_API_KEY : '' },
+        randomOrgApiKey: { type: String, default: dev ? process.env.RANDOM_ORG_API_KEY : '' },
         bonuses: {
             [Roles.User]: { type: Number, default: 10 },
             [Roles.Vip]: { type: Number, default: 15 },
