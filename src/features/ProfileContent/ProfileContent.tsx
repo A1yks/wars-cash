@@ -3,31 +3,17 @@ import styles from './ProfileContent.module.scss';
 import EditableForm from 'components/EditableForm';
 import useProfileContent from './hooks/useProfileContent';
 import ControlledInput from 'components/ControlledInput';
-import { WithOperations } from 'components/OperationsHistory/OperationsHistory.stories';
-import OperationsHistory from 'components/OperationsHistory';
 import Avatar from 'components/Avatar';
 import Button from 'components/Button';
 import Container from 'components/Container';
 import { changeNameSchema } from '@backend/controllers/user/validation';
 import { IPayment } from '@backend/models/Payment/types';
-import dayjs from 'dayjs';
 import DepositsTable from 'features/DepositsTable/DepositsTable';
 import PaymentRequestsTable from 'features/PaymentRequestsTable/PaymentRequestsTable';
+import { faHistory } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type PaymentData = Omit<IPayment, '_id' | 'user' | 'date'> & { date: string };
-
-const depositTitles = {
-    date: 'Дата',
-    sum: 'Сумма',
-};
-
-const withdrawalTitles: Record<keyof PaymentData, string> = {
-    date: 'Дата',
-    sum: 'Сумма',
-    paymentSystem: 'Тип кошелька',
-    wallet: 'Кошелек',
-    status: 'Статус',
-};
 
 function ProfileContent() {
     const { user, formState, isUpdatingName, isUpdatingAvatar, changeHandler, changeName, selectPhotoHandler } = useProfileContent();
@@ -59,7 +45,15 @@ function ProfileContent() {
                     onSave={changeName}
                 />
                 <div className="content">
+                    <h6 className={styles.tableTitle}>
+                        <FontAwesomeIcon icon={faHistory} />
+                        <span>История пополнений</span>
+                    </h6>
                     <DepositsTable tableClassName={styles.table} />
+                    <h6 className={styles.tableTitle}>
+                        <FontAwesomeIcon icon={faHistory} />
+                        <span>История вывода</span>
+                    </h6>
                     <PaymentRequestsTable staticStatus className={styles.paymentsTable} tableClassName={styles.table} />
                     {/* <OperationsHistory name="История пополнений" titles={depositTitles} {...WithOperations.args} className={styles.depositHistory} /> */}
                     {/* <OperationsHistory
