@@ -38,7 +38,30 @@ function useConfigContent() {
         };
     }
 
-    return { isGettingConfig, isUpdatingConfig, config, formState, changeHandler, changeBonusHandler, saveHandler, saveBonusHandler };
+    function cancelHandler(key: keyof Omit<SiteConfigState, 'bonuses'>) {
+        return () => {
+            setFormState((prev) => ({ ...prev, [key]: config[key] }));
+        };
+    }
+
+    function cancelBonusHandler(key: keyof SiteConfigState['bonuses']) {
+        return () => {
+            setFormState((prev) => ({ ...prev, bonuses: { ...prev.bonuses, [key]: config.bonuses[key] } }));
+        };
+    }
+
+    return {
+        isGettingConfig,
+        isUpdatingConfig,
+        config,
+        formState,
+        changeHandler,
+        changeBonusHandler,
+        saveHandler,
+        cancelHandler,
+        saveBonusHandler,
+        cancelBonusHandler,
+    };
 }
 
 export default useConfigContent;

@@ -29,8 +29,18 @@ const premiumBonusSchema = object({ premiumBonus: premiumBonusField });
 const sitePercentSchema = object({ sitePercent: sitePercentField });
 
 function ConfigContent() {
-    const { isGettingConfig, isUpdatingConfig, config, formState, changeHandler, changeBonusHandler, saveHandler, saveBonusHandler } =
-        useConfigContent();
+    const {
+        isGettingConfig,
+        isUpdatingConfig,
+        config,
+        formState,
+        changeHandler,
+        changeBonusHandler,
+        saveHandler,
+        saveBonusHandler,
+        cancelHandler,
+        cancelBonusHandler,
+    } = useConfigContent();
 
     if (isGettingConfig) {
         return <PageLoader />;
@@ -59,6 +69,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ randomOrgApiKey: config.randomOrgApiKey }}
                 onSave={saveHandler('randomOrgApiKey')}
+                onCancel={cancelHandler('randomOrgApiKey')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -81,6 +92,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ minWithdrawalAmount: config.minWithdrawalAmount }}
                 onSave={saveHandler('minWithdrawalAmount')}
+                onCancel={cancelHandler('minWithdrawalAmount')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -103,6 +115,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ spinDuration: config.spinDuration }}
                 onSave={saveHandler('spinDuration')}
+                onCancel={cancelHandler('spinDuration')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -125,6 +138,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ betsTime: config.betsTime }}
                 onSave={saveHandler('betsTime')}
+                onCancel={cancelHandler('betsTime')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -147,6 +161,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ sitePercent: config.sitePercent }}
                 onSave={saveHandler('sitePercent')}
+                onCancel={cancelHandler('sitePercent')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -169,6 +184,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ chatMessagesToSave: config.chatMessagesToSave }}
                 onSave={saveHandler('chatMessagesToSave')}
+                onCancel={cancelHandler('chatMessagesToSave')}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -191,6 +207,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ userBonus: config.bonuses.user }}
                 onSave={saveBonusHandler(Roles.User)}
+                onCancel={cancelBonusHandler(Roles.User)}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -213,6 +230,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ vipBonus: config.bonuses.vip }}
                 onSave={saveBonusHandler(Roles.Vip)}
+                onCancel={cancelBonusHandler(Roles.Vip)}
             />
             <EditableForm
                 className={styles.editableForm}
@@ -235,6 +253,7 @@ function ConfigContent() {
                 )}
                 defaultValidationValues={{ premiumBonus: config.bonuses.premium }}
                 onSave={saveBonusHandler(Roles.Premium)}
+                onCancel={cancelBonusHandler(Roles.Premium)}
             />
         </div>
     );
