@@ -11,6 +11,7 @@ export const initialState: SiteConfigState = {
     randomOrgApiKey: '',
     spinDuration: 10,
     betsTime: 10,
+    sitePercent: 5,
     bonuses: {
         [Roles.User]: 10,
         [Roles.Vip]: 15,
